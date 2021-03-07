@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EngineScript : MonoBehaviour
 {
-    public GameObject[] dot = new GameObject[10];
+    public GameObject[] dot = new GameObject[4];
     public Stack<int> n = new Stack<int>();
     int[] queue = new int[4];
-    int queueNumber = 0;
+    int queueNumber;
     bool wrong = false;
     int next = 0;
     // Start is called before the first frame update
@@ -27,21 +27,22 @@ public class EngineScript : MonoBehaviour
                 }
             }
         }
-        Blinker();
-        
+        Blinker();   
     }
 
     public void Press(GameObject child)
     {
-        if (child != dot[queue[next]])
+        if (next != 4)
         {
-            wrong = true;
-        }
-        next++;
-
-        if (next == 4 && wrong == false)
-        {
-            Debug.Log("WON THE GAME!!!");
+            if (child != dot[queue[next]])
+            {
+                wrong = true;
+                Debug.Log("You lose!");
+            }
+            if (next++ == 4 && wrong == false)
+            {
+                Debug.Log("WON THE GAME!!!");
+            }
         }
     }
 
@@ -54,6 +55,7 @@ public class EngineScript : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
+            queueNumber = 0;
             int temp;
             temp = n.Pop();
             queue[queueNumber++] = temp;

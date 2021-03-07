@@ -8,7 +8,7 @@ public class buttonscript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        sprt = this.GetComponent<SpriteRenderer>();
+        sprt = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -16,23 +16,21 @@ public class buttonscript : MonoBehaviour
     {
         
     }
-
     
     void OnMouseDown()
     {
-        Debug.Log("Pressed");
         this.GetComponentInParent<EngineScript>().Press(this.gameObject);
     }
 
     public void Blink()
     {
-        sprt.color = Color.Lerp(Color.red,Color.yellow + Color.red, 0.6f);
+        sprt.color = Color.red + Color.yellow;
         StartCoroutine(Wait());
     }
 
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(0.4f);
-        sprt.color = Color.Lerp(Color.white, Color.red, 1f);
+        sprt.color = Color.red;
     }
 }
