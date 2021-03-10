@@ -150,10 +150,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1092d76be3be05a44ac90bf763dd2396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dot:
+  dots:
   - {fileID: 1166373091}
-  - {fileID: 1206243360}
   - {fileID: 399390873}
+  - {fileID: 1206243360}
   - {fileID: 794445133}
 --- !u!4 &256860529
 Transform:
@@ -167,8 +167,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1166373093}
-  - {fileID: 1206243363}
   - {fileID: 399390876}
+  - {fileID: 1206243363}
   - {fileID: 794445137}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 399390874}
   - component: {fileID: 399390877}
   m_Layer: 0
-  m_Name: New Sprite (2)
+  m_Name: green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -244,7 +244,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.286274, g: 0.5566038, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -266,7 +266,7 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 5}
   m_Children: []
   m_Father: {fileID: 256860529}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &399390877
 CircleCollider2D:
@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 794445135}
   - component: {fileID: 794445134}
   m_Layer: 0
-  m_Name: New Sprite (3)
+  m_Name: blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -454,7 +454,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.24903384, b: 0.6320754, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -491,7 +491,7 @@ GameObject:
   - component: {fileID: 1166373094}
   - component: {fileID: 1166373095}
   m_Layer: 0
-  m_Name: New Sprite
+  m_Name: red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -537,7 +537,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.6981132, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -602,7 +602,7 @@ GameObject:
   - component: {fileID: 1206243361}
   - component: {fileID: 1206243364}
   m_Layer: 0
-  m_Name: New Sprite (1)
+  m_Name: yellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -660,7 +660,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.6132076, g: 0.5452336, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -682,7 +682,7 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 5}
   m_Children: []
   m_Father: {fileID: 256860529}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &1206243364
 CircleCollider2D:

@@ -2,47 +2,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class EngineScript : MonoBehaviour
 {
-    public GameObject[] dot = new GameObject[4];
-    public Stack<int> n = new Stack<int>();
+    public GameObject[] dots = new GameObject[4];
+    Stack<int> n = new Stack<int>();
     int[] queue = new int[4];
-    int queueNumber;
+    int temp = 0,next = 0;
     bool wrong = false;
-    int next = 0;
     // Start is called before the first frame update
     void Start()
     {
-        int temp,check; 
+        int temporary,check; 
         for (int i = 0; i < 4; i++)
         {
             check = 0;
             while (check == 0)
             {
-                temp = Random.Range(0, 4);
-                if (n.Contains(temp) != true)
+                temporary = Random.Range(0, 4);
+                if (n.Contains(temporary) != true)
                 {
-                    n.Push(temp);
+                    n.Push(temporary);
                     check++;
                 }
             }
         }
-        Blinker();   
+        StartCoroutine(Begin());
     }
 
     public void Press(GameObject child)
     {
-        if (next != 4)
+        if (next < 4 || wrong != true)
         {
-            if (child != dot[queue[next]])
+            if (next < 4 && child != dots[queue[next]])
             {
                 wrong = true;
                 Debug.Log("You lose!");
+                next = 4;
             }
-            if (next++ == 4 && wrong == false)
+            if (next == 3 && wrong == false)
             {
                 Debug.Log("WON THE GAME!!!");
             }
+            next++;
         }
     }
 
@@ -55,13 +57,16 @@ public class EngineScript : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            queueNumber = 0;
-            int temp;
             temp = n.Pop();
-            queue[queueNumber++] = temp;
-            dot[temp].GetComponent<buttonscript>().Blink();
+            queue[i] = temp;
+            dots[temp].GetComponent<buttonscript>().Blink();
             yield return new WaitForSeconds(1.3f);
         }
     }
 
+    IEnumerator Begin()
+    {
+        yield return new WaitForSeconds(3f);
+        Blinker();
+    }
 }
