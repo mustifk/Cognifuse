@@ -147,12 +147,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 256860527}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1092d76be3be05a44ac90bf763dd2396, type: 3}
+  m_Script: {fileID: 11500000, guid: c1239cf39343c7940bc7c0658246ea48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blinkCount: 3
-  objCount: 5
-  dot: {fileID: 7633663375140466068, guid: b9171e413635ea542bd2506987e372b2, type: 3}
+  objCount: 3
+  dot: {fileID: 7633663375140466068, guid: 4ed92af1958d2044586e4922602eb033, type: 3}
 --- !u!4 &256860529
 Transform:
   m_ObjectHideFlags: 0
