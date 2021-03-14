@@ -10,6 +10,7 @@ public class buttonscript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameObject.GetComponent<CircleCollider2D>().enabled = false;
         sprt = GetComponent<SpriteRenderer>();
         colortemp = sprt.color;
     }
@@ -74,5 +75,10 @@ public class buttonscript : MonoBehaviour
     public bool isTouching()
     {
         return colliding;
+    }
+
+    public void SetActive(bool active = true)
+    {
+        gameObject.GetComponent<CircleCollider2D>().enabled = active;
     }
 }

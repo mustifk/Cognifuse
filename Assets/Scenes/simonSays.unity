@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1092d76be3be05a44ac90bf763dd2396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blinkCount: 3
   objCount: 5
   dot: {fileID: 7633663375140466068, guid: b9171e413635ea542bd2506987e372b2, type: 3}
 --- !u!4 &256860529
