@@ -6,7 +6,7 @@ public class buttonscript : MonoBehaviour
 {
     SpriteRenderer sprt;
     Color colortemp;
-    bool blinking = false,touching = false;
+    bool blinking = false,clicked = false,colliding = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +21,7 @@ public class buttonscript : MonoBehaviour
         {
             sprt.material.color = Color.white + colortemp;
         }
-        else if (touching)
+        else if (clicked)
         {
             sprt.material.color = Color.white + colortemp + colortemp;
         }
@@ -29,9 +29,14 @@ public class buttonscript : MonoBehaviour
         {
             sprt.material.color = Color.Lerp(Color.white,colortemp,1f);
         }
-        
+        colliding = false;
     }
-    
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        colliding = true;
+    }
+
     void OnMouseDown()
     {
         Touch();
@@ -54,7 +59,7 @@ public class buttonscript : MonoBehaviour
 
     void Touch()
     {
-        touching = true;
+        clicked = true;
         //sprt.color = Color.Lerp(colortemp, Color.white, 0.6f);
         StartCoroutine(TouchWait());
     }
@@ -63,6 +68,11 @@ public class buttonscript : MonoBehaviour
     {
         yield return new WaitForSeconds(0.15f);
         //sprt.color = Color.Lerp(Color.white, colortemp, 1f);
-        touching = false;
+        clicked = false;
+    }
+
+    public bool isTouching()
+    {
+        return colliding;
     }
 }
