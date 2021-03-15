@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+public class gameEngine : MonoBehaviour
 {
     //1 -> Easy
     //2 -> Normal
@@ -14,11 +14,17 @@ public class GameController : MonoBehaviour
     public const float offsetX = 4f;
     public const float offsetY = 5f;
 
-    [SerializeField] private Main originalCard;
+    [SerializeField] private Card originalCard;
     [SerializeField] private Sprite[] images;   //hold our images
+
+    public bool selectedTwoCard
+    {
+        get { return _secondRevealed == null; }
+    }
 
     private void Start()
     {
+        originalCard.GetComponent<SpriteRenderer>().enabled = true;
         Vector3 startPos = originalCard.transform.position;
 
         //int[] numbers = { 0, 0, 1, 1, 2, 2, 3, 3 };
@@ -30,14 +36,14 @@ public class GameController : MonoBehaviour
         {
             for (int j = 0; j < row; j++)
             {
-                Main card;
+                Card card;
                 if (i == 0 && j == 0)
                 {
                     card = originalCard;
                 }
                 else
                 {
-                    card = Instantiate(originalCard) as Main;
+                    card = Instantiate(originalCard) as Card;
                     card.transform.parent = gameObject.transform;
                 }
 
@@ -59,10 +65,10 @@ public class GameController : MonoBehaviour
         maxNumber = row * col;
 
         int[] temp = new int[maxNumber];
-        for(int i = 0, j=0;j<high;j++)
+        for (int i = 0, j = 0; j < high; j++)
         {
-            temp[i] = j;
-            temp[++i] = j;
+            temp[i++] = j;
+            temp[i++] = j;
         }
         return temp;
     }
@@ -80,34 +86,38 @@ public class GameController : MonoBehaviour
         return temp;
     }
 
-    private Main _firstRevealed;
-    private Main _secondRevealed;
+    private Card _firstRevealed;
+    private Card _secondRevealed;
 
-    public bool canReveal
+    public void CardRevealed(Card card)
     {
-        get { return _secondRevealed == null; }
-    }
-
-    public void CardRevealed(Main card)
-    {
-        if (_firstRevealed == null)
-        { //ilk kart
+        if (_firstRevealed == null)     //ilk kart
+        {
             _firstRevealed = card;
+            // _firstRevealed.Flip();
         }
         else
         {
             _secondRevealed = card;
+            //_secondRevealed.Flip();
             StartCoroutine(checkMatch());
         }
     }
 
     private IEnumerator checkMatch()
     {
-        if(_firstRevealed.getId != _secondRevealed.getId)
-        { 
+        if (_firstRevealed.getId != _secondRevealed.getId)
+        {
             yield return new WaitForSeconds(0.5f);
-            _firstRevealed.Unreveal();
-            _secondRevealed.Unreveal();
+            _firstRevealed.Flip();
+            _secondRevealed.Flip();
+            //_firstRevealed.Unreveal();
+            //_secondRevealed.Unreveal();
+        }
+        else
+        {
+            _firstRevealed.matched = true;
+            _secondRevealed.matched = true;
         }
 
         _firstRevealed = null;
