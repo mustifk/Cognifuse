@@ -26,6 +26,7 @@ public class ChangeText : MonoBehaviour
     bool answer;
     void Start()
     {
+//<<<<<<< Updated upstream
 
         colors = new Color[8];
         colors[0] = Color.red;
@@ -90,6 +91,9 @@ public class ChangeText : MonoBehaviour
         answer = true;
         myText.text = colorNames[current];
         myText2.color = colors[current];
+//=======
+       // myText. = colorNames[2];
+//>>>>>>> Stashed changes
        
 
         while (current3 == current)
