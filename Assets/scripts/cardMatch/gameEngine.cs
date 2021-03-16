@@ -11,8 +11,8 @@ public class gameEngine : MonoBehaviour
 
     private int row = 2;
     private int col;
-    public const float offsetX = 4f;
-    public const float offsetY = 5f;
+    private float offsetX = 4f;
+    private float offsetY = 4f;
 
     [SerializeField] private Card originalCard;
     [SerializeField] private Sprite[] images;   //hold our images
@@ -41,13 +41,14 @@ public class gameEngine : MonoBehaviour
         {
             case 1:
                 col = 3;
-                startPos.x = -5;
+                startPos.x = -4;
                 break;
             case 2:
                 col = 4;
                 break;
             case 3:
-                startPos.x = -8;
+                startPos.x = -7;
+                offsetX = 3.5f;
                 col = 5;
                 break;
         }
@@ -78,6 +79,7 @@ public class gameEngine : MonoBehaviour
 
                 float posX = (offsetX * i) + startPos.x;
                 float posY = (offsetY * j) + startPos.y;
+                card.transform.localScale = new Vector3(0.6f,0.6f,1);
                 card.transform.position = new Vector3(posX, posY, startPos.z);
             }
         }
