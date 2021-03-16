@@ -78,6 +78,7 @@ public class ChangeText : MonoBehaviour
         {
             Debug.Log("GameOver");
             gameover = true;
+            StopAllCoroutines();
             checkButton.interactable = false;
             uncheckButton.interactable = false;
 
