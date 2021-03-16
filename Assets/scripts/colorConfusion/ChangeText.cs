@@ -11,23 +11,17 @@ public class ChangeText : MonoBehaviour
     [SerializeField] private Text myText2;
     [SerializeField] private Button checkButton;
     [SerializeField] private Button uncheckButton;
+    [SerializeField] private int difficulty;
 
-    //butonlar 2 adet
     string[] colorNames = { "Red", "Blue", "Black", "Green", "cyan", "Magenta", "White", "Yellow" };
     Color[] colors;
-    private Color newColor;
-    private string newString;
     private int current, current2, current3;
 
-    [SerializeField] private int difficulty;
-    private const float coefficient = 1.75f;
-    //private int level = difficulty * coefficient;
     bool gameover = false;
     bool answer;
     void Start()
     {
-//<<<<<<< Updated upstream
-
+       
         colors = new Color[8];
         colors[0] = Color.red;
         colors[1] = Color.blue;
@@ -40,22 +34,26 @@ public class ChangeText : MonoBehaviour
         current = Random.Range(0, 8);
         current2 = Random.Range(0, 8);
 
-        while (current == current2)
+        while (current == current2) // birincinin texti ile ikincinin renginin farklı olması için.
         {
             current2 = Random.Range(0, 8);
         }
-      
+
         StartCoroutine(Begin());
     }
 
 
     IEnumerator Begin()
     {
-        //bool gameover = false;
+        checkButton.gameObject.SetActive(true);
+        uncheckButton.gameObject.SetActive(true);
+        checkButton.interactable = true;
+        uncheckButton.interactable = true;
 
-        yield return new WaitForSeconds(0.3f);
-     
-        if (Random.Range(0, 2) == 1)
+        yield return new WaitForSeconds(0);
+
+       
+        if (Random.Range(0, 2) == 1) // %50 ihtimalle doğru veya yanlış fonksiyonu çağırılıyor.
         {
             True();
         }
@@ -63,38 +61,35 @@ public class ChangeText : MonoBehaviour
         {
             False();
         }
-
+        if (difficulty == 0)
+        {
+            endGame();
+        }
 
     }
 
-    
+
     public void Press(bool trueorfalse)
     {
         if (trueorfalse && answer || !trueorfalse && !answer && !gameover)
         {
             StartCoroutine(Begin());
-
+            difficulty--;
         }
         else
         {
             Debug.Log("GameOver");
-            gameover = true;
-            StopAllCoroutines();
-            checkButton.interactable = false;
-            uncheckButton.interactable = false;
+            endGame();
 
         }
     }
 
     void True()
     {
-        answer = true;
-        myText.text = colorNames[current];
+        answer = true; 
+        myText.text = colorNames[current]; // birincinin textiyle ikincinin rengi aynı olursa doğru oluyor.
         myText2.color = colors[current];
-//=======
-       // myText. = colorNames[2];
-//>>>>>>> Stashed changes
-       
+
 
         while (current3 == current)
         {
@@ -114,10 +109,11 @@ public class ChangeText : MonoBehaviour
     void False()
     {
         answer = false;
-        myText.text = colorNames[current];
+        myText.text = colorNames[current]; // birincinin textiyle ikincinin rengi farklı olursa yanlış oluyor.
         myText2.color = colors[current2];
-     
-        while (current3 == current)
+
+        //To different color and color names
+        while (current3 == current) 
         {
             current3 = Random.Range(0, 8);
         }
@@ -133,4 +129,17 @@ public class ChangeText : MonoBehaviour
         Debug.Log("false");
     }
 
+    public void endGame()
+    {
+        StopAllCoroutines();
+        gameover = true;
+        myText.gameObject.SetActive(false);
+        myText2.gameObject.SetActive(false);
+        checkButton.gameObject.SetActive(false);
+        uncheckButton.gameObject.SetActive(false);
+
+        //checkButton.interactable = false;
+        //uncheckButton.interactable = false;
+
+    }
 }
