@@ -7,30 +7,55 @@ public class gameEngine : MonoBehaviour
     //1 -> Easy
     //2 -> Normal
     //3 -> Hard
-    public int diffLevel = 1;
+    public int diffLevel;
 
-    public int row;
-    public int col;
+    private int row = 2;
+    private int col;
     public const float offsetX = 4f;
     public const float offsetY = 5f;
 
     [SerializeField] private Card originalCard;
     [SerializeField] private Sprite[] images;   //hold our images
 
+    private Card firstCard;
+    private Card secondCard;
+
     public bool selectedTwoCard
     {
-        get { return _secondRevealed == null; }
+        get { return secondCard == null; }
+    }
+
+    void Awake()
+    {
+        images = Resources.LoadAll<Sprite>("Sprites/cardMatch");
+        images = shuffleImages(images);
     }
 
     private void Start()
     {
         originalCard.GetComponent<SpriteRenderer>().enabled = true;
+
         Vector3 startPos = originalCard.transform.position;
+
+        switch(diffLevel)
+        {
+            case 1:
+                col = 3;
+                startPos.x = -5;
+                break;
+            case 2:
+                col = 4;
+                break;
+            case 3:
+                startPos.x = -8;
+                col = 5;
+                break;
+        }
 
         //int[] numbers = { 0, 0, 1, 1, 2, 2, 3, 3 };
         int[] numbers = new int[row * col];
         numbers = prepareArray(numbers);
-        numbers = Shuffle(numbers);
+        numbers = shuffle(numbers);
 
         for (int i = 0; i < col; i++)
         {
@@ -73,7 +98,7 @@ public class gameEngine : MonoBehaviour
         return temp;
     }
 
-    private int[] Shuffle(int[] numbers)
+    private int[] shuffle(int[] numbers)
     {
         int[] temp = numbers.Clone() as int[];
         for (int i = 0; i < temp.Length; i++)
@@ -86,42 +111,49 @@ public class gameEngine : MonoBehaviour
         return temp;
     }
 
-    private Card _firstRevealed;
-    private Card _secondRevealed;
+    private Sprite[] shuffleImages(Sprite[] images)
+    {
+        Sprite[] temp = images.Clone() as Sprite[];
+        for (int i = 0; i < temp.Length; i++)
+        {
+            Sprite tmp = temp[i];
+            int random = Random.Range(i, temp.Length);
+            temp[i] = temp[random];
+            temp[random] = tmp;
+        }
+        return temp;
+    }
+
 
     public void CardRevealed(Card card)
     {
-        if (_firstRevealed == null)     //ilk kart
+        if (firstCard == null)     //first card
         {
-            _firstRevealed = card;
-            // _firstRevealed.Flip();
+            firstCard = card;
         }
         else
         {
-            _secondRevealed = card;
-            //_secondRevealed.Flip();
+            secondCard = card;
             StartCoroutine(checkMatch());
         }
     }
 
     private IEnumerator checkMatch()
     {
-        if (_firstRevealed.getId != _secondRevealed.getId)
+        if (firstCard.getId != secondCard.getId)    //they are not same
         {
             yield return new WaitForSeconds(0.5f);
-            _firstRevealed.Flip();
-            _secondRevealed.Flip();
-            //_firstRevealed.Unreveal();
-            //_secondRevealed.Unreveal();
+            firstCard.Flip();
+            secondCard.Flip();
         }
-        else
+        else                                        //their face are same
         {
-            _firstRevealed.matched = true;
-            _secondRevealed.matched = true;
+            firstCard.matched = true;
+            secondCard.matched = true;
         }
-
-        _firstRevealed = null;
-        _secondRevealed = null;
+        //release selected two cards for new cards
+        firstCard = null;
+        secondCard = null;
     }
 
 }

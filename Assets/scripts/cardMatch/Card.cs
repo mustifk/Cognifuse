@@ -7,9 +7,7 @@ public class Card : MonoBehaviour
     [SerializeField]
     private gameEngine controller;
 
-    //private GameObject controller;
-
-    private SpriteRenderer rend;
+    private SpriteRenderer render;
 
     [SerializeField]
     private Sprite faceSprite, backSprite;
@@ -23,14 +21,12 @@ public class Card : MonoBehaviour
         get { return id; }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        //controller = GameObject.FindGameObjectWithTag("GameController");
-        rend = GetComponent<SpriteRenderer>();
-        rend.sprite = backSprite;
-        coroutineAllowed = true;
+        render = GetComponent<SpriteRenderer>();
+        render.sprite = backSprite;
         facedUp = false;
+        coroutineAllowed = true;
     }
 
     public void ChangeSprite(int id, Sprite image)
@@ -64,7 +60,7 @@ public class Card : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0f, i, 0f);
                 if (i == 90f)
                 {
-                    rend.sprite = faceSprite;
+                    render.sprite = faceSprite;
                 }
                 yield return new WaitForSeconds(0.01f);
             }
@@ -77,7 +73,7 @@ public class Card : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0f, i, 0f);
                 if (i == 90f)
                 {
-                    rend.sprite = backSprite;
+                    render.sprite = backSprite;
                 }
                 yield return new WaitForSeconds(0.01f);
             }
