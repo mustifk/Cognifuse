@@ -46,8 +46,7 @@ public class ChangeText : MonoBehaviour
         colors[5] = Color.magenta;
         colors[6] = Color.white;
         colors[7] = Color.yellow;
-        current = Random.Range(0, 8);
-        current2 = Random.Range(0, 8);
+       
 
         while (current == current2) // birincinin texti ile ikincinin renginin farklı olması için.
         {
@@ -60,6 +59,8 @@ public class ChangeText : MonoBehaviour
 
     IEnumerator Begin()
     {
+        current = Random.Range(0, 8);
+        current2 = Random.Range(0, 8);
         checkButton.gameObject.SetActive(true);
         uncheckButton.gameObject.SetActive(true);
         checkButton.interactable = true;
