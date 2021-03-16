@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class ChangeText : MonoBehaviour
 {
 
-    [SerializeField] private Text myText;
-    [SerializeField] private Text myText2;
+    [SerializeField] private TextMeshProUGUI myText;
+    [SerializeField] private TextMeshProUGUI myText2;
     [SerializeField] private Button checkButton;
     [SerializeField] private Button uncheckButton;
     [SerializeField] private int difficulty;
@@ -16,12 +16,27 @@ public class ChangeText : MonoBehaviour
     string[] colorNames = { "Red", "Blue", "Black", "Green", "cyan", "Magenta", "White", "Yellow" };
     Color[] colors;
     private int current, current2, current3;
+    private float level;
 
+    
     bool gameover = false;
     bool answer;
     void Start()
     {
-       
+        switch (difficulty)
+        {
+            case 1:
+                level = 4;
+            break;
+            case 2:
+                level = 6;
+                break;
+            case 3:
+                level = 8;
+                break;
+            default:
+                break;
+        }
         colors = new Color[8];
         colors[0] = Color.red;
         colors[1] = Color.blue;
@@ -61,7 +76,7 @@ public class ChangeText : MonoBehaviour
         {
             False();
         }
-        if (difficulty == 0)
+        if (level == 0)
         {
             endGame();
         }
@@ -74,7 +89,7 @@ public class ChangeText : MonoBehaviour
         if (trueorfalse && answer || !trueorfalse && !answer && !gameover)
         {
             StartCoroutine(Begin());
-            difficulty--;
+            level--;
         }
         else
         {
