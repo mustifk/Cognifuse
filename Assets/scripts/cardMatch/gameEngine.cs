@@ -14,6 +14,9 @@ public class gameEngine : MonoBehaviour
     private float offsetX = 4f;
     private float offsetY = 4f;
 
+    private int counter = 0;
+    private int numberOfCards;
+
     [SerializeField] private Card originalCard;
     [SerializeField] private Sprite[] images;   //hold our images
 
@@ -57,6 +60,8 @@ public class gameEngine : MonoBehaviour
         int[] numbers = new int[row * col];
         numbers = prepareArray(numbers);
         numbers = shuffle(numbers);
+
+        numberOfCards = (row * col) / 2;
 
         for (int i = 0; i < col; i++)
         {
@@ -152,6 +157,11 @@ public class gameEngine : MonoBehaviour
         {
             firstCard.matched = true;
             secondCard.matched = true;
+            counter++;
+            if(counter == numberOfCards)
+            {
+                //Game Over
+            }
         }
         //release selected two cards for new cards
         firstCard = null;
