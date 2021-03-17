@@ -42,6 +42,7 @@ public class tapTheDotEngine : MonoBehaviour
         for (int i = 0; i < blinkCount && !gameOver; i++)
         {
             temp = Random.Range(0, difficulty);
+            temp = 2;
             switch (temp)
             {
                 case 1:
@@ -154,7 +155,7 @@ public class tapTheDotEngine : MonoBehaviour
     {
         Vector2 position = new Vector2(Random.Range(-7f, 7.0001f), Random.Range(-3.5f, 3.50001f));
         float x = temp.x, y = temp.y, x2 = temp2.x, y2 = temp2.y;
-        while (Mathf.Abs(position.x - x) < 1.7 && Mathf.Abs(position.y - y) < 1.7 || Mathf.Abs(position.x - x2) < 1.7 && Mathf.Abs(position.y - y2) < 1.7)
+        while (Mathf.Abs(position.x - x) < 2 && Mathf.Abs(position.y - y) < 2 && Mathf.Abs(position.x - x2) < 2 && Mathf.Abs(position.y - y2) < 2)
         {
             position = new Vector2(Random.Range(-7f, 7.0001f), Random.Range(-3.5f, 3.50001f));
         }
