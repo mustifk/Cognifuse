@@ -42,7 +42,6 @@ public class tapTheDotEngine : MonoBehaviour
         for (int i = 0; i < blinkCount && !gameOver; i++)
         {
             temp = Random.Range(0, difficulty);
-            temp = 2;
             switch (temp)
             {
                 case 1:
