@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class tapTheDotEngine : MonoBehaviour
 {
-    public int blinkCount, difficulty; //blink free - diff max 3 
+    int blinkCount, difficulty = new int(); //blink free - diff max 3 
     public GameObject dot,dot2;
     private float lifespan;
     private bool gameOver = false;
@@ -12,6 +12,21 @@ public class tapTheDotEngine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+
+        switch (difficulty)
+        {
+            case 1:
+                blinkCount = Random.Range(4,7);
+                break;
+            case 2:
+                blinkCount = Random.Range(7,10);
+                break;
+            case 3:
+                blinkCount = Random.Range(10,14);
+                break;
+        }
+
         dots = new GameObject[3];
         lifespan = 1.2f - (blinkCount * 0.035f);
         StartCoroutine(Begin());
@@ -26,7 +41,7 @@ public class tapTheDotEngine : MonoBehaviour
     {
         if (wrong) // puan ver
         {
-            Debug.Log("You Lose!");
+            StartCoroutine(EndOfMinigame(false));
             gameOver = true;
         }
         for (int i = 0; i < dots.Length; i++)
@@ -58,7 +73,7 @@ public class tapTheDotEngine : MonoBehaviour
         }
         if (!gameOver)
         {
-            Debug.Log("YOU WON THE GAME!");
+            StartCoroutine(EndOfMinigame(true));
             gameOver = true;
         }
     }
@@ -160,4 +175,11 @@ public class tapTheDotEngine : MonoBehaviour
         }
         return position;
     }
+
+    IEnumerator EndOfMinigame(bool result)
+    {
+        yield return new WaitForSeconds(1);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, result);
+    }
+
 }

@@ -150,9 +150,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166404a681b6c13469aead0d59996d8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diffLevel: 1
   originalCard: {fileID: 868226717}
-  images: []
+  images:
+  - {fileID: 21300000, guid: aa9b2f1884c1a9f43ae49a92762646a7, type: 3}
+  - {fileID: 21300000, guid: 6be746a7bce8dff44915bfc0079b5aad, type: 3}
+  - {fileID: 21300000, guid: b20c420d3d43a924782fe9fb8c260bf0, type: 3}
+  - {fileID: 21300000, guid: b76fa276788f61047b5ebaf159b58d8d, type: 3}
+  - {fileID: 21300000, guid: 5258ea5d90713ac4cb9f6a7956f8d46e, type: 3}
+  - {fileID: 21300000, guid: 2170f4a553ebccb4e90058b045d4a322, type: 3}
+  - {fileID: 21300000, guid: 695a014983a0e73499f80a4a9db971a4, type: 3}
+  - {fileID: 21300000, guid: f26477ec7b096794f8d3f4ff08d8e3f6, type: 3}
+  - {fileID: 21300000, guid: 94544955b56cdae458cc01c96fa4be7c, type: 3}
+  - {fileID: 21300000, guid: f1844dcbb1c9ee14ab31eb4acae7b385, type: 3}
 --- !u!4 &241846381
 Transform:
   m_ObjectHideFlags: 0

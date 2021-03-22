@@ -11,7 +11,7 @@ public class ChangeText : MonoBehaviour
     [SerializeField] private TextMeshProUGUI myText2;
     [SerializeField] private Button checkButton;
     [SerializeField] private Button uncheckButton;
-    [SerializeField] private int difficulty;
+    private int difficulty = new int();
 
     string[] colorNames = { "Red", "Blue", "Black", "Green", "cyan", "Magenta", "White", "Yellow" };
     Color[] colors;
@@ -23,11 +23,9 @@ public class ChangeText : MonoBehaviour
     bool answer;
     void Start()
     {
+        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
         switch (difficulty)
         {
-            case 1:
-                level = 4;
-            break;
             case 2:
                 level = 6;
                 break;
@@ -35,6 +33,7 @@ public class ChangeText : MonoBehaviour
                 level = 8;
                 break;
             default:
+                level = 4;
                 break;
         }
         colors = new Color[8];
@@ -79,7 +78,7 @@ public class ChangeText : MonoBehaviour
         }
         if (level == 0)
         {
-            endGame();
+            endGame(true);
         }
 
     }
@@ -94,9 +93,7 @@ public class ChangeText : MonoBehaviour
         }
         else
         {
-            Debug.Log("GameOver");
-            endGame();
-
+            endGame(false);
         }
     }
 
@@ -118,8 +115,6 @@ public class ChangeText : MonoBehaviour
             current3 = Random.Range(0, 8);
         }
         myText2.text = colorNames[current3];
-
-        Debug.Log("true");
     }
 
     void False()
@@ -140,12 +135,9 @@ public class ChangeText : MonoBehaviour
             current3 = Random.Range(0, 8);
         }
         myText2.text = colorNames[current3];
-
-
-        Debug.Log("false");
     }
 
-    public void endGame()
+    public void endGame(bool win)
     {
         StopAllCoroutines();
         gameover = true;
@@ -153,9 +145,22 @@ public class ChangeText : MonoBehaviour
         myText2.gameObject.SetActive(false);
         checkButton.gameObject.SetActive(false);
         uncheckButton.gameObject.SetActive(false);
-
+        if (win)
+        {
+            StartCoroutine(EndOfMinigame(true));
+        }
+        else
+        {
+            StartCoroutine(EndOfMinigame(false));
+        }
         //checkButton.interactable = false;
         //uncheckButton.interactable = false;
 
+    }
+
+    IEnumerator EndOfMinigame(bool result)
+    {
+        yield return new WaitForSeconds(1);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, result);
     }
 }

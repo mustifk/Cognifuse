@@ -7,7 +7,7 @@ public class gameEngine : MonoBehaviour
     //1 -> Easy
     //2 -> Normal
     //3 -> Hard
-    public int diffLevel;
+    int diffLevel = new int();
 
     private int row = 2;
     private int col;
@@ -36,6 +36,8 @@ public class gameEngine : MonoBehaviour
 
     private void Start()
     {
+        diffLevel = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+
         originalCard.GetComponent<SpriteRenderer>().enabled = true;
 
         Vector3 startPos = originalCard.transform.position;
@@ -160,12 +162,19 @@ public class gameEngine : MonoBehaviour
             counter++;
             if(counter == numberOfCards)
             {
-                //Game Over
+                StartCoroutine(EndOfMinigame(true));
             }
         }
         //release selected two cards for new cards
         firstCard = null;
         secondCard = null;
     }
+
+    IEnumerator EndOfMinigame(bool result)
+    {
+        yield return new WaitForSeconds(1);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, result);
+    }
+
 
 }

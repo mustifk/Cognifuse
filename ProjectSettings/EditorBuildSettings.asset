@@ -4,5 +4,20 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: 26866ed29613b5a488d1ae84c81cf405
+  - enabled: 1
+    path: Assets/Scenes/simonSays.unity
+    guid: be093f57b6f6e6847b6447831bfcb53f
+  - enabled: 1
+    path: Assets/Scenes/tapTheDot.unity
+    guid: 844403ec1c4cd2142bd8fd2af62b5548
+  - enabled: 1
+    path: Assets/Scenes/cardMatch.unity
+    guid: bacdb8fa712dcee428a39ba440316443
+  - enabled: 1
+    path: Assets/Scenes/colorConfusion.unity
+    guid: 7612caaa68a498e419efa338f93d4e12
   m_configObjects: {}
