@@ -18,7 +18,8 @@ public class mainScript : MonoBehaviour
 {
     public float animSpeed;
     public Animator transition;
-    static int levelCount, HP, totalScore,lastMinigame;
+    private int nextSceneIndex;
+    static int levelCount, HP, totalScore,bestScore,lastMinigame;
     static int difficulty = new int();
     public int sceneCount = 4;
     Stack<int> sceneQueue;
@@ -27,6 +28,8 @@ public class mainScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Destroy(GameObject.FindGameObjectWithTag("OldScript"));
+        bestScore = PlayerPrefs.GetInt("highscore");
         difficulty = 1;
         sceneQueue = new Stack<int>();
         DontDestroyOnLoad(this.gameObject.GetComponent<mainScript>());
@@ -40,12 +43,26 @@ public class mainScript : MonoBehaviour
 
     public void BeginTheGame()
     {
+        bestScore = PlayerPrefs.GetInt("highscore");
         HP = 3;
+        sceneQueue = new Stack<int>();
         totalScore = 0;
         levelCount = 0;
         difficulty = 1;
         SceneRandomizer();
         transition.SetTrigger("End");
+        Lagger();
+    }   
+
+    public void PlayAgain()
+    {
+        bestScore = PlayerPrefs.GetInt("highscore");
+        HP = 3;
+        sceneQueue = new Stack<int>();
+        totalScore = 0;
+        levelCount = 0;
+        difficulty = 1;
+        SceneRandomizer();
         Lagger();
     }
 
@@ -56,17 +73,23 @@ public class mainScript : MonoBehaviour
     IEnumerator Lag()
     {
         yield return new WaitForSeconds(animSpeed);
-        NextScene();
+        Transitioner();
     }
 
-    void NextScene()
+    public void NextScene()
     {
         difficulty = ((levelCount++ / 4) + 1);
         if (difficulty > 3)
         {
             difficulty = 3;
         }
-        SceneManager.LoadScene(sceneQueue.Pop());
+        if (sceneQueue.Count == 1)
+        {
+            lastMinigame = sceneQueue.Pop();
+            sceneQueue.Push(lastMinigame);
+        }
+        nextSceneIndex = sceneQueue.Pop();
+        SceneManager.LoadScene(nextSceneIndex);
         if (sceneQueue.Count == 0)
         {
             SceneRandomizer();
@@ -76,9 +99,7 @@ public class mainScript : MonoBehaviour
     void EndScene()
     {
 
-        SceneManager.LoadScene(0);
-        //olması gereken
-        //SceneManager.LoadScene(sceneCount + 1);
+        SceneManager.LoadScene("End");
     }
 
     void SceneRandomizer()
@@ -88,7 +109,11 @@ public class mainScript : MonoBehaviour
         {
             if (i == 0)
             {
-                lastMinigame = temp;
+                while (sceneQueue.Contains(lastMinigame))
+                {
+                    temp = Random.Range(1, sceneCount + 1);
+                    lastMinigame = temp;
+                }
                 sceneQueue.Push(temp);
             }
             else
@@ -103,21 +128,22 @@ public class mainScript : MonoBehaviour
         }
     }
 
-    public bool isGameOver() {
-        return gameOver;
-    }
-
 
     public void EndOfMinigame(int score,bool won)
-    {
-        totalScore += score;
+    {        
         if (won)
         {
+            totalScore += score * difficulty;
             Debug.Log("Won the minigame!");
-            NextScene();
+            Transitioner();
         }
         else if(!won && HP == 1)
         {
+            if (totalScore > bestScore)
+            {
+                bestScore = totalScore;
+                PlayerPrefs.SetInt("highscore", bestScore);
+            }
             Debug.Log("Lost the game! - Score = " + totalScore);
             HP = 0;
             EndScene();
@@ -126,13 +152,38 @@ public class mainScript : MonoBehaviour
         {
             Debug.Log("Lose the minigame!");
             HP--;
-            NextScene();
+            Transitioner();
         }
+    }
+
+    void Transitioner()
+    {
+        int temp = sceneQueue.Pop();
+        nextSceneIndex = temp;
+        sceneQueue.Push(temp);
+        SceneManager.LoadScene("Transition");
+    }
+
+    public string getScore()
+    {
+        return totalScore.ToString();
+    }
+    public string getBestScore()
+    {
+        return bestScore.ToString();
+    }
+
+    public bool isGameOver() {
+        return gameOver;
     }
 
     public int Difficulty()
     {
         return difficulty;
+    }
+    public int CurrentSceneIndex()
+    {
+        return nextSceneIndex;
     }
 }
 

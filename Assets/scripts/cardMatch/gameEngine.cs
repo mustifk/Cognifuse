@@ -175,6 +175,4 @@ public class gameEngine : MonoBehaviour
         yield return new WaitForSeconds(1);
         GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, result);
     }
-
-
 }

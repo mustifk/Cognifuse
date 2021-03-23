@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166404a681b6c13469aead0d59996d8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transition: {fileID: 0}
   originalCard: {fileID: 868226717}
   images:
   - {fileID: 21300000, guid: aa9b2f1884c1a9f43ae49a92762646a7, type: 3}
