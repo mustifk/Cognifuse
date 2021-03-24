@@ -9,6 +9,8 @@ public class ChangeText : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI myText;
     [SerializeField] private TextMeshProUGUI myText2;
+    [SerializeField] private Button Button;
+    [SerializeField] private Button Button2;
     [SerializeField] private Button checkButton;
     [SerializeField] private Button uncheckButton;
     private int difficulty = new int();
@@ -24,6 +26,7 @@ public class ChangeText : MonoBehaviour
     void Start()
     {
         difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        
         switch (difficulty)
         {
             case 2:
@@ -61,6 +64,9 @@ public class ChangeText : MonoBehaviour
         current = Random.Range(0, 8);
         current2 = Random.Range(0, 8);
         checkButton.gameObject.SetActive(true);
+        Button.gameObject.SetActive(true);
+        Button2.gameObject.SetActive(true);
+        uncheckButton.gameObject.SetActive(true);
         uncheckButton.gameObject.SetActive(true);
         checkButton.interactable = true;
         uncheckButton.interactable = true;
@@ -145,6 +151,8 @@ public class ChangeText : MonoBehaviour
         myText2.gameObject.SetActive(false);
         checkButton.gameObject.SetActive(false);
         uncheckButton.gameObject.SetActive(false);
+        Button.gameObject.SetActive(false);
+        Button2.gameObject.SetActive(false);
         if (win)
         {
             StartCoroutine(EndOfMinigame(true));
@@ -153,8 +161,7 @@ public class ChangeText : MonoBehaviour
         {
             StartCoroutine(EndOfMinigame(false));
         }
-        //checkButton.interactable = false;
-        //uncheckButton.interactable = false;
+    
 
     }
 

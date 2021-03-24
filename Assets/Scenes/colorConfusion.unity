@@ -152,9 +152,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myText: {fileID: 674388617}
   myText2: {fileID: 575735545}
+  Button: {fileID: 1276793528}
+  Button2: {fileID: 974879221}
   checkButton: {fileID: 2088631484}
   uncheckButton: {fileID: 1519998634}
-  difficulty: 3
 --- !u!4 &249232781
 Transform:
   m_ObjectHideFlags: 0
@@ -555,12 +556,12 @@ GameObject:
   - component: {fileID: 974879222}
   - component: {fileID: 974879221}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Button2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &974879220
 RectTransform:
   m_ObjectHideFlags: 0
@@ -827,7 +828,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1276793527
 RectTransform:
   m_ObjectHideFlags: 0
