@@ -74,31 +74,32 @@ public class shape : MonoBehaviour
             }
         }
     }
-    public void changeSprite()
+    public int changeSprite(int index)
     {
         switch (shapeName)
         {
             case "circle":
-                int a = Random.Range(0, _circleSprite.Length);
-                GetComponent<SpriteRenderer>().sprite = _circleSprite[a];
+                index = (++index) % _circleSprite.Length;
+                GetComponent<SpriteRenderer>().sprite = _circleSprite[index];
                 break;
             case "hexagon":
-                int b = Random.Range(0, _hexagonSprite.Length);
-                GetComponent<SpriteRenderer>().sprite = _hexagonSprite[b];
+                index = (++index) % _hexagonSprite.Length;
+                GetComponent<SpriteRenderer>().sprite = _hexagonSprite[index];
                 break;
             case "rectangle":
-                int c = Random.Range(0, _rectangleSprite.Length);
-                GetComponent<SpriteRenderer>().sprite = _rectangleSprite[c];
+                index = (++index) % _rectangleSprite.Length;
+                GetComponent<SpriteRenderer>().sprite = _rectangleSprite[index];
                 break;
             case "star":
-                int d = Random.Range(0, _starSprite.Length);
-                GetComponent<SpriteRenderer>().sprite = _starSprite[d];
+                index = (++index) % _starSprite.Length;
+                GetComponent<SpriteRenderer>().sprite = _starSprite[index];
                 break;
             case "triangle":
-                int e = Random.Range(0, _triangleSprite.Length);
-                GetComponent<SpriteRenderer>().sprite = _triangleSprite[e];
+                index = (++index) % _triangleSprite.Length;
+                GetComponent<SpriteRenderer>().sprite = _triangleSprite[index];
                 break;
         }
+        return index;
     }
 
     private Sprite[] shuffleImages(Sprite[] images)

@@ -23,13 +23,15 @@ public class shapeController : MonoBehaviour
     private shape[] otherShapes;        //otherShapes is an array that does not contain the shape in the message
 
     private Sprite[] otherSprites;
-    int[] bitArray;
+    int[] otherSpriteArray;         //for different shape
+    int[] sameSpriteArray;          //array filled depends on message
 
     public bool checkShape = true;
     public int counterShape = 0;
 
     private int numberOfObjects;
     private int beforeTextIndex = -1;
+    int lastSprite = 0;
 
     private string[] texts = { "circle", "hexagon", "rectangle", "star", "triangle" };
 
@@ -48,7 +50,8 @@ public class shapeController : MonoBehaviour
                 break;
         }
 
-        bitArray = new int[numberOfObjects];
+        otherSpriteArray = new int[numberOfObjects];
+        sameSpriteArray = new int[diffLevel];
 
         prepareGame();
     }
@@ -66,7 +69,7 @@ public class shapeController : MonoBehaviour
             GameObject.Destroy(transform.GetChild(0).gameObject);
 
             counterShape = 0;
-
+            lastSprite = 0;
             prepareGame();
         }
     }
@@ -75,7 +78,12 @@ public class shapeController : MonoBehaviour
     {
         for (int i = 0; i < numberOfObjects; i++)
         {
-            bitArray[i] = 0;
+            otherSpriteArray[i] = 0;
+        }
+
+        for (int i = 0; i < diffLevel; i++)
+        {
+            sameSpriteArray[i] = 0;
         }
 
         int index = Random.Range(0, texts.Length);
@@ -124,12 +132,12 @@ public class shapeController : MonoBehaviour
                 distanceY = Random.Range(1f, 1.5f);
                 break;
             case 2:
-                distanceX = Random.Range(2f, 3f);
+                distanceX = Random.Range(2f, 2.5f);
                 distanceY = Random.Range(0.5f, 1f);
                 break;
             case 3:
                 startPosX = -8f;
-                distanceX = Random.Range(2f,2.5f);
+                distanceX = Random.Range(2f,2.3f);
                 distanceY = Random.Range(0.3f, 0.9f);
                 break;
         }
@@ -174,7 +182,7 @@ public class shapeController : MonoBehaviour
                         break;
                 }
                 shape = Instantiate(shape) as shape;
-                shape.changeSprite();
+                lastSprite = shape.changeSprite(lastSprite);
             }
             else
             {
@@ -200,17 +208,17 @@ public class shapeController : MonoBehaviour
                         break;
                 }
 
-                while(bitArray[index] == 1)
+                while(otherSpriteArray[index] == 1)
                 {
-                    if(bitArray.Length > otherSprites.Length)
+                    if(otherSpriteArray.Length > otherSprites.Length)
                         index = (index + 1) % otherSprites.Length;
                     else
-                        index = (index + 1) % bitArray.Length;
+                        index = (index + 1) % otherSpriteArray.Length;
 
                 }
 
                 shape.GetComponent<SpriteRenderer>().sprite = otherSprites[index];
-                bitArray[index] = 1;
+                otherSpriteArray[index] = 1;
             }
 
             shape.transform.parent = gameObject.transform;
@@ -237,6 +245,7 @@ public class shapeController : MonoBehaviour
         }
 
         GameObject.Destroy(transform.GetChild(0).gameObject);
+        GameObject.Destroy(text);
         //SceneManager.LoadScene("cardMatch");
     }
 
