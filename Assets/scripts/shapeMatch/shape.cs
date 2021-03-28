@@ -71,6 +71,7 @@ public class shape : MonoBehaviour
             {
                 controller.counterShape++;      //user selected right shape and counter is incremented
                 selectable = false;
+                Destroy(gameObject);
             }
         }
     }

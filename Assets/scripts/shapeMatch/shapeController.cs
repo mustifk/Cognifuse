@@ -138,7 +138,7 @@ public class shapeController : MonoBehaviour
             case 3:
                 startPosX = -8f;
                 distanceX = Random.Range(2f,2.3f);
-                distanceY = Random.Range(0.3f, 0.9f);
+                distanceY = Random.Range(0.5f, 0.9f);
                 break;
         }
 
