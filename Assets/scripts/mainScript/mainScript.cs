@@ -109,11 +109,11 @@ public class mainScript : MonoBehaviour
         {
             if (i == 0)
             {
-                while (sceneQueue.Contains(lastMinigame))
+                while (temp == lastMinigame)
                 {
                     temp = Random.Range(1, sceneCount + 1);
-                    lastMinigame = temp;
                 }
+                lastMinigame = temp;
                 sceneQueue.Push(temp);
             }
             else

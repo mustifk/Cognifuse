@@ -536,7 +536,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 1069368209}
   title: {fileID: 1169786839}
-  transitionDuration: 3
+  transitionDuration: 8
   sceneIndex: 0
 --- !u!4 &946761830
 Transform:

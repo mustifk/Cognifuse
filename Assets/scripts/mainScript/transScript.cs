@@ -5,7 +5,7 @@ using TMPro;
 public class transScript : MonoBehaviour
 {
     public TextMeshProUGUI text,title;
-    public float transitionDuration = 3f;
+    public float transitionDuration = 8f;
     public int sceneIndex = 0;
     private string[][] instructions;
     // Start is called before the first frame update
@@ -25,7 +25,7 @@ public class transScript : MonoBehaviour
         instructions[3][0] = "Match The Cards";
         instructions[3][1] = "Try to find the other twin of all the cards on the screen!";
         instructions[4][0] = "Color Confusion";
-        instructions[4][1] = "Result is correct iff text in left is the color the right part!";
+        instructions[4][1] = "Result is correct iff text in left part is the color of the right part!";
         instructions[5][0] = "Simon Says";
         instructions[5][1] = "Wait for the buttons to blink, then push them in the correct order!";
         CurrentSceneSelector();
