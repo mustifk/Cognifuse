@@ -18,7 +18,7 @@ public class haveYou : MonoBehaviour
     private int cardNumbers;
     void Awake()
     {
-        images = Resources.LoadAll<Sprite>("Sprites/whichOne");
+        images = Resources.LoadAll<Sprite>("Sprites/haveYou");
         images = shuffleImages(images);
     }
 
@@ -49,7 +49,7 @@ public class haveYou : MonoBehaviour
         for (int i = 0; i < cardNumbers; i++)
         {
             StartCoroutine(showCards(i));
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
 
         }
 
