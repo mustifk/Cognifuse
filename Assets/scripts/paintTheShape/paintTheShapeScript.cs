@@ -6,8 +6,8 @@ using UnityEngine;
 /// sağda solda iki şekil oluşuyor fakat yanmıyor
 ///
 /// onların birleşimini ortada yapmalı- bu fonksiyon eksik
-/// randomizer dene
-/// sağ sol cisim yerleri değişcek
+/// randomizer çalışıyor sanırım ama yanmıyor
+/// 
 /// kontrol mekanizmasına bak
 /// 
 /// 
@@ -53,7 +53,8 @@ public class paintTheShapeScript : MonoBehaviour
                 arrLength = 3;
                 break;
         }
-        Randomizer();
+        Randomizer(blocks1);
+        Randomizer(blocks2);
         for (int x = 0; x < arrLength; x++)
         {
             for (int y = 0; y < arrLength; y++)
@@ -65,6 +66,18 @@ public class paintTheShapeScript : MonoBehaviour
                 tempGO.GetComponent<blockScript>().ChangeState(blocks2[x, y]);
             }
         }
+        BlocksRight.transform.localScale = new Vector3(0.5f,0.5f,1);
+        BlocksLeft.transform.localScale = new Vector3(0.5f,0.5f,1);
+        if (difficulty == 2)
+        {
+            BlocksRight.transform.position = new Vector3(Camera.main.transform.position.x + 3f, Camera.main.transform.position.y / 2, 3);
+            BlocksLeft.transform.position = new Vector3(Camera.main.transform.position.x - 4.5f, Camera.main.transform.position.y / 2, 3);
+        }
+        else
+        {
+            BlocksRight.transform.position = new Vector3(Camera.main.transform.position.x + 4f, Camera.main.transform.position.y / 2, 3);
+            BlocksLeft.transform.position = new Vector3(Camera.main.transform.position.x - 6f, Camera.main.transform.position.y / 2, 3);
+        }
     }
 
     void Update()
@@ -74,6 +87,7 @@ public class paintTheShapeScript : MonoBehaviour
 
     public void Press()
     {
+        Validator();
         int complete = 0;
         for (int x = 0; x < arrLength; x++)
         {
@@ -82,6 +96,7 @@ public class paintTheShapeScript : MonoBehaviour
                 if (blockList[x,y].GetComponent<blockScript>().CurrentState() < validBlocks[x,y])
                 {
                     Debug.Log("GAMEOVER");
+                    Terminate();
                 }
                 else if (blockList[x,y].GetComponent<blockScript>().CurrentState() == validBlocks[x,y])
                 {
@@ -95,7 +110,25 @@ public class paintTheShapeScript : MonoBehaviour
         }
     }
 
-    void Randomizer()
+    void Validator()
+    {
+        for (int x = 0; x < arrLength; x++)
+        {
+            for (int y = 0; y < arrLength; y++)
+            {
+                if (blocks1[x,y] >= blocks2[x,y])
+                {
+                    validBlocks[x, y] = blocks1[x, y];
+                }
+                else
+                {
+                    validBlocks[x, y] = blocks2[x, y];
+                }
+            }
+        }
+    }
+
+    void Randomizer(int[,] blocks)
     {
         int temp = Random.Range(0, 3);
         int[] states;
@@ -122,43 +155,24 @@ public class paintTheShapeScript : MonoBehaviour
         {
             for (int y = 0; y < arrLength; y++)
             {
+                temp = Random.Range(0, 3);
                 while (states[temp] == 0)
                 {
                     temp = Random.Range(0, 3);
                 }
                 states[temp]--;
-                blocks1[x, y] = temp;
+                blocks[x, y] = temp;
             }
         }
+    }
 
-        switch (difficulty)
+    void Terminate()
+    {
+        for (int i = 0; i < arrLength; i++)
         {
-            case 2:
-                states[0] = 5;
-                states[1] = 5;
-                states[2] = 6;
-                break;
-            case 3:
-                states[0] = 8;
-                states[1] = 8;
-                states[2] = 9;
-                break;
-            default:
-                states[0] = 3;
-                states[1] = 3;
-                states[2] = 3;
-                break;
-        }
-        for (int x = 0; x < arrLength; x++)
-        {
-            for (int y = 0; y < arrLength; y++)
+            for (int k = 0; k < arrLength; k++)
             {
-                while (states[temp] == 0)
-                {
-                    temp = Random.Range(0, 3);
-                }
-                states[temp]--;
-                blocks2[x, y] = temp;
+                blockList[i, k].GetComponent<blockScript>().ColliderOff();
             }
         }
     }

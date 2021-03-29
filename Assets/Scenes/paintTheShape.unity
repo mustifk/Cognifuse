@@ -313,4 +313,4 @@ MonoBehaviour:
   blockM: {fileID: 2601698519667632535, guid: 0b3a647ed83be304a85277ebe900739f, type: 3}
   BlocksRight: {fileID: 490369400}
   BlocksLeft: {fileID: 927242216}
-  difficulty: 1
+  difficulty: 2
