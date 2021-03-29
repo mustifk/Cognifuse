@@ -157,7 +157,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.19215688, g: 0.3019608, b: 0.47450984, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -455,7 +455,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Have you seen before?
+  m_text: Have you seen this before?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f66f64bed1dc8ad49941998a74bdb2fa, type: 2}
   m_sharedMaterial: {fileID: 4412520069657485630, guid: f66f64bed1dc8ad49941998a74bdb2fa,
@@ -578,7 +578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   images: []
-  difficulty: 1
+  difficulty: 3
   originalCard: {fileID: 4183790851887539374, guid: ad091ffe4d587c44c8d0b75437d62aec,
     type: 3}
   text: {fileID: 849524933}
