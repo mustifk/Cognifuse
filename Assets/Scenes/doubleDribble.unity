@@ -896,4 +896,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   droplet: {fileID: 4210644504572757133, guid: 40388a9970913eb4dba776b6b5ba7353, type: 3}
-  difficulty: 1
+  difficulty: 3

@@ -11,7 +11,7 @@ public class blockScript : MonoBehaviour
     void Start()
     {
         objectColor = this.gameObject.GetComponent<SpriteRenderer>().color;
-        state = 2;
+        state = 1;
     }
 
     // Update is called once per frame
@@ -23,9 +23,9 @@ public class blockScript : MonoBehaviour
             case 0:
                 this.gameObject.GetComponent<SpriteRenderer>().sprite = blockTransparent;  
                 break;
-            case 1:
-                this.gameObject.GetComponent<SpriteRenderer>().color = Color.Lerp(objectColor, Color.red, 1);
-                break;
+            //case 1:
+                //this.gameObject.GetComponent<SpriteRenderer>().color = Color.Lerp(objectColor, Color.red, 1);
+                //break;
         }
 
     }
@@ -34,6 +34,10 @@ public class blockScript : MonoBehaviour
     {
         state--;
         this.transform.parent.GetComponent<paintTheShapeScript>().Press();
+        if (state == 0)
+        {
+            ColliderOff();
+        }
     }
     public int CurrentState()
     {
@@ -49,9 +53,9 @@ public class blockScript : MonoBehaviour
                 this.gameObject.GetComponent<SpriteRenderer>().sprite = blockTransparent;
                 //this.gameObject.GetComponent<SpriteRenderer>().color = Color.Lerp(objectColor, new Color(objectColor.r, objectColor.g, objectColor.b, 0), 1);
                 break;
-            case 1:
+           /* case 1:
                 this.gameObject.GetComponent<SpriteRenderer>().color = Color.Lerp(objectColor, Color.red, 1);
-                break;
+                break;*/
         }
         this.gameObject.GetComponent<BoxCollider2D>().enabled = false;
     }

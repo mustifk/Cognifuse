@@ -6,15 +6,15 @@ public class dropletScript : MonoBehaviour
 {
 
     bool blue;
+    static bool isGameOver;
     float difficulty;
     // Start is called before the first frame update
     void Start()
     {
+        isGameOver = false;
         difficulty = this.transform.parent.GetComponent<DDBallsEngine>().GetDifficulty();
         blue = false;
-        transform.tag = "DropletO";
-        this.GetComponent<SpriteRenderer>().color = Color.red;
-        this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -1.6f * difficulty);
+        this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -3 + -1.2f * difficulty);
     }
 
     // Update is called once per frame
@@ -27,13 +27,22 @@ public class dropletScript : MonoBehaviour
     {
         if (this.transform.position.y < -6f)
         {
+            this.transform.parent.GetComponent<DDBallsEngine>().DropletGone();            
             Destroy(this.gameObject);
+        }
+        else if (this.transform.position.y < -5f && this.transform.tag != "DropletX")
+        {
+            if (!isGameOver)
+            {
+                this.transform.parent.GetComponent<DDBallsEngine>().GameOver();
+                isGameOver = true;
+            }
         }
     }
 
     public void Wrong()
     {
-        this.transform.tag = "DropletX";
+        this.gameObject.tag = "DropletX";
         if (blue)
         {
             this.GetComponent<SpriteRenderer>().color = Color.red;
@@ -50,6 +59,12 @@ public class dropletScript : MonoBehaviour
         this.GetComponent<SpriteRenderer>().color = Color.blue;
     }
 
+    public void Red()
+    {
+        blue = false;
+        this.GetComponent<SpriteRenderer>().color = Color.red;
+    }
+
     public void Position()
     {
         if (!blue)
@@ -59,6 +74,11 @@ public class dropletScript : MonoBehaviour
             {
                 transform.position = new Vector3(-5, 7);
             }
+            Red();
+            if (Random.Range(0, 2) == 1)
+            {
+                Wrong();
+            }
         }
         else
         {
@@ -66,6 +86,11 @@ public class dropletScript : MonoBehaviour
             if (Random.Range(0, 2) == 1)
             {
                 transform.position = new Vector3(5, 7);
+            }
+            Blue();
+            if (Random.Range(0, 2) == 1)
+            {
+                Wrong();
             }
         }
     }

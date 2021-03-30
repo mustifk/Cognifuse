@@ -6,11 +6,11 @@ public class DDBallsEngine : MonoBehaviour
 {
     public GameObject droplet;
     public int difficulty = 3;
-    int dropletCount;
+    int dropletCount,dCtemp;
+    bool isGameover;
     /// <summary>
     /// -2 / -5 / 2 / 5 ** 7 drop noktaları
     /// -6 kaybolma noktası
-    /// belirli hızda insin çıksın
     /// doğma noktasını randomize yaparsın ikisi için de 
     /// doğma süreleri için courotine kullanıcaksın
     /// doğma x pozisyonlarına göre renklerinşi verebilirsin
@@ -23,6 +23,7 @@ public class DDBallsEngine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isGameover = false;
         switch (difficulty)
         {
             case 2:
@@ -35,7 +36,7 @@ public class DDBallsEngine : MonoBehaviour
                 dropletCount = 4;
                 break;
         }
-
+        dCtemp = 2 * dropletCount;
         StartCoroutine(Begin());
     }
 
@@ -44,7 +45,6 @@ public class DDBallsEngine : MonoBehaviour
         GameObject temp;
         while (dropletCount != 0)
         {
-            yield return new WaitForSeconds(2.3f - difficulty * 0.3f);
             for (int i = 0; i < 2; i++)
             {
                 temp = Instantiate(droplet, new Vector3(0, 0), Quaternion.identity, transform);
@@ -52,13 +52,10 @@ public class DDBallsEngine : MonoBehaviour
                 {
                     temp.GetComponent<dropletScript>().Blue();
                 }
-                if (Random.Range(0, 2) == 1)
-                {
-                    temp.GetComponent<dropletScript>().Wrong();
-                }
                 temp.GetComponent<dropletScript>().Position();
             }
             dropletCount--;
+            yield return new WaitForSeconds(2.8f - difficulty * 0.6f);
         }
     }
 
@@ -71,5 +68,24 @@ public class DDBallsEngine : MonoBehaviour
     public float GetDifficulty()
     {
         return difficulty;
+    }
+
+    public void GameOver()
+    {
+        if (!isGameover)
+        {
+            isGameover = true;
+            StopAllCoroutines();
+            Debug.Log("You Lose!");
+        }
+    }
+
+    public void DropletGone()
+    {
+        dCtemp--;
+        if (dCtemp == 0)
+        {
+            Debug.Log("You won!");
+        }
     }
 }

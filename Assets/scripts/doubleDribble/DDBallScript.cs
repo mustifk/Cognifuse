@@ -25,10 +25,12 @@ public class DDBallScript : MonoBehaviour
     {
         if (collision.transform.tag == "DropletX")
         {
-            Debug.Log("GAMEOVER");
+            Destroy(collision.gameObject);
+            this.transform.parent.GetComponent<DDBallsEngine>().GameOver();
         }
         else
         {
+            collision.transform.parent.GetComponent<DDBallsEngine>().DropletGone();
             Destroy(collision.gameObject);
         }
     }

@@ -53,21 +53,27 @@ public class paintTheShapeScript : MonoBehaviour
                 arrLength = 3;
                 break;
         }
-        Randomizer(blocks1);
-        Randomizer(blocks2);
+
+        do
+        {
+            Randomizer(blocks1);
+            Randomizer(blocks2);
+        } 
+        while (!Validator());
+        
         for (int x = 0; x < arrLength; x++)
         {
             for (int y = 0; y < arrLength; y++)
             {
-                blockList[x,y] = Instantiate(currentBlock, new Vector3(x * gap, y * gap,1), Quaternion.identity, this.transform);
+                blockList[x, y] = Instantiate(currentBlock, new Vector3(x * gap, y * gap, 1), Quaternion.identity, this.transform);
                 tempGO = Instantiate(currentBlock, new Vector3(x * gap, y * gap, 1), Quaternion.identity, BlocksLeft.transform) as GameObject;
                 tempGO.GetComponent<blockScript>().ChangeState(blocks1[x, y]);
                 tempGO = Instantiate(currentBlock, new Vector3(x * gap, y * gap, 1), Quaternion.identity, BlocksRight.transform) as GameObject;
                 tempGO.GetComponent<blockScript>().ChangeState(blocks2[x, y]);
             }
         }
-        BlocksRight.transform.localScale = new Vector3(0.5f,0.5f,1);
-        BlocksLeft.transform.localScale = new Vector3(0.5f,0.5f,1);
+        BlocksRight.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+        BlocksLeft.transform.localScale = new Vector3(0.5f, 0.5f, 1);
         if (difficulty == 2)
         {
             BlocksRight.transform.position = new Vector3(Camera.main.transform.position.x + 3f, Camera.main.transform.position.y / 2, 3);
@@ -78,6 +84,8 @@ public class paintTheShapeScript : MonoBehaviour
             BlocksRight.transform.position = new Vector3(Camera.main.transform.position.x + 4f, Camera.main.transform.position.y / 2, 3);
             BlocksLeft.transform.position = new Vector3(Camera.main.transform.position.x - 6f, Camera.main.transform.position.y / 2, 3);
         }
+       
+        
     }
 
     void Update()
@@ -87,7 +95,6 @@ public class paintTheShapeScript : MonoBehaviour
 
     public void Press()
     {
-        Validator();
         int complete = 0;
         for (int x = 0; x < arrLength; x++)
         {
@@ -110,8 +117,9 @@ public class paintTheShapeScript : MonoBehaviour
         }
     }
 
-    void Validator()
+    bool Validator()
     {
+        int count = arrLength * arrLength;
         for (int x = 0; x < arrLength; x++)
         {
             for (int y = 0; y < arrLength; y++)
@@ -124,8 +132,13 @@ public class paintTheShapeScript : MonoBehaviour
                 {
                     validBlocks[x, y] = blocks2[x, y];
                 }
+                if (validBlocks[x, y] == 1)
+                {
+                    count--;
+                }
             }
         }
+        return !(count == 0);
     }
 
     void Randomizer(int[,] blocks)
@@ -136,29 +149,29 @@ public class paintTheShapeScript : MonoBehaviour
         switch (difficulty)
         {
             case 2:
-                states[0] = 5;
-                states[1] = 5;
-                states[2] = 6;
+                states[0] = 9;
+                states[1] = 7;
+                //states[2] = 6;
                 break;
             case 3:
-                states[0] = 8;
-                states[1] = 8;
-                states[2] = 9;
+                states[0] = 13;
+                states[1] = 12;
+                //states[2] = 9;
                 break;
             default:
-                states[0] = 3;
-                states[1] = 3;
-                states[2] = 3;
+                states[0] = 5;
+                states[1] = 4;
+                //states[2] = 3;
                 break;
         }
         for (int x = 0; x < arrLength; x++)
         {
             for (int y = 0; y < arrLength; y++)
             {
-                temp = Random.Range(0, 3);
+                temp = Random.Range(0, 2);
                 while (states[temp] == 0)
                 {
-                    temp = Random.Range(0, 3);
+                    temp = Random.Range(0, 2);
                 }
                 states[temp]--;
                 blocks[x, y] = temp;
