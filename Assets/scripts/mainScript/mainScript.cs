@@ -9,7 +9,8 @@ using UnityEngine.SceneManagement;
 /// OYUNLAR DÜZENLENİP EKLENECEK
 /// CAN VE FİNAL İÇİN SAHNELER OLUŞTURULACAK
 /// SKOR TAKİBİ ÖNEMLİ
-/// 
+/// HALA ARKA ARKAYA AYNI OYUN GELEBİLİYOR
+/// KATEGORİLER EKLENDİĞİNDE BU PROBLEMİ ÇÖZ /\
 /// </summary>
 
 
@@ -19,7 +20,7 @@ public class mainScript : MonoBehaviour
     public float animSpeed;
     public Animator transition;
     private int nextSceneIndex;
-    static int levelCount, HP, totalScore,bestScore,lastMinigame;
+    static int levelCount, HP, totalScore,bestScore,lastMinigame = 0;
     static int difficulty = new int();
     public int sceneCount = 4;
     Stack<int> sceneQueue;
@@ -82,11 +83,6 @@ public class mainScript : MonoBehaviour
         if (difficulty > 3)
         {
             difficulty = 3;
-        }
-        if (sceneQueue.Count == 1)
-        {
-            lastMinigame = sceneQueue.Pop();
-            sceneQueue.Push(lastMinigame);
         }
         nextSceneIndex = sceneQueue.Pop();
         SceneManager.LoadScene(nextSceneIndex);
