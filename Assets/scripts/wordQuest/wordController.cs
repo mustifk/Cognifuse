@@ -11,7 +11,7 @@ public class wordController : MonoBehaviour
     //3 -> Hard     3 word
     public int diffLevel;
 
-    string[] words = { "APPLE", "PEAR", "ORANGE", "LIMES", "PEACH", "APRICOT", "MANGO", "AVOCADO", "BANANA", "MANDARIN"};
+    string[] words = { "GENE", "MEMORY", "MOOD", "NEURO", "SENSES", "RETINA", "STRESS", "STROKE", "PROTEIN", "VISUAL", "CORTEX", "RNA"};
 
     public Text text;
 
@@ -29,8 +29,6 @@ public class wordController : MonoBehaviour
 
     public bool selected = false;
 
-    //public GameObject over_panel;
-
     int find_number_of_word = 0;
 
     int startPosX, startPosY;
@@ -39,17 +37,19 @@ public class wordController : MonoBehaviour
 
     int maxWord;
     int distance;
+    int indexWord;
 
     [SerializeField]
     string tempWord;
 
     int[,] bitArray;
     int[] bitWord;
+    int[] bitPath;
 
     void Start()
     {
         selected_buttons = new List<GameObject>();
-        //maxWord = diffLevel * 2;
+
         maxWord = diffLevel;
         startPosX = -130;
         startPosY = 70;
@@ -60,19 +60,25 @@ public class wordController : MonoBehaviour
             case 1:
                 row = 3;
                 column = 4;
-                distance = 80;
+                startPosX = -156;
+                startPosY = 95;
+                distance = 100;
                 rt.sizeDelta = new Vector2(distance, distance);
                 break;
             case 2:
                 row = 4;
-                column = 6;
-                distance = 60;
+                column = 5;
+                startPosX = -198;
+                startPosY = 115;
+                distance = 80;
                 rt.sizeDelta = new Vector2(distance, distance);
                 break;
             case 3:
                 row = 5;
-                column = 8;
-                distance = 50;
+                column = 6;
+                startPosX = -180;
+                startPosY = 103;
+                distance = 65;
                 rt.sizeDelta = new Vector2(distance, distance);
                 break;
         }
@@ -92,30 +98,62 @@ public class wordController : MonoBehaviour
             bitWord[i] = 0;
         }
 
+        bitPath = new int[5];
+        for (int i = 0; i < 5; i++)
+        {
+            bitPath[i] = 0;
+        }
+
         buttons = new button[row,column];
         createButtons();
         assignWord();
     }
 
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            selected = true;
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            selected = false;
+
+            makeWord();
+
+            text.text = null;
+        }
+    }
+
     void createButtons()
     {
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXZ";
         //char startChar = 'A';
         char startChar = 'X';
+        int tempPosY = startPosY;
         for(int i=0;i<row;i++)
         {
+            int tempPosX = startPosX;
             for (int j = 0; j < column; j++)
             {
-                button temp = Instantiate(button, new Vector3(startPosX, startPosY, 0), Quaternion.identity) as button;
+                button temp = Instantiate(button, new Vector3(tempPosX, tempPosY, 0), Quaternion.identity) as button;
                 //button temp = Instantiate(button) as button;
                 temp.transform.SetParent(canvas.transform, false);
-                temp.name = startChar.ToString();
+                //temp.name = startChar.ToString();
+                
+                //int rand = Random.Range(0, 26);
+                //for (int k = 0; k < rand; k++)
+                startChar = chars[Random.Range(0, chars.Length)];
+
                 temp.GetComponentInChildren<Text>().text = startChar.ToString();
                 //startChar++;
-                startPosX += distance;
+                tempPosX += distance;
                 buttons[i,j] = temp;
             }
-            startPosY -= distance;
-            startPosX = -130;
+            tempPosY -= distance;
+            //startPosY -= distance;
+            //startPosX = -130;
         }
     }
 
@@ -126,21 +164,57 @@ public class wordController : MonoBehaviour
             indexRow = Random.Range(0, row);
             indexCol = Random.Range(0, column);
 
-            int indexWord = Random.Range(0, words.Length);
+            indexWord = Random.Range(0, words.Length);
             while(bitWord[indexWord] == 1)
             {
                 indexWord = Random.Range(0, words.Length);
             }
             tempWord = words[indexWord];
             bitWord[indexWord] = 1;
+            Debug.Log(tempWord);
 
             for (int i = 0; i < tempWord.Length; i++)
             {
-                Debug.Log(indexRow + " --- " + indexCol + "    -----    " + tempWord.Length + "  ************************");
                 buttons[indexRow, indexCol].GetComponentInChildren<Text>().text = tempWord[i].ToString();
                 bitArray[indexRow, indexCol] = 1;
                 findPath();
             }
+        }
+    }
+
+    void checkFilled()
+    {
+        int counter = Random.Range(0, 5);
+        if (bitPath[counter] == 1)
+        {
+            counter = Random.Range(0, 5);
+        }
+        else
+        {
+            switch (counter)
+            {
+                case 0:
+                    indexRow = 0;
+                    indexCol = 0;
+                    break;
+                case 1:
+                    indexRow = 0;
+                    indexCol = column - 1;
+                    break;
+                case 2:
+                    indexRow = row - 1;
+                    indexCol = 0;
+                    break;
+                case 3:
+                    indexRow = row / 2;
+                    indexCol = column / 2;
+                    break;
+                case 4:
+                    indexRow = row - 1;
+                    indexCol = column - 1;
+                    break;
+            }
+            bitPath[counter] = 1;
         }
     }
 
@@ -152,28 +226,24 @@ public class wordController : MonoBehaviour
             bit[i] = 0;
         }
 
-        if(indexRow != 0 && bitArray[(indexRow -1),indexCol] != 1)
+        if(indexRow != 0 && bitArray[(indexRow - 1),indexCol] != 1)
         {
             //up();
-            //indexRow--;
             bit[0] = 1;
         }
-        else if(indexRow != (row -1) && bitArray[(indexRow + 1), indexCol] != 1)
+        if(indexRow != (row - 1) && bitArray[(indexRow + 1), indexCol] != 1)
         {
             //down();
-            //indexRow++;
             bit[1] = 1;
         }
-        else if(indexCol != 0 && bitArray[indexRow, (indexCol - 1)] != 1)
+        if(indexCol != 0 && bitArray[indexRow, (indexCol - 1)] != 1)
         {
             //left();
-            //indexCol--;
             bit[2] = 1;
         }
-        else
+        if (indexCol != (column - 1) && bitArray[indexRow, (indexCol + 1)] != 1)
         {
             //right();
-            //indexCol++;
             bit[3] = 1;
         }
 
@@ -198,6 +268,7 @@ public class wordController : MonoBehaviour
         }
 
     }
+
     public void makePath(GameObject button)
     {
         selected_buttons.Add(button);
@@ -212,29 +283,15 @@ public class wordController : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            selected = true;
-        }
-
-        if(Input.GetMouseButtonUp(0))
-        {
-            selected = false;
-
-            makeWord();
-
-            text.text = null;
-        }
-    }
-
     void makeWord()
     {
         foreach(string temp in words)
         {
             if(temp == word)
             {
+                for (int i = 0; i < words.Length; i++)
+                    if (words[i] == temp)
+                        deleteWord(words, i);
                 find_number_of_word++;
 
                 foreach (GameObject temp2 in selected_buttons)
@@ -247,8 +304,31 @@ public class wordController : MonoBehaviour
 
         if(find_number_of_word == maxWord)
         {
-            Debug.Log("Finish");
+            Debug.Log("Win");
+            Finish();
         }
     }
 
+    void deleteWord(string[] array, int index)
+    {
+        if (index == (array.Length - 1))
+            array[index] = "";
+        else
+        {
+            for (int i = index; i < array.Length - 1; i++)
+            {
+               // string temp = array[i];
+                array[i] = array[i + 1];
+               // array[i + 1] = temp;
+            }
+        }
+    }
+
+    void Finish()
+    {
+        foreach (Transform child in transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+    }
 }

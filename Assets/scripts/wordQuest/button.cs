@@ -50,15 +50,15 @@ public class button : MonoBehaviour
 
     public void makeGreen()
     {
-        if(wordController.selected == true)
+        if(wordController.selected)
         {
             color.color = Color.green;
-            if(selected_button == false)
+            if(!selected_button)
             {
                 wordController.makePath(gameObject);
                 selected_button = true;             //each character given 1 time
             }
         }
     }
-    
+
 }

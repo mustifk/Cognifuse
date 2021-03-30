@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class shapeController : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class shapeController : MonoBehaviour
     public shape star;
     public shape triangle;
 
-    public Text text;
+    public TextMeshProUGUI text;
 
     public string message;
     private shape[] otherShapes;        //otherShapes is an array that does not contain the shape in the message
