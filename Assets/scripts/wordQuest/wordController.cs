@@ -11,7 +11,7 @@ public class wordController : MonoBehaviour
     //3 -> Hard     3 word
     public int diffLevel;
 
-    string[] words = { "GENE", "MEMORY", "MOOD", "NEURO", "SENSES", "RETINA", "STRESS", "STROKE", "PROTEIN", "VISUAL", "CORTEX", "RNA"};
+    string[] words = { "GENE", "MEMORY", "MOOD", "NEURO", "STRESS", "PROTEIN", "VISUAL", "CORTEX", "RNA"};
 
     public Text text;
 
@@ -177,7 +177,8 @@ public class wordController : MonoBehaviour
             {
                 buttons[indexRow, indexCol].GetComponentInChildren<Text>().text = tempWord[i].ToString();
                 bitArray[indexRow, indexCol] = 1;
-                //findPath();
+                findPath();
+                
             }
         }
     }
@@ -218,7 +219,7 @@ public class wordController : MonoBehaviour
         }
     }
 
- /*   void findPath()
+    void findPath()
     {
         int[] bit = new int[4];     //{up, down, left, right}
         for(int i=0;i<4;i++)
@@ -262,12 +263,12 @@ public class wordController : MonoBehaviour
             case 2:
                 indexCol--;
                 break;
-            case 3:
+            default:
                 indexCol++;
                 break;
         }
 
-    }*/
+    }
 
     public void makePath(GameObject button)
     {
