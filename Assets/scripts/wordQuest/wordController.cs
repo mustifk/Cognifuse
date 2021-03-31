@@ -177,7 +177,7 @@ public class wordController : MonoBehaviour
             {
                 buttons[indexRow, indexCol].GetComponentInChildren<Text>().text = tempWord[i].ToString();
                 bitArray[indexRow, indexCol] = 1;
-                findPath();
+                //findPath();
             }
         }
     }
@@ -218,7 +218,7 @@ public class wordController : MonoBehaviour
         }
     }
 
-    void findPath()
+ /*   void findPath()
     {
         int[] bit = new int[4];     //{up, down, left, right}
         for(int i=0;i<4;i++)
@@ -267,7 +267,7 @@ public class wordController : MonoBehaviour
                 break;
         }
 
-    }
+    }*/
 
     public void makePath(GameObject button)
     {
