@@ -11,7 +11,7 @@ public class wordController : MonoBehaviour
     //3 -> Hard     3 word
     public int diffLevel;
 
-    string[] words = { "GENE", "MEMORY", "MOOD", "NEURO", "STRESS", "PROTEIN", "VISUAL", "CORTEX", "RNA"};
+    string[] words = { "GENE", "BODY", "MOOD", "NEURO", "BRAIN", "CONE", "DEEP", "LEARN", "RNA", "IONS", "TERM", "OPTIC", "PAIN", "PRION", "EYE", "ROD", "SENSE", "STEM", "ULTRA", "RAY"};
 
     public Text text;
 
@@ -67,7 +67,7 @@ public class wordController : MonoBehaviour
                 break;
             case 2:
                 row = 4;
-                column = 5;
+                column = 6;
                 startPosX = -198;
                 startPosY = 115;
                 distance = 80;
@@ -75,7 +75,7 @@ public class wordController : MonoBehaviour
                 break;
             case 3:
                 row = 5;
-                column = 6;
+                column = 7;
                 startPosX = -180;
                 startPosY = 103;
                 distance = 65;
@@ -98,8 +98,8 @@ public class wordController : MonoBehaviour
             bitWord[i] = 0;
         }
 
-        bitPath = new int[5];
-        for (int i = 0; i < 5; i++)
+        bitPath = new int[3];
+        for (int i = 0; i < 3; i++)
         {
             bitPath[i] = 0;
         }
@@ -129,7 +129,6 @@ public class wordController : MonoBehaviour
     void createButtons()
     {
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXZ";
-        //char startChar = 'A';
         char startChar = 'X';
         int tempPosY = startPosY;
         for(int i=0;i<row;i++)
@@ -138,22 +137,16 @@ public class wordController : MonoBehaviour
             for (int j = 0; j < column; j++)
             {
                 button temp = Instantiate(button, new Vector3(tempPosX, tempPosY, 0), Quaternion.identity) as button;
-                //button temp = Instantiate(button) as button;
                 temp.transform.SetParent(canvas.transform, false);
-                //temp.name = startChar.ToString();
                 
-                //int rand = Random.Range(0, 26);
-                //for (int k = 0; k < rand; k++)
                 startChar = chars[Random.Range(0, chars.Length)];
 
                 temp.GetComponentInChildren<Text>().text = startChar.ToString();
-                //startChar++;
+                
                 tempPosX += distance;
                 buttons[i,j] = temp;
             }
             tempPosY -= distance;
-            //startPosY -= distance;
-            //startPosX = -130;
         }
     }
 
@@ -172,7 +165,7 @@ public class wordController : MonoBehaviour
             tempWord = words[indexWord];
             bitWord[indexWord] = 1;
             Debug.Log(tempWord);
-
+            checkFilled();
             for (int i = 0; i < tempWord.Length; i++)
             {
                 buttons[indexRow, indexCol].GetComponentInChildren<Text>().text = tempWord[i].ToString();
@@ -185,38 +178,27 @@ public class wordController : MonoBehaviour
 
     void checkFilled()
     {
-        int counter = Random.Range(0, 5);
-        if (bitPath[counter] == 1)
+        int counter = Random.Range(0, 3);
+        while (bitPath[counter] == 1)
         {
-            counter = Random.Range(0, 5);
+            counter = (counter + 1) % 3;
         }
-        else
+        switch (counter)
         {
-            switch (counter)
-            {
-                case 0:
-                    indexRow = 0;
-                    indexCol = 0;
-                    break;
-                case 1:
-                    indexRow = 0;
-                    indexCol = column - 1;
-                    break;
-                case 2:
-                    indexRow = row - 1;
-                    indexCol = 0;
-                    break;
-                case 3:
-                    indexRow = row / 2;
-                    indexCol = column / 2;
-                    break;
-                case 4:
-                    indexRow = row - 1;
-                    indexCol = column - 1;
-                    break;
-            }
-            bitPath[counter] = 1;
+            case 0:
+                indexRow = 0;
+                indexCol = 0;
+                break;
+            case 1:
+                indexRow = row /2;
+                indexCol = column /2;
+                break;
+            case 2:
+                indexRow = row - 1;
+                indexCol = column - 1;
+                break;
         }
+        bitPath[counter] = 1;
     }
 
     void findPath()
@@ -249,10 +231,11 @@ public class wordController : MonoBehaviour
         }
 
         int number = Random.Range(0, 4);
-        while (bit[number] == 0)
-            number = Random.Range(0, 4);
 
-        switch(number)
+        while (bit[number] == 0)
+            number = (number + 1) % 4;
+
+        switch (number)
         {
             case 0:
                 indexRow--;
@@ -267,7 +250,6 @@ public class wordController : MonoBehaviour
                 indexCol++;
                 break;
         }
-
     }
 
     public void makePath(GameObject button)
@@ -318,9 +300,7 @@ public class wordController : MonoBehaviour
         {
             for (int i = index; i < array.Length - 1; i++)
             {
-               // string temp = array[i];
                 array[i] = array[i + 1];
-               // array[i + 1] = temp;
             }
         }
     }
