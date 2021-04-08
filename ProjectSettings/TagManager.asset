@@ -7,6 +7,10 @@ TagManager:
   - OldScript
   - DropletO
   - DropletX
+  - circle
+  - rectangle
+  - star
+  - triangle
   layers:
   - Default
   - TransparentFX
