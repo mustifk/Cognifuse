@@ -26,8 +26,18 @@ public class transScript : MonoBehaviour
         instructions[3][1] = "Try to find the other twin of all the cards on the screen!";
         instructions[4][0] = "Color Confusion";
         instructions[4][1] = "Result is correct iff text in left part is the color of the right part!";
-        instructions[5][0] = "Simon Says";
-        instructions[5][1] = "Wait for the buttons to blink, then push them in the correct order!";
+        instructions[5][0] = "Double Dribble";
+        instructions[5][1] = "Catch the circles with the same color and avoid vice versa!";
+        instructions[6][0] = "Have You Seen This";
+        instructions[6][1] = "Follow the objects in the screen and then, have you seen this?";
+        instructions[7][0] = "Paint The Shape";
+        instructions[7][1] = "Try to figure out the final shape when the shapes on left and right become one!";
+        instructions[8][0] = "Shape Match";
+        instructions[8][1] = "Find the correct shapes among all and select them!";
+        instructions[9][0] = "Which One";
+        instructions[9][1] = "Watch carefully to catch the one which was't on the previous screen!";
+        instructions[10][0] = "Word Quest";
+        instructions[10][1] = "Try to find the given words on the word puzzle!";
         CurrentSceneSelector();
         StartCoroutine(NextScene());
     }

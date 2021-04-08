@@ -1168,7 +1168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animSpeed: 0.5
   transition: {fileID: 1928249964}
-  sceneCount: 4
+  sceneCount: 10
 --- !u!1 &1928249962
 GameObject:
   m_ObjectHideFlags: 0
@@ -1330,8 +1330,8 @@ Canvas:
   m_GameObject: {fileID: 1993719591}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 137174120}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1

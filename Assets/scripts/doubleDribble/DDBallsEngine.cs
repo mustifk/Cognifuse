@@ -5,7 +5,7 @@ using UnityEngine;
 public class DDBallsEngine : MonoBehaviour
 {
     public GameObject droplet;
-    public int difficulty = 3;
+    int difficulty = 3;
     int dropletCount,dCtemp;
     bool isGameover;
     /// <summary>
@@ -23,6 +23,7 @@ public class DDBallsEngine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
         isGameover = false;
         switch (difficulty)
         {
@@ -76,7 +77,7 @@ public class DDBallsEngine : MonoBehaviour
         {
             isGameover = true;
             StopAllCoroutines();
-            Debug.Log("You Lose!");
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, false);
         }
     }
 
@@ -85,7 +86,7 @@ public class DDBallsEngine : MonoBehaviour
         dCtemp--;
         if (dCtemp == 0)
         {
-            Debug.Log("You won!");
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, true);
         }
     }
 }

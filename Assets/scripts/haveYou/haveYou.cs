@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class haveYou : MonoBehaviour
 {
     [SerializeField] private Sprite[] images;
-    [SerializeField] private int difficulty;
+    private int difficulty;
     [SerializeField] private images originalCard;
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private Button button;
@@ -24,6 +24,7 @@ public class haveYou : MonoBehaviour
 
     void Start()
     {
+        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
         setActives(false);
         originalCard.transform.localScale = new Vector2(1f, 1f);
         originalCard.transform.position = new Vector2(0f, 0f);
@@ -97,7 +98,6 @@ public class haveYou : MonoBehaviour
         originalCard.transform.localScale = new Vector2(0.6f, 0.6f);
         int index = Random.Range(0, difficulty);
         StartCoroutine(showCards(index));
-        Debug.Log("true");
     }
     private void False()
     {
@@ -106,18 +106,17 @@ public class haveYou : MonoBehaviour
         originalCard.transform.localScale = new Vector2(0.6f, 0.6f);
         int index = Random.Range(difficulty, images.Length);
         StartCoroutine(showCards(index));
-        Debug.Log("false");
     }
     public void Press(bool trueorfalse)
     {
         if (isTrue && trueorfalse || !isTrue && !trueorfalse)
         {
-            Debug.Log("win");
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, true);
 
         }
         else
         {
-            Debug.Log("lose");
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, false);
         }
     }
     private void setActives(bool trueorfalse)

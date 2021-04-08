@@ -14,7 +14,6 @@ public class MainCard : MonoBehaviour
     {
         if (controller.isAgain)
         {
-            Debug.Log(id);
             controller.check(id);
         }
        

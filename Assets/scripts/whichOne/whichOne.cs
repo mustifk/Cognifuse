@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class whichOne : MonoBehaviour
 {
     [SerializeField] private Sprite[] images;
-    [SerializeField] private int difficulty;
+    private int difficulty;
     private int cardNumbers;
     [SerializeField] private MainCard originalCard;
     private float offsetX,offsetY;
@@ -21,7 +21,7 @@ public class whichOne : MonoBehaviour
 
     private void Start()
     {
-
+        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
         originalCard.GetComponent<SpriteRenderer>().enabled = true;
         originalCard.transform.position = new Vector2(-2f, 2f);
         startPos = originalCard.transform.position;
@@ -72,7 +72,6 @@ public class whichOne : MonoBehaviour
             }
             else
             {
-                Debug.Log(randomList[j]);
                 card.ChangeSprite(randomList[j], images[randomList[j]]);
 
             }
@@ -128,14 +127,14 @@ public class whichOne : MonoBehaviour
     {
         if (id == cardNumbers)
         {
-            Debug.Log("win");
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, true);
             StopAllCoroutines();
             isAgain = false;
 
         }
         else
         {
-            Debug.Log("lose");
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, false);
             StopAllCoroutines();
             isAgain = false;
         }

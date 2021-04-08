@@ -24,6 +24,7 @@ public class paintTheShapeScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
         blockList = new GameObject[5,5];
         blocks1 = new int[5,5];
         blocks2 = new int[5,5];
@@ -102,8 +103,8 @@ public class paintTheShapeScript : MonoBehaviour
             {
                 if (blockList[x,y].GetComponent<blockScript>().CurrentState() < validBlocks[x,y])
                 {
-                    Debug.Log("GAMEOVER");
                     Terminate();
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, false);
                 }
                 else if (blockList[x,y].GetComponent<blockScript>().CurrentState() == validBlocks[x,y])
                 {
@@ -113,7 +114,7 @@ public class paintTheShapeScript : MonoBehaviour
         }
         if (complete == arrLength * arrLength)
         {
-            Debug.Log("YOU WONN");
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, true);
         }
     }
 

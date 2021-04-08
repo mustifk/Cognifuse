@@ -10,7 +10,7 @@ public class shapeController : MonoBehaviour
     //Easy -> 1
     //Normal -> 2
     //Hard -> 3
-    public int diffLevel = 1;
+    int difficulty = 1;
 
     public shape circle;
     public shape hexagon;
@@ -38,7 +38,8 @@ public class shapeController : MonoBehaviour
 
     void Start()
     {
-        switch (diffLevel)
+        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        switch (difficulty)
         {
             case 1:
                 numberOfObjects = 4;
@@ -52,14 +53,14 @@ public class shapeController : MonoBehaviour
         }
 
         otherSpriteArray = new int[numberOfObjects];
-        sameSpriteArray = new int[diffLevel];
+        sameSpriteArray = new int[difficulty];
 
         prepareGame();
     }
 
     private void Update()
     {
-        if (counterShape == diffLevel)       //load other shapes
+        if (counterShape == difficulty)       //load other shapes
         {
             int childs = transform.childCount;
             for (int i = childs - 1; i > 0; i--)
@@ -82,7 +83,7 @@ public class shapeController : MonoBehaviour
             otherSpriteArray[i] = 0;
         }
 
-        for (int i = 0; i < diffLevel; i++)
+        for (int i = 0; i < difficulty; i++)
         {
             sameSpriteArray[i] = 0;
         }
@@ -126,7 +127,7 @@ public class shapeController : MonoBehaviour
         float distanceX = 0, distanceY = 0;
         float startPosX = -6f;
         float startPosY = -4f;
-        switch (diffLevel)
+        switch (difficulty)
         {
             case 1:
                 distanceX = Random.Range(3f, 4f);
@@ -162,7 +163,7 @@ public class shapeController : MonoBehaviour
         {
             shape shape;
 
-            if (i < diffLevel)
+            if (i < difficulty)
             {
                 switch (message)
                 {
@@ -238,7 +239,8 @@ public class shapeController : MonoBehaviour
     }
     public void GameOver()
     {
-        Debug.Log("Game Over!");
+        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, false);
+
         int childs = transform.childCount;
         for (int i = childs - 1; i > 0; i--)
         {

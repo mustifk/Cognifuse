@@ -9,7 +9,7 @@ public class wordController : MonoBehaviour
     //1 -> Easy     1 word
     //2 -> Normal   2 word
     //3 -> Hard     3 word
-    public int diffLevel;
+    public int difficulty;
 
     string[] words = { "GENE", "BODY", "MOOD", "NEURO", "BRAIN", "CONE", "DEEP", "LEARN", "RNA", "IONS", "TERM", "OPTIC", "PAIN", "PRION", "EYE", "ROD", "SENSE", "STEM", "ULTRA", "RAY"};
 
@@ -49,13 +49,15 @@ public class wordController : MonoBehaviour
     void Start()
     {
         selected_buttons = new List<GameObject>();
+        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
 
-        maxWord = diffLevel;
+
+        maxWord = difficulty;
         startPosX = -130;
         startPosY = 70;
         
         RectTransform rt = button.GetComponent<RectTransform>();
-        switch(diffLevel)
+        switch(difficulty)
         {
             case 1:
                 row = 3;
@@ -287,8 +289,8 @@ public class wordController : MonoBehaviour
 
         if(find_number_of_word == maxWord)
         {
-            Debug.Log("Win");
             Finish();
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, true);
         }
     }
 
