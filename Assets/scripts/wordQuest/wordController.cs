@@ -42,6 +42,10 @@ public class wordController : MonoBehaviour
     [SerializeField]
     string tempWord;
 
+    [SerializeField]
+    TextMeshProUGUI[] texts;
+    int textIndex = 0;
+
     int[,] bitArray;
     int[] bitWord;
     int[] bitPath;
@@ -50,8 +54,7 @@ public class wordController : MonoBehaviour
     {
         selected_buttons = new List<GameObject>();
         difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
-
-
+        
         maxWord = difficulty;
         startPosX = -130;
         startPosY = 70;
@@ -100,32 +103,26 @@ public class wordController : MonoBehaviour
             bitWord[i] = 0;
         }
 
-        bitPath = new int[3];
-        for (int i = 0; i < 3; i++)
+        bitPath = new int[4];
+        for (int i = 0; i < 4; i++)
         {
             bitPath[i] = 0;
+        }
+
+        for(int i=0;i<difficulty;i++)
+        {
+            indexWord = Random.Range(0, words.Length);
+            while (bitWord[indexWord] == 1)
+            {
+                indexWord = Random.Range(0, words.Length);
+            }
+            texts[textIndex++].text = words[indexWord];
+            bitWord[indexWord] = 1;
         }
 
         buttons = new button[row,column];
         createButtons();
         assignWord();
-    }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            selected = true;
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            selected = false;
-
-            makeWord();
-
-            text.text = null;
-        }
     }
 
     void createButtons()
@@ -159,13 +156,7 @@ public class wordController : MonoBehaviour
             indexRow = Random.Range(0, row);
             indexCol = Random.Range(0, column);
 
-            indexWord = Random.Range(0, words.Length);
-            while(bitWord[indexWord] == 1)
-            {
-                indexWord = Random.Range(0, words.Length);
-            }
-            tempWord = words[indexWord];
-            bitWord[indexWord] = 1;
+            tempWord = texts[t].text;
             Debug.Log(tempWord);
             checkFilled();
             for (int i = 0; i < tempWord.Length; i++)
@@ -180,10 +171,10 @@ public class wordController : MonoBehaviour
 
     void checkFilled()
     {
-        int counter = Random.Range(0, 3);
+        int counter = Random.Range(0, 4);
         while (bitPath[counter] == 1)
         {
-            counter = (counter + 1) % 3;
+            counter = (counter + 1) % 4;
         }
         switch (counter)
         {
@@ -192,12 +183,20 @@ public class wordController : MonoBehaviour
                 indexCol = 0;
                 break;
             case 1:
-                indexRow = row /2;
+                indexRow = (row /2) + 1;
                 indexCol = column /2;
                 break;
             case 2:
                 indexRow = row - 1;
                 indexCol = column - 1;
+                break;
+            case 3:
+                indexRow = 0;
+                indexCol = column - 1;
+                break;
+            default:
+                indexRow = row - 1;
+                indexCol = 1;
                 break;
         }
         bitPath[counter] = 1;
@@ -233,9 +232,13 @@ public class wordController : MonoBehaviour
         }
 
         int number = Random.Range(0, 4);
-
-        while (bit[number] == 0)
+      
+        for(int i=0;i<4;i++)
+        {
+            if (bit[number] == 1)
+                break;
             number = (number + 1) % 4;
+        }
 
         switch (number)
         {
@@ -268,7 +271,7 @@ public class wordController : MonoBehaviour
 
     }
 
-    void makeWord()
+    public void makeWord()
     {
         foreach(string temp in words)
         {

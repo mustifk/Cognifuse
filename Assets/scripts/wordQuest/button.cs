@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class button : MonoBehaviour
+public class button : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
 
     wordController wordController;
@@ -61,4 +62,18 @@ public class button : MonoBehaviour
         }
     }
 
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        
+        wordController.selected = false;
+
+        wordController.makeWord();
+
+        wordController.text.text = null;
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        wordController.selected = true;
+    }
 }

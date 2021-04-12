@@ -28,11 +28,6 @@ public class correctSideEngine : MonoBehaviour
     float[] scaleX = { 2, 1.5f, 1 };
     float[] scaleY = { 2, 1.5f, 1 };
 
-    // float[] posButtonsX = { -5.95f, -3.68f };
-    //  float[] posButtonsY = { 5.95f, -3.68f };
-    //float[] posButtonsX = { -5.92f, 6.01f };
-    //float[] posButtonsY = { -1.88f, -1.88f };
-
     int indexOfShape = 0;
 
     [SerializeField]
@@ -44,6 +39,10 @@ public class correctSideEngine : MonoBehaviour
     GameObject leftShape, rightShape;
 
     GameObject[] objects;
+
+    int previousShape = -1;
+
+    public GameObject shapeParticle;
 
     void Start()
     {
@@ -59,7 +58,7 @@ public class correctSideEngine : MonoBehaviour
                 numberOfShape = 15;
                 break;
         }
-        objects = new GameObject[numberOfShape+1];
+        objects = new GameObject[numberOfShape];
 
         assignShapes();
 
@@ -73,10 +72,17 @@ public class correctSideEngine : MonoBehaviour
         GameObject[] shapesArray = { triangle, circle, rectangle, star };
 
         int number, index = 0;
-        for (int i = 0; i < numberOfShape+1; i++)
+        for (int i = 0; i < numberOfShape; i++)
         {
             number = Random.Range(0, 4);
+            if(previousShape == number) 
+                if(number>=3)
+                    number = Random.Range(0, number-1);
+                else
+                    number = Random.Range(number+1, 4);
+
             objects[index++] = shapesArray[number];
+            previousShape = number;
         }
     }
 
@@ -86,13 +92,23 @@ public class correctSideEngine : MonoBehaviour
         if (number == 0)
         {
             leftShape = objects[indexOfShape];
-            number = Random.Range(indexOfShape+1, objects.Length);
+            /*  number = Random.Range((indexOfShape + 1) % objects.Length, objects.Length);
+              if(objects[number].name == leftShape.name)
+                  number = Random.Range((indexOfShape + 1) % objects.Length, objects.Length);*/
+            number = (indexOfShape + 1) % objects.Length;
+            if(objects[number].name == leftShape.name)
+                number = (indexOfShape + 1) % objects.Length;
             rightShape = objects[number];
         }
         else
         {
             rightShape = objects[indexOfShape];
-            number = Random.Range(indexOfShape+1, objects.Length);
+            /*  number = Random.Range((indexOfShape + 1) % objects.Length, objects.Length);
+              if (objects[number].name == rightShape.name)
+                  number = Random.Range((indexOfShape + 1) % objects.Length, objects.Length);*/
+            number = (indexOfShape + 1) % objects.Length;
+            if (objects[number].name == rightShape.name)
+                number = (indexOfShape + 1) % objects.Length;
             leftShape = objects[number];
         }
 
@@ -101,48 +117,39 @@ public class correctSideEngine : MonoBehaviour
 
         GameObject shape;
         int j = 0;
-        for(int i=indexOfShape;i<(indexOfShape+3);i++, j++)
+        for(int i=indexOfShape, counter=0;counter<3 && i<objects.Length;counter++, j++)
         {
-            shape = Instantiate(objects[i], new Vector3(posX[j], posY[j]), Quaternion.identity);
+            shape = Instantiate(objects[i++], new Vector3(posX[j], posY[j]), Quaternion.identity);
             shape.transform.localScale = new Vector3(scaleX[j], scaleY[j]);
             shape.transform.parent = gameObject.transform;
-            if ((indexOfShape + 1) == objects.Length)
-                break;
         }
     }
 
     public void checkShape(CSshape gameObject)
     {
-        if(gameObject.str == "left")
+
+        if (gameObject.str == "left")
         {
             if (leftShape.CompareTag(objects[indexOfShape].transform.tag))
             {
-                Debug.Log(objects[indexOfShape].transform.tag);
-                //GameObject.Destroy(transform.GetChild(0).gameObject);
-                //Destroy(gameObject.transform.GetChild(0));
-                //indexOfShape++;
                 arrangeButtons();
             }
             else
             {
                 Debug.Log("GAME OVER");
-                gameOver();
+                Finish();
             }
         }
         else if(gameObject.str == "right")
         {
             if (rightShape.CompareTag(objects[indexOfShape].transform.tag))
             {
-                Debug.Log(objects[indexOfShape].transform.tag);
-                //Destroy(gameObject.transform.GetChild(0));
-                //GameObject.Destroy(transform.GetChild(0).gameObject);
-                //indexOfShape++;
                 arrangeButtons();
             }
             else
             {
                 Debug.Log("GAME OVER");
-                gameOver();
+                Finish();
             }
         }
         
@@ -151,35 +158,34 @@ public class correctSideEngine : MonoBehaviour
     public void arrangeButtons()
     {
         indexOfShape++;
-        
+
+        StartCoroutine(createShapeParticle());
+
         int counter = 0;
-        for (int i = transform.childCount - 1; counter <= 4; i--, counter++)
+        for (int i = transform.childCount - 1; counter <= 4 && i > 1; i--, counter++)
         {
             GameObject.Destroy(transform.GetChild(i).gameObject);
         }
 
-        createShapes();
-
-        transform.GetChild(transform.childCount - 1).transform.localPosition = new Vector3(posX[2], posY[2]);
-        transform.GetChild(transform.childCount - 2).transform.localPosition = new Vector3(posX[1], posY[1]);
-        transform.GetChild(transform.childCount - 3).transform.localPosition = new Vector3(posX[0], posY[0]);
-/*
-        int random = Random.Range(0, 2);
-        if(random == 0)
+        if (indexOfShape == objects.Length)
         {
-            //left
-            leftShape = transform.GetChild(transform.childCount - 3).gameObject;
-            rightShape = objects[Random.Range(indexOfShape, objects.Length)];
+            Debug.Log("WIN");
+            Finish();
         }
         else
         {
-            //right
-            rightShape = transform.GetChild(transform.childCount - 3).gameObject;
-            leftShape = objects[Random.Range(indexOfShape, objects.Length)];
-        }*/
+            createShapes();
+        }
     }
 
-    void gameOver()
+    IEnumerator createShapeParticle()
+    {
+        GameObject temp = Instantiate(shapeParticle, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(1f);
+        Destroy(temp);
+    }
+
+    void Finish()
     {
         int childs = transform.childCount;
         for (int i = childs - 1; i > 0; i--)
@@ -191,98 +197,4 @@ public class correctSideEngine : MonoBehaviour
         //SceneManager.LoadScene("cardMatch");
     }
 
-    /*  void createShapes()
-      {
-          int number = Random.Range(0,4);
-
-         // int selectedShape = 0;
-          CSshape temp;
-       /*   switch(number)
-          {
-              case 0:
-                  //triangle
-                  temp = Instantiate(triangle);
-                  break;
-              case 1:
-                  //circle
-                  //selectedShape = 1;
-                  temp = Instantiate(circle);
-                  break;
-              case 2:
-                  //rectangle
-                  //selectedShape = 2;
-                  temp = Instantiate(rectangle);
-                  break;
-              default:
-                  //star
-                  //selectedShape = 3;
-                  temp = Instantiate(star);
-                  break;
-          }
-
-          int sortNumber = 1;
-
-          temp.transform.position = new Vector3(0f, startPosY);
-          temp.GetComponent<SpriteRenderer>().sortingOrder = sortNumber--;
-
-          temp.transform.parent = gameObject.transform;
-
-          int index = 0;
-          objects[index++] = temp;
-
-          CSshape[] shapesArray = { triangle, circle, rectangle, star };
-
-          for (int i=0;i<numberOfShape-1;i++)
-          {
-              number = Random.Range(0, 4);
-              temp = Instantiate(shapesArray[number]);
-              temp.GetComponent<SpriteRenderer>().sortingOrder = sortNumber--;
-
-              startPosY += 0.95f;
-
-              temp.transform.parent = gameObject.transform;
-              temp.transform.position = new Vector3(0f, startPosY);
-              objects[index++] = temp;
-          }
-
-          // createOtherShape(selectedShape);
-
-
-      }*/
-
-
-    /*void createOtherShape(int selectedShape)
-    {
-        int number;
-        CSshape[] shapesArray = new CSshape[3];
-        switch(selectedShape)
-        {
-            case 0:
-                //triangle
-                shapesArray[0] = circle;
-                shapesArray[1] = rectangle;
-                shapesArray[2] = star;
-                break;
-            case 1:
-                //circle
-                shapesArray[0] = triangle;
-                shapesArray[1] = rectangle;
-                shapesArray[2] = star;
-                break;
-            case 2:
-                //rectangle
-                shapesArray[0] = circle;
-                shapesArray[1] = triangle;
-                shapesArray[2] = star;
-                break;
-            default:
-                //star
-                shapesArray[0] = circle;
-                shapesArray[1] = rectangle;
-                shapesArray[2] = triangle;
-                break;
-        }
-        number = Random.Range(0, 3);
-        Instantiate(shapesArray[number]);
-    }*/
 }
