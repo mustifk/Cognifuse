@@ -11,13 +11,10 @@ TagManager:
   - rectangle
   - star
   - triangle
-<<<<<<< Updated upstream
-  - canvas
-=======
   - Collectible
   - Enemy
   - Avoid
->>>>>>> Stashed changes
+  - canvas
   layers:
   - Default
   - TransparentFX
