@@ -11,6 +11,7 @@ TagManager:
   - rectangle
   - star
   - triangle
+  - canvas
   layers:
   - Default
   - TransparentFX
