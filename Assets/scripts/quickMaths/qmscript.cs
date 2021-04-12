@@ -7,10 +7,9 @@ using UnityEngine.UI;
 public class qmscript : MonoBehaviour
 {
     static int questioncounter;
-    bool istrue;
     public int difficulty;
     private int firstnum, secnum, ans;
-    int temp, i, y, x, forans, forans2, forans3,diff;
+    int temp, i, y, x, forans, forans2, forans3;
     public TextMeshProUGUI text, text1, text2, text3;
     public Button button1, button2, button3;
     void Start()
@@ -18,15 +17,12 @@ public class qmscript : MonoBehaviour
         switch (difficulty)
         {
             case 1:
-                diff = 2;
                 questioncounter = 2;
                 break;
             case 2:
-                diff = 3;
                 questioncounter = 3;
                 break;
             case 3:
-                diff = 4;
                 questioncounter = 4;
                 break;
             default:
@@ -44,7 +40,6 @@ public class qmscript : MonoBehaviour
             {
 
                 Debug.Log("win");
-                istrue = true;
             }
             else {questioncounter--;
             quest(); }
@@ -52,9 +47,7 @@ public class qmscript : MonoBehaviour
         }
         else
             {
-
                 Debug.Log("lose");
-                istrue = false;
             }
 
     }
@@ -120,20 +113,20 @@ public class qmscript : MonoBehaviour
             Debug.Log(firstnum + " - " + secnum + " =" + ans);
             if (difficulty == 1)
             {
-                forans3 = Random.Range(1, ans + 5);
-                forans2 = Random.Range(1, ans + 5);
+                forans3 = ans+3;
+                forans2 = ans + 6;
                 if (forans2 == forans3) { forans2 = Random.Range(1, forans3); }
             }
             if (difficulty == 2)
             {
-                forans3 = Random.Range(1, ans + 5);
-                forans2 = Random.Range(1, ans + 5);
+                forans3 = ans + 3;
+                forans2 = ans + 6;
                 if (forans2 == forans3) { forans2 = Random.Range(1, forans3); }
             }
             if (difficulty == 3)
             {
-                forans3 = Random.Range(1, ans + 5);
-                forans2 = Random.Range(1, ans + 5);
+                forans3 = ans + 3;
+                forans2 = ans + 6;
                 if (forans2 == forans3) { forans2 = Random.Range(1, forans3); }
             }
         }
@@ -171,20 +164,20 @@ public class qmscript : MonoBehaviour
             Debug.Log(firstnum + " / " + secnum + " =" + ans);
             if (difficulty == 1)
             {
-                forans3 = Random.Range(1, ans + 10);
-                forans2 = Random.Range(1, ans + 10);
+                forans3 = ans + 3;
+                forans2 = ans + 6;
                 if (forans2 == forans3) { forans2 = Random.Range(1, forans3); }
             }
             if (difficulty == 2)
             {
-                forans3 = Random.Range(1, ans + 10);
-                forans2 = Random.Range(1, ans + 10);
+                forans3 = ans + 3;
+                forans2 = ans + 6;
                 if (forans2 == forans3) { forans2 = Random.Range(1, forans3); }
             }
             if (difficulty == 3)
             {
-                forans3 = Random.Range(1, ans + 10);
-                forans2 = Random.Range(1, ans + 10);
+                forans3 = ans + 3;
+                forans2 = ans + 6;
                 if (forans2 == forans3) { forans2 = Random.Range(1, forans3); }
             }
         }
