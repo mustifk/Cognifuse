@@ -11,7 +11,13 @@ TagManager:
   - rectangle
   - star
   - triangle
+<<<<<<< Updated upstream
   - canvas
+=======
+  - Collectible
+  - Enemy
+  - Avoid
+>>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX
@@ -48,4 +54,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: enemy
+    uniqueID: 960124757
     locked: 0
