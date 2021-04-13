@@ -5,7 +5,7 @@ using UnityEngine;
 public class numberRushEnemyScript : MonoBehaviour
 {
     GameObject sprite,limbs;
-    bool RL,start = false,isPatrolling = false;
+    bool RL, start = false, isPatrolling = false, patrolOver = false;
     float moveSpeed,patrolSpeed;
     Transform player;
     Rigidbody2D rb, rbOrg;
@@ -31,6 +31,7 @@ public class numberRushEnemyScript : MonoBehaviour
         RL = Random.Range(0, 2) == 1;
         rbOrg = this.GetComponent<Rigidbody2D>();
         rb = limbs.GetComponent<Rigidbody2D>();
+        temp = new Vector2(Random.Range(-7, 7), Random.Range(-4, 4));
     }
 
     // Update is called once per frame
@@ -62,15 +63,16 @@ public class numberRushEnemyScript : MonoBehaviour
         
         if (start)
         {
-            if (isPatrolling)
+            if (isPatrolling && !patrolOver)
             {
                 transform.position = Vector2.MoveTowards(transform.position, temp , Time.deltaTime * patrolSpeed);
                 if (transform.position == new Vector3(temp.x,temp.y,transform.position.z))
                 {
+                    patrolOver = true;
                     StartCoroutine(Wait());
                 }
             }
-            else
+            else if(!isPatrolling)
             {
                 moveChar();
             }
@@ -81,14 +83,16 @@ public class numberRushEnemyScript : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f * patrolSpeed);
         temp = new Vector2(Random.Range(-7, 7), Random.Range(-4, 4));
+        patrolOver = false;
     }
 
     void moveChar()
     {
         rbOrg.transform.position = Vector2.MoveTowards(rbOrg.transform.position,player.position,(moveSpeed * Time.deltaTime));
     }
-    public void Move(int x)
+    public void Follower()
     {
+        this.GetComponentInChildren<SpriteRenderer>().color = Color.red;
     }
 
     public void Patrol(int x)

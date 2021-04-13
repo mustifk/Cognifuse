@@ -34,10 +34,10 @@ public class numberRushScript : MonoBehaviour
         {
             case 2:
                 enemyCount = 3;
-                collectibleCount = 7;
+                collectibleCount = 6;
                 break;
             case 3:
-                collectibleCount = 10;
+                collectibleCount = 8;
                 enemyCount = 4;
                 break;
             default:
@@ -83,10 +83,13 @@ public class numberRushScript : MonoBehaviour
                 temp = new Vector2(Random.Range(-7, 7), Random.Range(-4, 4));
             } while (coord[(int)temp.x + 7, (int)temp.y + 4] == 1);
             enemies[i] = Instantiate(enemy, temp, Quaternion.identity, this.transform);
-            enemies[i].GetComponent<numberRushEnemyScript>().Move(difficulty);
             if (i != 1)
             {
                 enemies[i].GetComponent<numberRushEnemyScript>().Patrol(difficulty);
+            }
+            else
+            {
+                enemies[i].GetComponent<numberRushEnemyScript>().Follower();
             }
             coord[(int)temp.x + 7, (int)temp.y + 4] = 1;
 
