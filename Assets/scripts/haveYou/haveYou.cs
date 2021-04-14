@@ -102,6 +102,7 @@ public class haveYou : MonoBehaviour
     private void False()
     {
         isTrue = false;
+        //Debug.Log(isTrue);
         setActives(true);
         originalCard.transform.localScale = new Vector2(0.6f, 0.6f);
         int index = Random.Range(difficulty, images.Length);
