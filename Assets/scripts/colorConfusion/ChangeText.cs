@@ -71,7 +71,7 @@ public class ChangeText : MonoBehaviour
 
     private void Update()
     {
-        if (timebar.GetTime() == 0)
+        if (timebar.GetTime() == 0 && !gameover)
         {
             endGame(false);
         }

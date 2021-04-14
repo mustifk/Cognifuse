@@ -36,6 +36,8 @@ public class transScript : MonoBehaviour
         instructions[8][1] = "Find the correct shapes among all and select them!";
         instructions[9][0] = "Which One";
         instructions[9][1] = "Watch carefully to catch the one which was't on the previous screen!";
+        instructions[10][0] = "Word Quest";
+        instructions[10][1] = "Try to find the hidden words written on the left before the time is up!";
         instructions[11][0] = "Number Rush";
         instructions[11][1] = "Try to collect all numbers in order, avoid the enemies!";
         instructions[12][0] = "Correct Side";

@@ -77,20 +77,25 @@ public class DDBallsEngine : MonoBehaviour
     {
         if (!isGameover)
         {
-            isGameover = true;
             StopAllCoroutines();
-            timebar.Stop();
-            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, false);
+            StartCoroutine(End(false));
         }
     }
 
+    IEnumerator End(bool win)
+    {
+        isGameover = true;
+        timebar.Stop();
+        yield return new WaitForSeconds(1);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
+    }
     public void DropletGone()
     {
         dCtemp--;
         if (dCtemp == 0)
         {
-            timebar.Stop();
-            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, true);
+            StopAllCoroutines();
+            StartCoroutine(End(true));
         }
     }
 }

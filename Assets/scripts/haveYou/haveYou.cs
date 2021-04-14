@@ -129,15 +129,15 @@ public class haveYou : MonoBehaviour
     }
     public void Press(bool trueorfalse)
     {
+        timebar.Stop();
         if (isTrue && trueorfalse || !isTrue && !trueorfalse)
         {
-            EndGame(true);
+            StartCoroutine(EndGame(true));
         }
         else
         {
-            EndGame(false);
+            StartCoroutine(EndGame(false));
         }
-        timebar.Stop();
     }
     private void setActives(bool trueorfalse)
     {
