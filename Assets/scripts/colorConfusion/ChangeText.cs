@@ -165,6 +165,7 @@ public class ChangeText : MonoBehaviour
     {
         StopAllCoroutines();
         gameover = true;
+        timebar.Stop();
         myText.gameObject.SetActive(false);
         myText2.gameObject.SetActive(false);
         checkButton.gameObject.SetActive(false);
