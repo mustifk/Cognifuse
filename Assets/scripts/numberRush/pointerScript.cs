@@ -13,7 +13,6 @@ public class pointerScript : MonoBehaviour
     {
         mainCam = Camera.main;
         rb = GetComponent<Rigidbody2D>();
-
     }
 
 
@@ -75,7 +74,6 @@ public class pointerScript : MonoBehaviour
         else if (collision.collider.tag == "Enemy")
         {
             this.transform.parent.GetComponent<numberRushScript>().Collision(-1);
-            Destroy(collision.gameObject);
         }
     }
 }

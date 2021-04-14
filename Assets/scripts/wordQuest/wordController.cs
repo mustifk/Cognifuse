@@ -6,6 +6,12 @@ using UnityEngine.UI;
 
 public class wordController : MonoBehaviour
 {
+    //timebar
+    public GameObject TBC;
+    timebarScript timebar;
+
+    bool isGameover = false;
+
     //1 -> Easy     1 word
     //2 -> Normal   2 word
     //3 -> Hard     3 word
@@ -18,10 +24,11 @@ public class wordController : MonoBehaviour
     [SerializeField]
     button button;
 
+    public Canvas canva;
+
     button[,] buttons;
 
-    [SerializeField]
-    Canvas canvas;
+    [SerializeField] Canvas canvas;
 
     List<GameObject> selected_buttons;      //green buttons
 
@@ -52,7 +59,12 @@ public class wordController : MonoBehaviour
 
     void Start()
     {
+        //timebar
+        GameObject temp = Instantiate(TBC);
+        timebar = temp.GetComponent<TBCscript>().timebar();
+
         selected_buttons = new List<GameObject>();
+
         difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
         
         maxWord = difficulty;
@@ -65,25 +77,28 @@ public class wordController : MonoBehaviour
             case 1:
                 row = 3;
                 column = 4;
-                startPosX = -156;
-                startPosY = 95;
+                startPosX = -126;
+                startPosY = 85;
                 distance = 100;
+                timebar.SetMax(5);
                 rt.sizeDelta = new Vector2(distance, distance);
                 break;
             case 2:
                 row = 4;
                 column = 6;
-                startPosX = -198;
-                startPosY = 115;
+                startPosX = -178;
+                startPosY = 105;
                 distance = 80;
+                timebar.SetMax(9);
                 rt.sizeDelta = new Vector2(distance, distance);
                 break;
             case 3:
                 row = 5;
                 column = 7;
-                startPosX = -180;
-                startPosY = 103;
+                startPosX = -162;
+                startPosY = 93;
                 distance = 65;
+                timebar.SetMax(14);
                 rt.sizeDelta = new Vector2(distance, distance);
                 break;
         }
@@ -123,6 +138,16 @@ public class wordController : MonoBehaviour
         buttons = new button[row,column];
         createButtons();
         assignWord();
+        timebar.Begin();
+    }
+
+    private void Update()
+    {
+        if (timebar.GetTime() == 0 && !isGameover)
+        {
+            StartCoroutine(EndOfMinigame(false));
+            isGameover = true;
+        }
     }
 
     void createButtons()
@@ -157,14 +182,12 @@ public class wordController : MonoBehaviour
             indexCol = Random.Range(0, column);
 
             tempWord = texts[t].text;
-            Debug.Log(tempWord);
             checkFilled();
             for (int i = 0; i < tempWord.Length; i++)
             {
                 buttons[indexRow, indexCol].GetComponentInChildren<Text>().text = tempWord[i].ToString();
                 bitArray[indexRow, indexCol] = 1;
                 findPath();
-                
             }
         }
     }
@@ -292,9 +315,18 @@ public class wordController : MonoBehaviour
 
         if(find_number_of_word == maxWord)
         {
-            Finish();
-            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, true);
+            StartCoroutine(EndOfMinigame(true));
         }
+    }
+
+    IEnumerator EndOfMinigame(bool win)
+    {
+        timebar.Stop();
+        isGameover = true;
+        yield return new WaitForSeconds(1);
+        Finish();
+        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
+
     }
 
     void deleteWord(string[] array, int index)
@@ -315,6 +347,13 @@ public class wordController : MonoBehaviour
         foreach (Transform child in transform)
         {
             GameObject.Destroy(child.gameObject);
+        }
+        foreach (Transform child in canva.transform)
+        {
+            if (child.name != "Image")
+            {
+                GameObject.Destroy(child.gameObject);
+            }
         }
     }
 }

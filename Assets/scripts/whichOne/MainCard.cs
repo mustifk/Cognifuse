@@ -23,9 +23,7 @@ public class MainCard : MonoBehaviour
         if (!x)
         {
             StartCoroutine(destroy());
-            
         }
-        
     }
     public int getId
     {

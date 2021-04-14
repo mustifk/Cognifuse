@@ -482,11 +482,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d4247fcef48fa498faa3827d074ef7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TBC: {fileID: 2680854561537681972, guid: e2316c9dfafdf884c98b9b13723782fd, type: 3}
   block: {fileID: 6489936877388339711, guid: acbc28b025467bb4d90da499c4bf3399, type: 3}
   blockM: {fileID: 2601698519667632535, guid: 0b3a647ed83be304a85277ebe900739f, type: 3}
   BlocksRight: {fileID: 490369400}
   BlocksLeft: {fileID: 927242216}
-  difficulty: 2
 --- !u!1 &1730968893
 GameObject:
   m_ObjectHideFlags: 0

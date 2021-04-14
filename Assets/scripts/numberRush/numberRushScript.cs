@@ -2,17 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 
-/// ENEMYLERİN BAZISI YERİNDE SAYSIN ONU DENE
-/// TAKİPTEYKEN YAKLAŞINDA YAVAŞLIYORLAR BAYA
-/// 
-/// /// </summary>
-
 public class numberRushScript : MonoBehaviour
 {
-    public GameObject collectible,enemy;
+    public GameObject collectible,enemy,TBC;
     GameObject[] collectibles,enemies;
+    timebarScript timebar;
     int[,] coord;
     public int difficulty = 3;
     int collectibleCount,enemyCount,nextToCount = 1;
@@ -20,6 +14,10 @@ public class numberRushScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //timebar
+        GameObject temp = Instantiate(TBC);
+        timebar = temp.GetComponent<TBCscript>().timebar();
+
         coord = new int[15,9];
         for (int i = 0; i < 15; i++)
         {
@@ -35,12 +33,15 @@ public class numberRushScript : MonoBehaviour
             case 2:
                 enemyCount = 3;
                 collectibleCount = 6;
+                timebar.SetMax(8);
                 break;
             case 3:
+                timebar.SetMax(10);
                 collectibleCount = 8;
                 enemyCount = 4;
                 break;
             default:
+                timebar.SetMax(5);
                 collectibleCount = 4;
                 enemyCount = 2;
                 break;
@@ -55,6 +56,10 @@ public class numberRushScript : MonoBehaviour
         if (isGameOver)
         {
             GetComponentInChildren<pointerScript>().Disable();
+        }
+        if (timebar.GetTime() == 0 && !isGameOver)
+        {
+            GameOver(0);
         }
     }
 
@@ -98,6 +103,7 @@ public class numberRushScript : MonoBehaviour
 
     public void Begin()
     {
+        timebar.Begin();
         if (!isGameOver)
         {
             for (int i = 0; i < collectibleCount; i++)
@@ -118,13 +124,27 @@ public class numberRushScript : MonoBehaviour
             nextToCount++;
             if (nextToCount == collectibleCount + 1)
             {
-                isGameOver = true;
-                Debug.Log("WON");
+                GameOver(1);
             }
         }
         else
         {
+            GameOver(0);
+        }
+    }
+
+    void GameOver(int x)
+    {
+        if (x == 1)
+        {
             isGameOver = true;
+            timebar.Stop();
+            Debug.Log("WON");
+        }
+        else
+        {
+            isGameOver = true;
+            timebar.Stop();
             Debug.Log("LOSE");
         }
     }
@@ -137,7 +157,7 @@ public class numberRushScript : MonoBehaviour
     {
         if (nextToCount < collectibleCount + 1)
         {
-            isGameOver = true;
+            GameOver(0);
         }
     }
 }

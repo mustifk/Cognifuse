@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class correctSideEngine : MonoBehaviour
 {
+    //timebar
+    public GameObject TBC;
+    timebarScript timebar;
+    bool isGameover = false;
+
     //1 -> Easy
     //2 -> Normal
     //3 -> Hard
+
     public int diffLevel = 1;
 
     int numberOfShape;
@@ -46,16 +52,23 @@ public class correctSideEngine : MonoBehaviour
 
     void Start()
     {
-        switch(diffLevel)
+        //timebar
+        GameObject temp = Instantiate(TBC);
+        timebar = temp.GetComponent<TBCscript>().timebar();
+
+        switch (diffLevel)
         {
             case 1:
                 numberOfShape = 5;
+                timebar.SetMax(6);
                 break;
             case 2:
-                numberOfShape = 10;
+                numberOfShape = 8;
+                timebar.SetMax(8);
                 break;
             case 3:
-                numberOfShape = 15;
+                numberOfShape = 12;
+                timebar.SetMax(10);
                 break;
         }
         objects = new GameObject[numberOfShape];
@@ -66,7 +79,19 @@ public class correctSideEngine : MonoBehaviour
         Instantiate(rightButton, new Vector3(5.95f, -3.68f), Quaternion.identity).transform.parent = gameObject.transform;
 
         createShapes();
+
+        timebar.Begin();
     }
+
+    private void Update()
+    {
+        if (timebar.GetTime() == 0 && !isGameover)
+        {
+            Finish();
+            isGameover = true;
+        }
+    }
+
     void assignShapes()
     {
         GameObject[] shapesArray = { triangle, circle, rectangle, star };
@@ -136,7 +161,6 @@ public class correctSideEngine : MonoBehaviour
             }
             else
             {
-                Debug.Log("GAME OVER");
                 Finish();
             }
         }
@@ -148,7 +172,6 @@ public class correctSideEngine : MonoBehaviour
             }
             else
             {
-                Debug.Log("GAME OVER");
                 Finish();
             }
         }
@@ -169,6 +192,7 @@ public class correctSideEngine : MonoBehaviour
 
         if (indexOfShape == objects.Length)
         {
+            timebar.Stop();
             Debug.Log("WIN");
             Finish();
         }
@@ -187,6 +211,8 @@ public class correctSideEngine : MonoBehaviour
 
     void Finish()
     {
+        Debug.Log("GAME OVER");
+        timebar.Stop();
         int childs = transform.childCount;
         for (int i = childs - 1; i > 0; i--)
         {
@@ -194,7 +220,6 @@ public class correctSideEngine : MonoBehaviour
         }
 
         GameObject.Destroy(transform.GetChild(0).gameObject);
-        //SceneManager.LoadScene("cardMatch");
     }
 
 }

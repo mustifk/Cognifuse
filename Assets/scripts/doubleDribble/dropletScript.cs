@@ -14,7 +14,7 @@ public class dropletScript : MonoBehaviour
         isGameOver = false;
         difficulty = this.transform.parent.GetComponent<DDBallsEngine>().GetDifficulty();
         blue = false;
-        this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -3 + -1.2f * difficulty);
+        this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -4 + -1f * difficulty);
     }
 
     // Update is called once per frame

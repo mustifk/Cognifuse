@@ -4,36 +4,37 @@ using UnityEngine;
 
 public class DDBallsEngine : MonoBehaviour
 {
+    //timebar
+    public GameObject TBC;
+    timebarScript timebar;
+
     public GameObject droplet;
     int difficulty = 3;
     int dropletCount,dCtemp;
     bool isGameover;
-    /// <summary>
-    /// -2 / -5 / 2 / 5 ** 7 drop noktaları
-    /// -6 kaybolma noktası
-    /// doğma noktasını randomize yaparsın ikisi için de 
-    /// doğma süreleri için courotine kullanıcaksın
-    /// doğma x pozisyonlarına göre renklerinşi verebilirsin
-    /// hızı difficultiye bağla
-    /// aynı zamanda didfficulty obje sayısını da versin
-    /// dropletin scriptini yenilemeyi unutma
-    /// mainde fonksiyonun olsun
-    /// </summary>
-    /// 
+    
     // Start is called before the first frame update
     void Start()
     {
+        //timebar
+        GameObject temp = Instantiate(TBC);
+        timebar = temp.GetComponent<TBCscript>().timebar();
+
+
         difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
         isGameover = false;
         switch (difficulty)
         {
             case 2:
+                timebar.SetMax(10.5f);
                 dropletCount = 8;
                 break;
             case 3:
+                timebar.SetMax(11);
                 dropletCount = 12;
                 break;
             default:
+                timebar.SetMax(7.5f);
                 dropletCount = 4;
                 break;
         }
@@ -43,6 +44,7 @@ public class DDBallsEngine : MonoBehaviour
 
     IEnumerator Begin()
     {
+        timebar.Begin();
         GameObject temp;
         while (dropletCount != 0)
         {
@@ -56,7 +58,7 @@ public class DDBallsEngine : MonoBehaviour
                 temp.GetComponent<dropletScript>().Position();
             }
             dropletCount--;
-            yield return new WaitForSeconds(2.8f - difficulty * 0.6f);
+            yield return new WaitForSeconds(2f - difficulty * 0.4f);
         }
     }
 
@@ -77,6 +79,7 @@ public class DDBallsEngine : MonoBehaviour
         {
             isGameover = true;
             StopAllCoroutines();
+            timebar.Stop();
             GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, false);
         }
     }
@@ -86,6 +89,7 @@ public class DDBallsEngine : MonoBehaviour
         dCtemp--;
         if (dCtemp == 0)
         {
+            timebar.Stop();
             GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, true);
         }
     }

@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class gameEngine : MonoBehaviour
 {
+    //timebar
+    public GameObject TBC;
+    timebarScript timebar;
     //1 -> Easy
     //2 -> Normal
     //3 -> Hard
     int diffLevel = new int();
-
     private int row = 2;
     private int col;
     private float offsetX = 4f;
@@ -36,8 +38,13 @@ public class gameEngine : MonoBehaviour
 
     private void Start()
     {
-        diffLevel = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        //timebar
+        GameObject temp = Instantiate(TBC);
+        timebar = temp.GetComponent<TBCscript>().timebar();
 
+
+        diffLevel = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        
         originalCard.GetComponent<SpriteRenderer>().enabled = true;
 
         Vector3 startPos = originalCard.transform.position;
@@ -47,14 +54,17 @@ public class gameEngine : MonoBehaviour
             case 1:
                 col = 3;
                 startPos.x = -4;
+                timebar.SetMax(4);
                 break;
             case 2:
                 col = 4;
+                timebar.SetMax(7);
                 break;
             case 3:
                 startPos.x = -7;
                 offsetX = 3.5f;
                 col = 5;
+                timebar.SetMax(10);
                 break;
         }
 
@@ -89,6 +99,14 @@ public class gameEngine : MonoBehaviour
                 card.transform.localScale = new Vector3(0.6f,0.6f,1);
                 card.transform.position = new Vector3(posX, posY, startPos.z);
             }
+        }
+    }
+
+    private void Update()
+    {
+        if (timebar.GetTime() == 0)
+        {
+            GameOver(0);
         }
     }
 
@@ -136,6 +154,10 @@ public class gameEngine : MonoBehaviour
 
     public void CardRevealed(Card card)
     {
+        if (timebar.GetTime() == timebar.GetMax())
+        {
+            timebar.Begin();
+        }
         if (firstCard == null)     //first card
         {
             firstCard = card;
@@ -162,7 +184,7 @@ public class gameEngine : MonoBehaviour
             counter++;
             if(counter == numberOfCards)
             {
-                StartCoroutine(EndOfMinigame(true));
+                GameOver(1);
             }
         }
         //release selected two cards for new cards
@@ -174,5 +196,20 @@ public class gameEngine : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, result);
+    }
+
+
+    void GameOver(int x)
+    {
+        if (x == 1)
+        {
+            timebar.Stop();
+            StartCoroutine(EndOfMinigame(true));
+        }
+        else
+        {
+            timebar.Stop();
+            StartCoroutine(EndOfMinigame(false));
+        }
     }
 }

@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class ChangeText : MonoBehaviour
 {
+    //timebar
+    public GameObject TBC;
+    timebarScript timebar;
 
     [SerializeField] private TextMeshProUGUI myText;
     [SerializeField] private TextMeshProUGUI myText2;
@@ -25,17 +28,24 @@ public class ChangeText : MonoBehaviour
     bool answer;
     void Start()
     {
+        //timebar
+        GameObject temp = Instantiate(TBC);
+        timebar = temp.GetComponent<TBCscript>().timebar();
+
         difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
-        
+
         switch (difficulty)
         {
             case 2:
                 level = 6;
+                timebar.SetMax(8);
                 break;
             case 3:
+                timebar.SetMax(10);
                 level = 8;
                 break;
             default:
+                timebar.SetMax(6);
                 level = 4;
                 break;
         }
@@ -55,9 +65,17 @@ public class ChangeText : MonoBehaviour
             current2 = Random.Range(0, 8);
         }
 
+        timebar.Begin();
         StartCoroutine(Begin());
     }
 
+    private void Update()
+    {
+        if (timebar.GetTime() == 0)
+        {
+            endGame(false);
+        }
+    }
 
     IEnumerator Begin()
     {

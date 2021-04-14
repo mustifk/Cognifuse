@@ -168,6 +168,7 @@ MonoBehaviour:
   collectible: {fileID: 1363592036668795497, guid: d8c3fdfab011cec478b0b42726e89f79,
     type: 3}
   enemy: {fileID: 2449552498420333042, guid: de089593f87366f4dbad99c3eb4c49f6, type: 3}
+  TBC: {fileID: 2680854561537681972, guid: e2316c9dfafdf884c98b9b13723782fd, type: 3}
   difficulty: 3
 --- !u!1 &253992480
 GameObject:

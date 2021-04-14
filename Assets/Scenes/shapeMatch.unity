@@ -230,6 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdafe00fd4d3d524491910dc29f535e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TBC: {fileID: 2680854561537681972, guid: e2316c9dfafdf884c98b9b13723782fd, type: 3}
   circle: {fileID: 286640003722128831, guid: 540a177584deda146b0aa76dddef6438, type: 3}
   hexagon: {fileID: 2032971663500816175, guid: f6b1330c1f481b9498775e5a81b41600, type: 3}
   rectangle: {fileID: 4229580631828894320, guid: a2eded8ad8723504d95276d8d3efedc0,
@@ -297,7 +298,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 81abdfe84edd45846929745d39f4d5d2, type: 2}
   m_sharedMaterial: {fileID: -9203132406642237673, guid: 81abdfe84edd45846929745d39f4d5d2,

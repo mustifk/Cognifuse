@@ -164,8 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4626824affb819e4d941b8b333995704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TBC: {fileID: 2680854561537681972, guid: e2316c9dfafdf884c98b9b13723782fd, type: 3}
   images: []
-  difficulty: 1
   originalCard: {fileID: 4638812118996268118, guid: 66e2d0c21bd1e4d48bdb027d9cfc87bd,
     type: 3}
   isAgain: 0

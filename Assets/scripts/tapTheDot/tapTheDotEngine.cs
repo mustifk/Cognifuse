@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class tapTheDotEngine : MonoBehaviour
 {
+    //timebar
+    public GameObject TBC;
+    timebarScript timebar;
+
     int blinkCount, difficulty = new int(); //blink free - diff max 3 
     public GameObject dot,dot2;
     private float lifespan;
@@ -12,8 +16,13 @@ public class tapTheDotEngine : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
 
+        //timebar
+        GameObject temp = Instantiate(TBC);
+        timebar = temp.GetComponent<TBCscript>().timebar();
+
+        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        
         switch (difficulty)
         {
             case 1:
@@ -26,15 +35,21 @@ public class tapTheDotEngine : MonoBehaviour
                 blinkCount = Random.Range(10,14);
                 break;
         }
+        lifespan = 1.2f - (blinkCount * 0.035f);
+        timebar.SetMax(2.3f + (lifespan * blinkCount));
 
         dots = new GameObject[3];
-        lifespan = 1.2f - (blinkCount * 0.035f);
         StartCoroutine(Begin());
+        timebar.Begin();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (timebar.GetTime() == 0 && !gameOver)
+        {
+            timebar.Stop();
+        }
     }
 
     public void Press(bool wrong)
@@ -178,6 +193,7 @@ public class tapTheDotEngine : MonoBehaviour
 
     IEnumerator EndOfMinigame(bool result)
     {
+        timebar.Stop();
         yield return new WaitForSeconds(1);
         GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, result);
     }

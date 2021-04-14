@@ -65,7 +65,7 @@ public class shape : MonoBehaviour
             if (controller.message != shapeName)     //user selected wrong shape according to message
             {
                 controller.checkShape = false;
-                controller.GameOver();
+                controller.GameOver(false);
             }
             else
             {

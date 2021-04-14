@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class haveYou : MonoBehaviour
 {
+    //timebar
+    public GameObject TBC;
+    timebarScript timebar;
+
     [SerializeField] private Sprite[] images;
     private int difficulty;
     [SerializeField] private images originalCard;
@@ -24,7 +28,12 @@ public class haveYou : MonoBehaviour
 
     void Start()
     {
+        //timebar
+        GameObject temp = Instantiate(TBC);
+        timebar = temp.GetComponent<TBCscript>().timebar();
+
         difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        
         setActives(false);
         originalCard.transform.localScale = new Vector2(1f, 1f);
         originalCard.transform.position = new Vector2(0f, 0f);
@@ -32,18 +41,29 @@ public class haveYou : MonoBehaviour
         {
             case 1:
                 cardNumbers = 4;
+                timebar.SetMax(3);
                 break;
             case 2:
                 cardNumbers = 5;
+                timebar.SetMax(3);
                 break;
             case 3:
                 cardNumbers = 6;
+                timebar.SetMax(3);
                 break;
             default:
                 break;
         }
         StartCoroutine(listCards());
     }
+    private void Update()
+    {
+        if (timebar.GetTime() == 0)
+        {
+            EndGame(false);
+        }
+    }
+
     private IEnumerator listCards()
     {
 
@@ -64,8 +84,9 @@ public class haveYou : MonoBehaviour
         {
             False();
         }
-
+        timebar.Begin();
         yield return new WaitForSeconds(1f);
+
     }
 
     private IEnumerator showCards(int i)
@@ -76,7 +97,6 @@ public class haveYou : MonoBehaviour
         card.transform.parent = this.gameObject.transform;
         card.ChangeSprite(i, images[i]);
         card.isDestroy(isAgain);
-
     }
 
     private Sprite[] shuffleImages(Sprite[] images)
@@ -102,7 +122,6 @@ public class haveYou : MonoBehaviour
     private void False()
     {
         isTrue = false;
-        //Debug.Log(isTrue);
         setActives(true);
         originalCard.transform.localScale = new Vector2(0.6f, 0.6f);
         int index = Random.Range(difficulty, images.Length);
@@ -112,18 +131,24 @@ public class haveYou : MonoBehaviour
     {
         if (isTrue && trueorfalse || !isTrue && !trueorfalse)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, true);
-
+            EndGame(true);
         }
         else
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, false);
+            EndGame(false);
         }
+        timebar.Stop();
     }
     private void setActives(bool trueorfalse)
     {
         button.gameObject.SetActive(trueorfalse);
         button2.gameObject.SetActive(trueorfalse);
         text.enabled = trueorfalse;
+    }
+
+    IEnumerator EndGame(bool win)
+    {
+        yield return new WaitForSeconds(1);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
     }
 }

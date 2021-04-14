@@ -6,50 +6,84 @@ using UnityEngine.UI;
 
 public class qmscript : MonoBehaviour
 {
+    //timebar
+    public GameObject TBC;
+    timebarScript timebar;
+
+    bool isGameover = false;
     static int questioncounter;
-    public int difficulty;
+    int difficulty;
     private int firstnum, secnum, ans;
     int temp, i, y, x, forans, forans2, forans3;
     public TextMeshProUGUI text, text1, text2, text3;
     public Button button1, button2, button3;
     void Start()
     {
+
+        //timebar
+        GameObject temp = Instantiate(TBC);
+        timebar = temp.GetComponent<TBCscript>().timebar();
+
+        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+
         switch (difficulty)
         {
             case 1:
                 questioncounter = 2;
+                timebar.SetMax(6);
                 break;
             case 2:
                 questioncounter = 3;
+                timebar.SetMax(7);
                 break;
             case 3:
                 questioncounter = 4;
+                timebar.SetMax(9);
                 break;
             default:
                 break;
         }
         quest();
+        timebar.Begin();
+    }
 
+    private void Update()
+    {
+        if (timebar.GetTime() == 0 && !isGameover)
+        {
+            StartCoroutine(Gameover(false));
+        }
+    }
+
+    IEnumerator Gameover(bool win)
+    {
+        isGameover = true;
+        timebar.Stop();
+        yield return new WaitForSeconds(1);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
     }
 
     public void choice(string str)
     {
-        if (str == ans.ToString())
+        if (!isGameover)
         {
-            if (questioncounter == 0)
+            if (str == ans.ToString())
             {
-
-                Debug.Log("win");
+                if (questioncounter == 0)
+                {
+                    StartCoroutine(Gameover(true));
+                }
+                else
+                {
+                    questioncounter--;
+                    quest();
+                }
             }
-            else {questioncounter--;
-            quest(); }
-            
+            else
+            {
+                StartCoroutine(Gameover(false));
+            }
         }
-        else
-            {
-                Debug.Log("lose");
-            }
-
     }
 
     void quest()
@@ -86,7 +120,6 @@ public class qmscript : MonoBehaviour
         {
             ans = firstnum + secnum;
             text.text = firstnum.ToString() + " + " + secnum.ToString();
-            Debug.Log(firstnum + " + " + secnum + " =" + ans);
             if (difficulty == 1)
             {
                 forans3 = Random.Range(1, ans);
@@ -110,7 +143,6 @@ public class qmscript : MonoBehaviour
         {
             ans = firstnum - secnum;
             text.text = firstnum.ToString() + " - " + secnum.ToString();
-            Debug.Log(firstnum + " - " + secnum + " =" + ans);
             if (difficulty == 1)
             {
                 forans3 = ans+3;
@@ -134,7 +166,6 @@ public class qmscript : MonoBehaviour
         {
             ans = firstnum * secnum;
             text.text = firstnum.ToString() + " * " + secnum.ToString();
-            Debug.Log(firstnum + " * " + secnum + " =" + ans);
             if (difficulty == 1)
             {
                 forans3 = Random.Range(1, ans);
@@ -157,11 +188,8 @@ public class qmscript : MonoBehaviour
         if (y == 4)
         {
             ans = firstnum / secnum;
-            Debug.Log(firstnum + "  " + secnum);
             firstnum = ans * secnum;
-            Debug.Log(firstnum + "  " + secnum);
             text.text = firstnum.ToString() + " / " + secnum.ToString();
-            Debug.Log(firstnum + " / " + secnum + " =" + ans);
             if (difficulty == 1)
             {
                 forans3 = ans + 3;

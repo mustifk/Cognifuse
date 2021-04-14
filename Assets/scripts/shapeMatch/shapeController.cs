@@ -7,6 +7,11 @@ using TMPro;
 
 public class shapeController : MonoBehaviour
 {
+    //timebar
+    public GameObject TBC;
+    timebarScript timebar;
+
+    bool isGameover = false;
     //Easy -> 1
     //Normal -> 2
     //Hard -> 3
@@ -30,7 +35,7 @@ public class shapeController : MonoBehaviour
     public bool checkShape = true;
     public int counterShape = 0;
 
-    private int numberOfObjects;
+    private int numberOfObjects,numberOfScene;
     private int beforeTextIndex = -1;
     int lastSprite = 0;
 
@@ -40,18 +45,28 @@ public class shapeController : MonoBehaviour
 
     void Start()
     {
+        //timebar
+        GameObject temp = Instantiate(TBC);
+        timebar = temp.GetComponent<TBCscript>().timebar();
+
         difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
 
         switch (difficulty)
         {
             case 1:
                 numberOfObjects = 4;
+                numberOfScene = 3;
+                timebar.SetMax(5);
                 break;
             case 2:
                 numberOfObjects = 6;
+                numberOfScene = 5;
+                timebar.SetMax(10);
                 break;
             case 3:
                 numberOfObjects = 8;
+                numberOfScene = 7;
+                timebar.SetMax(15);
                 break;
         }
 
@@ -61,32 +76,41 @@ public class shapeController : MonoBehaviour
         sameSpriteArray = new int[difficulty];
 
         prepareGame();
+        timebar.Begin();
     }
 
     private void Update()
     {
-        if(gameCounter < (difficulty *2))
+        if (!isGameover)
         {
-            if (counterShape == difficulty)       //load other shapes
+            if (gameCounter < numberOfScene)
             {
-                int childs = transform.childCount;
-                for (int i = childs - 1; i > 0; i--)
+                if (counterShape == difficulty)       //load other shapes
                 {
-                    GameObject.Destroy(transform.GetChild(i).gameObject);
+                    int childs = transform.childCount;
+                    for (int i = childs - 1; i > 0; i--)
+                    {
+                        GameObject.Destroy(transform.GetChild(i).gameObject);
+                    }
+                    GameObject.Destroy(transform.GetChild(0).gameObject);
+                    gameCounter++;
+                    counterShape = 0;
+                    lastSprite = 0;
+                    if (gameCounter < numberOfScene)
+                    {
+                        prepareGame();
+                    }
                 }
-
-                GameObject.Destroy(transform.GetChild(0).gameObject);
-
-                gameCounter++;
-
-                counterShape = 0;
-                lastSprite = 0;
-                prepareGame();
             }
-        }
-        else
-        {
-            GameOver();
+            else
+            {
+                GameOver(true);
+            }
+            if (timebar.GetTime() == 0 && !isGameover)
+            {
+                GameOver(false);
+                isGameover = true;
+            }
         }
     }
 
@@ -248,22 +272,30 @@ public class shapeController : MonoBehaviour
             Ypos.RemoveAt(indexOfPos);
             shape.transform.position = new Vector3(posx, posy, circle.transform.position.z);
 
-            
         }
     }
-    public void GameOver()
+    public void GameOver(bool win)
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, false);
+        isGameover = true;
 
         int childs = transform.childCount;
         for (int i = childs - 1; i > 0; i--)
         {
             GameObject.Destroy(transform.GetChild(i).gameObject);
         }
-
-        GameObject.Destroy(transform.GetChild(0).gameObject);
+        if (transform.childCount > 0)
+        {
+            GameObject.Destroy(transform.GetChild(0).gameObject);
+        }
         GameObject.Destroy(text);
-        //SceneManager.LoadScene("cardMatch");
+        StartCoroutine(End(win));
+    }
+
+    IEnumerator End(bool win)
+    {
+        timebar.Stop();
+        yield return new WaitForSeconds(1);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
     }
 
     private Sprite[] shuffleImages(Sprite[] images)

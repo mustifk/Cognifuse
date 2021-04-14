@@ -39,6 +39,15 @@ EditorBuildSettings:
     path: Assets/Scenes/wordQuest.unity
     guid: 4a4da3dcc5aba86409ff899a174dd916
   - enabled: 1
+    path: Assets/Scenes/numberRush.unity
+    guid: 3cba1d4f17e947048b501a65b25c61e6
+  - enabled: 1
+    path: Assets/Scenes/correctSide.unity
+    guid: f783d8e2fd2d3d64bbdd8a99013eef95
+  - enabled: 1
+    path: Assets/Scenes/quickMaths.unity
+    guid: 5d1b2f79feb57bc49890307bd06131e3
+  - enabled: 1
     path: Assets/Scenes/Transition.unity
     guid: 1167cf781edab1f4397987a9a186de69
   - enabled: 1

@@ -472,6 +472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55e4864f71252474197ba7a60de7ef14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TBC: {fileID: 2680854561537681972, guid: e2316c9dfafdf884c98b9b13723782fd, type: 3}
   dot: {fileID: 330416055690104494, guid: 6011d3c62da70c54694731d60d612609, type: 3}
   dot2: {fileID: 9101598950498765755, guid: e6db5c400c1a6f045bbbdb63e0e6b82c, type: 3}
 --- !u!4 &1910427644

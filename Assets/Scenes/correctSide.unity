@@ -238,7 +238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a35910661c457ae4c9096ad9ef228394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diffLevel: 3
+  TBC: {fileID: 2680854561537681972, guid: e2316c9dfafdf884c98b9b13723782fd, type: 3}
+  diffLevel: 2
   triangle: {fileID: 641772893257787070, guid: a7b5f5a0c8f33a14ea9d1ea25df658f4, type: 3}
   circle: {fileID: 7624655620257593914, guid: 61425c49d16cddf4886c597cbb2900de, type: 3}
   rectangle: {fileID: 1709407307126830388, guid: f94dcf00bc2a45349898cc3f15db87d4,

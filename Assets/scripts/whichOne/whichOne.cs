@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 public class whichOne : MonoBehaviour
 {
+    //timebar
+    public GameObject TBC;
+    timebarScript timebar;
+
+    bool isGameover = false;
     [SerializeField] private Sprite[] images;
     private int difficulty;
     private int cardNumbers;
@@ -21,7 +26,13 @@ public class whichOne : MonoBehaviour
 
     private void Start()
     {
+
+        //timebar
+        GameObject temp = Instantiate(TBC);
+        timebar = temp.GetComponent<TBCscript>().timebar();
+
         difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        
         originalCard.GetComponent<SpriteRenderer>().enabled = true;
         originalCard.transform.position = new Vector2(-2f, 2f);
         startPos = originalCard.transform.position;
@@ -29,19 +40,22 @@ public class whichOne : MonoBehaviour
         switch (difficulty)
         {
             case 1:
-                col = 4;
-                cardNumbers = 4;
+                col = 0;
+                cardNumbers = 3;
+                timebar.SetMax(3);
                 break;
             case 2:
-                startPos.x = -6f;
+                startPos.x = -3f;
                 col = 6;
-                cardNumbers = 6;
+                cardNumbers = 4;
+                timebar.SetMax(3);
                 break;
 
             case 3:
-                col = 4;
+                col = 6;
                 startPos.x = -6f;
-                cardNumbers = 8;
+                timebar.SetMax(3);
+                cardNumbers = 6;
                 break;
 
             default:
@@ -50,12 +64,28 @@ public class whichOne : MonoBehaviour
        
         StartCoroutine(listCard());
     }
+    private void Update()
+    {
+        if (timebar.GetTime() == 0 && !isGameover)
+        {
+            isGameover = true;
+            timebar.Stop();
+            StartCoroutine(GameOver(false));
+        }
+    }
+
+    IEnumerator GameOver(bool win)
+    {
+        yield return new WaitForSeconds(1);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
+     
+    }
+
     private IEnumerator listCard()
     {
         if (isAgain)
         {
             shuffleList();
-
         }
         for (int j = 0,i=0; j < cardNumbers; j++)
         {
@@ -68,13 +98,12 @@ public class whichOne : MonoBehaviour
             if (!isAgain)
             {
                 card.ChangeSprite(j, images[j]);
-
             }
             else
             {
                 card.ChangeSprite(randomList[j], images[randomList[j]]);
-
             }
+            
             if (j < cardNumbers / 2)
             {
                 float posX = (col * j) + startPos.x;
@@ -89,17 +118,36 @@ public class whichOne : MonoBehaviour
                 card.transform.position = new Vector2(posX, posY);
                 i++; 
             }
-           
-            
+            if (difficulty == 1)
+            {
+                if (j == 0)
+                {
+                    float posX = 4;
+                    float posY = 0;
+                    card.transform.position = new Vector2(posX, posY);
+                }
+                else if (j == 1)
+                {
+                    float posX = 0;
+                    float posY = 0;
+                    card.transform.position = new Vector2(posX, posY);
+                }
+                else
+                {
+                    float posX = -4;
+                    float posY = 0;
+                    card.transform.position = new Vector2(posX, posY);
+                    i++;
+                }
+            }
         }
         yield return new WaitForSeconds(4f);
-
         if (!isAgain)
         {
             isAgain = true;
             StartCoroutine(listCard());
+            timebar.Begin();
         }
-
     }
     private void shuffleList()
     {
@@ -120,23 +168,20 @@ public class whichOne : MonoBehaviour
 
         index = Random.Range(0, cardNumbers);
         randomList[index] = cardNumbers;
-        
-        
     }
+
    public void check(int id)
     {
+        timebar.Stop();
+        isAgain = false;
+        StopAllCoroutines();
         if (id == cardNumbers)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, true);
-            StopAllCoroutines();
-            isAgain = false;
-
+            StartCoroutine(GameOver(true));
         }
         else
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, false);
-            StopAllCoroutines();
-            isAgain = false;
+            StartCoroutine(GameOver(false));
         }
     }
     

@@ -2,28 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// sağda solda iki şekil oluşuyor fakat yanmıyor
-///
-/// onların birleşimini ortada yapmalı- bu fonksiyon eksik
-/// randomizer çalışıyor sanırım ama yanmıyor
-/// 
-/// kontrol mekanizmasına bak
-/// 
-/// 
-/// </summary>
 
 public class paintTheShapeScript : MonoBehaviour
 {
+    //timebar
+    public GameObject TBC;
+    timebarScript timebar;
+
+    bool isGameover = false;
     public GameObject block, blockM,BlocksRight,BlocksLeft;
     GameObject currentBlock,tempGO;
     GameObject[,] blockList;
     public int[,] blocks1, blocks2, validBlocks;
-    public int difficulty;
+    int difficulty;
     int gap = 1,arrLength;
     // Start is called before the first frame update
     void Start()
     {
+        //timebar
+        GameObject temp = Instantiate(TBC);
+        timebar = temp.GetComponent<TBCscript>().timebar();
+
         difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
         blockList = new GameObject[5,5];
         blocks1 = new int[5,5];
@@ -38,6 +37,7 @@ public class paintTheShapeScript : MonoBehaviour
                 //this.gameObject.transform.position += new Vector3(-2.25f, -2.25f, 0);
                 currentBlock = blockM;
                 arrLength = 4;
+                timebar.SetMax(9);
                 break;
             case 3:
                 Camera.main.transform.position = new Vector3(2f, 2f, 0);
@@ -45,6 +45,7 @@ public class paintTheShapeScript : MonoBehaviour
                 //this.gameObject.transform.position += new Vector3(-2.5f, -2.5f, 1f);
                 currentBlock = blockM;
                 arrLength = 5;
+                timebar.SetMax(13);
                 break;
             default:
                 gap = 2;
@@ -52,6 +53,7 @@ public class paintTheShapeScript : MonoBehaviour
                 //this.gameObject.transform.position += new Vector3(-2f,-2f,1f);
                 currentBlock = block;
                 arrLength = 3;
+                timebar.SetMax(5);
                 break;
         }
 
@@ -85,14 +87,18 @@ public class paintTheShapeScript : MonoBehaviour
             BlocksRight.transform.position = new Vector3(Camera.main.transform.position.x + 4f, Camera.main.transform.position.y / 2, 3);
             BlocksLeft.transform.position = new Vector3(Camera.main.transform.position.x - 6f, Camera.main.transform.position.y / 2, 3);
         }
-       
-        
+
+        timebar.Begin();
     }
 
     void Update()
     {
-        
+        if (timebar.GetTime() == 0 && !isGameover)
+        {
+            StartCoroutine(GameOver(false));
+        }
     }
+
 
     public void Press()
     {
@@ -103,8 +109,7 @@ public class paintTheShapeScript : MonoBehaviour
             {
                 if (blockList[x,y].GetComponent<blockScript>().CurrentState() < validBlocks[x,y])
                 {
-                    Terminate();
-                    GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, false);
+                    StartCoroutine(GameOver(false));
                 }
                 else if (blockList[x,y].GetComponent<blockScript>().CurrentState() == validBlocks[x,y])
                 {
@@ -114,7 +119,7 @@ public class paintTheShapeScript : MonoBehaviour
         }
         if (complete == arrLength * arrLength)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, true);
+            StartCoroutine(GameOver(true));
         }
     }
 
@@ -189,5 +194,15 @@ public class paintTheShapeScript : MonoBehaviour
                 blockList[i, k].GetComponent<blockScript>().ColliderOff();
             }
         }
+    }
+
+
+    IEnumerator GameOver(bool win)
+    {
+        isGameover = true;
+        Terminate();
+        timebar.Stop();
+        yield return new WaitForSeconds(1);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
     }
 }
