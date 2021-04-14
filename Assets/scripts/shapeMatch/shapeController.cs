@@ -36,9 +36,12 @@ public class shapeController : MonoBehaviour
 
     private string[] texts = { "circle", "hexagon", "rectangle", "star", "triangle" };
 
+    int gameCounter;
+
     void Start()
     {
         difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+
         switch (difficulty)
         {
             case 1:
@@ -52,6 +55,8 @@ public class shapeController : MonoBehaviour
                 break;
         }
 
+        gameCounter = 0;
+
         otherSpriteArray = new int[numberOfObjects];
         sameSpriteArray = new int[difficulty];
 
@@ -60,19 +65,28 @@ public class shapeController : MonoBehaviour
 
     private void Update()
     {
-        if (counterShape == difficulty)       //load other shapes
+        if(gameCounter < (difficulty *2))
         {
-            int childs = transform.childCount;
-            for (int i = childs - 1; i > 0; i--)
+            if (counterShape == difficulty)       //load other shapes
             {
-                GameObject.Destroy(transform.GetChild(i).gameObject);
+                int childs = transform.childCount;
+                for (int i = childs - 1; i > 0; i--)
+                {
+                    GameObject.Destroy(transform.GetChild(i).gameObject);
+                }
+
+                GameObject.Destroy(transform.GetChild(0).gameObject);
+
+                gameCounter++;
+
+                counterShape = 0;
+                lastSprite = 0;
+                prepareGame();
             }
-
-            GameObject.Destroy(transform.GetChild(0).gameObject);
-
-            counterShape = 0;
-            lastSprite = 0;
-            prepareGame();
+        }
+        else
+        {
+            GameOver();
         }
     }
 
