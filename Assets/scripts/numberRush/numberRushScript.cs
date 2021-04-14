@@ -8,7 +8,7 @@ public class numberRushScript : MonoBehaviour
     GameObject[] collectibles,enemies;
     timebarScript timebar;
     int[,] coord;
-    public int difficulty = 3;
+    public int difficulty;
     int collectibleCount,enemyCount,nextToCount = 1;
     bool isGameOver = false;
     // Start is called before the first frame update
@@ -17,6 +17,8 @@ public class numberRushScript : MonoBehaviour
         //timebar
         GameObject temp = Instantiate(TBC);
         timebar = temp.GetComponent<TBCscript>().timebar();
+
+        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
 
         coord = new int[15,9];
         for (int i = 0; i < 15; i++)
@@ -135,18 +137,22 @@ public class numberRushScript : MonoBehaviour
 
     void GameOver(int x)
     {
+        timebar.Stop();
+        isGameOver = true;
         if (x == 1)
         {
-            isGameOver = true;
-            timebar.Stop();
-            Debug.Log("WON");
+            StartCoroutine(End(true));
         }
         else
         {
-            isGameOver = true;
-            timebar.Stop();
-            Debug.Log("LOSE");
+            StartCoroutine(End(false));
         }
+    }
+
+    IEnumerator End(bool win)
+    {
+        yield return new WaitForSeconds(1);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
     }
 
     public int GetDifficulty()
