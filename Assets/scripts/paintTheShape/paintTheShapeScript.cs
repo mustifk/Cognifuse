@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class paintTheShapeScript : MonoBehaviour
 {
+    public int Demo = 0;
     //timebar
     public GameObject TBC;
     timebarScript timebar;
@@ -22,8 +23,14 @@ public class paintTheShapeScript : MonoBehaviour
         //timebar
         GameObject temp = Instantiate(TBC);
         timebar = temp.GetComponent<TBCscript>().timebar();
-
-        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        if (Demo == 0)
+        {
+            difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        }
+        else
+        {
+            difficulty = Demo;
+        }
         blockList = new GameObject[5,5];
         blocks1 = new int[5,5];
         blocks2 = new int[5,5];
@@ -203,6 +210,9 @@ public class paintTheShapeScript : MonoBehaviour
         Terminate();
         timebar.Stop();
         yield return new WaitForSeconds(1);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
+        if (Demo == 0)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
+        }
     }
 }

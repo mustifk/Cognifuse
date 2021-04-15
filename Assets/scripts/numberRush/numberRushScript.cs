@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class numberRushScript : MonoBehaviour
 {
+    public int Demo = 0;
     public GameObject collectible,enemy,TBC;
     GameObject[] collectibles,enemies;
     timebarScript timebar;
@@ -17,8 +18,14 @@ public class numberRushScript : MonoBehaviour
         //timebar
         GameObject temp = Instantiate(TBC);
         timebar = temp.GetComponent<TBCscript>().timebar();
-
-        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        if (Demo == 0)
+        {
+            difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        }
+        else
+        {
+            difficulty = Demo;
+        }
 
         coord = new int[15,9];
         for (int i = 0; i < 15; i++)
@@ -152,7 +159,10 @@ public class numberRushScript : MonoBehaviour
     IEnumerator End(bool win)
     {
         yield return new WaitForSeconds(1);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
+        if (Demo == 0)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
+        }
     }
 
     public int GetDifficulty()

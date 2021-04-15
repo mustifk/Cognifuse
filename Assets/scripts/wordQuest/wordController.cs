@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class wordController : MonoBehaviour
 {
+    public int Demo = 0;
     //timebar
     public GameObject TBC;
     timebarScript timebar;
@@ -65,7 +66,14 @@ public class wordController : MonoBehaviour
 
         selected_buttons = new List<GameObject>();
 
-        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        if (Demo == 0)
+        {
+            difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        }
+        else
+        {
+            difficulty = Demo;
+        }
         
         maxWord = difficulty;
         startPosX = -130;
@@ -325,7 +333,10 @@ public class wordController : MonoBehaviour
         isGameover = true;
         yield return new WaitForSeconds(1);
         Finish();
-        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
+        if (Demo == 0)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
+        }
 
     }
 

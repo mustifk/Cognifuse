@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DDBallsEngine : MonoBehaviour
 {
+    public int Demo = 0;
+
     //timebar
     public GameObject TBC;
     timebarScript timebar;
@@ -20,8 +22,14 @@ public class DDBallsEngine : MonoBehaviour
         GameObject temp = Instantiate(TBC);
         timebar = temp.GetComponent<TBCscript>().timebar();
 
-
-        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        if (Demo == 0)
+        {
+            difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        }
+        else
+        {
+            difficulty = Demo;
+        }
         isGameover = false;
         switch (difficulty)
         {
@@ -87,7 +95,10 @@ public class DDBallsEngine : MonoBehaviour
         isGameover = true;
         timebar.Stop();
         yield return new WaitForSeconds(1);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
+        if (Demo == 0)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
+        }
     }
     public void DropletGone()
     {

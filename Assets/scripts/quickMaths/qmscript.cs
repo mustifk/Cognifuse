@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class qmscript : MonoBehaviour
 {
+    public int Demo = 0;
+
     //timebar
     public GameObject TBC;
     timebarScript timebar;
@@ -23,8 +25,14 @@ public class qmscript : MonoBehaviour
         //timebar
         GameObject temp = Instantiate(TBC);
         timebar = temp.GetComponent<TBCscript>().timebar();
-
-        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        if (Demo == 0)
+        {
+            difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        }
+        else
+        {
+            difficulty = Demo;
+        }
 
         switch (difficulty)
         {
@@ -60,7 +68,10 @@ public class qmscript : MonoBehaviour
         isGameover = true;
         timebar.Stop();
         yield return new WaitForSeconds(1);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
+        if (Demo == 0)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
+        }
     }
 
     public void choice(string str)

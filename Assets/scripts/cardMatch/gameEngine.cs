@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class gameEngine : MonoBehaviour
 {
+    public int Demo = 0;
+
     //timebar
     public GameObject TBC;
     timebarScript timebar;
@@ -42,8 +44,14 @@ public class gameEngine : MonoBehaviour
         GameObject temp = Instantiate(TBC);
         timebar = temp.GetComponent<TBCscript>().timebar();
 
-
-        diffLevel = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        if (Demo == 0)
+        {
+            diffLevel = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        }
+        else
+        {
+            diffLevel = Demo;
+        }
         
         originalCard.GetComponent<SpriteRenderer>().enabled = true;
 
@@ -195,7 +203,10 @@ public class gameEngine : MonoBehaviour
     IEnumerator EndOfMinigame(bool result)
     {
         yield return new WaitForSeconds(1);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, result);
+        if (Demo == 0)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, result);
+        }
     }
 
 

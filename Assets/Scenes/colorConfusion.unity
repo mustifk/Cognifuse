@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05a8a9ac8daf8444bb811859592aca65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Demo: 0
   TBC: {fileID: 2680854561537681972, guid: e2316c9dfafdf884c98b9b13723782fd, type: 3}
   myText: {fileID: 674388617}
   myText2: {fileID: 575735545}

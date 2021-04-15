@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class haveYou : MonoBehaviour
 {
+    public int Demo = 0;
+
     //timebar
     public GameObject TBC;
     timebarScript timebar;
@@ -32,7 +34,14 @@ public class haveYou : MonoBehaviour
         GameObject temp = Instantiate(TBC);
         timebar = temp.GetComponent<TBCscript>().timebar();
 
-        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        if (Demo == 0)
+        {
+            difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        }
+        else
+        {
+            difficulty = Demo;
+        }
         
         setActives(false);
         originalCard.transform.localScale = new Vector2(1f, 1f);
@@ -149,6 +158,9 @@ public class haveYou : MonoBehaviour
     IEnumerator EndGame(bool win)
     {
         yield return new WaitForSeconds(1);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
+        if (Demo == 0)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
+        }
     }
 }

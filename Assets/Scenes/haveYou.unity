@@ -650,6 +650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf0a2f66502d0f74383b1ebefe2cd63d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Demo: 0
   TBC: {fileID: 2680854561537681972, guid: e2316c9dfafdf884c98b9b13723782fd, type: 3}
   images: []
   originalCard: {fileID: 4183790851887539374, guid: ad091ffe4d587c44c8d0b75437d62aec,

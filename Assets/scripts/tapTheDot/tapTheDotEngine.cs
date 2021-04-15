@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class tapTheDotEngine : MonoBehaviour
 {
+    public int Demo = 0;
     //timebar
     public GameObject TBC;
     timebarScript timebar;
@@ -21,8 +22,15 @@ public class tapTheDotEngine : MonoBehaviour
         GameObject temp = Instantiate(TBC);
         timebar = temp.GetComponent<TBCscript>().timebar();
 
-        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
-        
+        if (Demo == 0)
+        {
+            difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        }
+        else
+        {
+            difficulty = Demo;
+        }
+
         switch (difficulty)
         {
             case 1:
@@ -195,7 +203,10 @@ public class tapTheDotEngine : MonoBehaviour
     {
         timebar.Stop();
         yield return new WaitForSeconds(1);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, result);
+        if (Demo == 0)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, result);
+        }
     }
 
 }

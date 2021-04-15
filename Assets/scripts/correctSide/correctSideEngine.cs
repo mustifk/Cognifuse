@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class correctSideEngine : MonoBehaviour
 {
+    public int Demo = 0;
     //timebar
     public GameObject TBC;
     timebarScript timebar;
@@ -56,6 +57,15 @@ public class correctSideEngine : MonoBehaviour
         GameObject temp = Instantiate(TBC);
         timebar = temp.GetComponent<TBCscript>().timebar();
 
+        if (Demo == 0)
+        {
+            diffLevel = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        }
+        else
+        {
+            diffLevel = Demo;
+        }
+
         switch (diffLevel)
         {
             case 1:
@@ -87,8 +97,8 @@ public class correctSideEngine : MonoBehaviour
     {
         if (timebar.GetTime() == 0 && !isGameover)
         {
-            Finish();
             isGameover = true;
+            Finish(false);
         }
     }
 
@@ -161,7 +171,7 @@ public class correctSideEngine : MonoBehaviour
             }
             else
             {
-                Finish();
+                Finish(false);
             }
         }
         else if(gameObject.str == "right")
@@ -172,7 +182,7 @@ public class correctSideEngine : MonoBehaviour
             }
             else
             {
-                Finish();
+                Finish(false);
             }
         }
         
@@ -193,8 +203,7 @@ public class correctSideEngine : MonoBehaviour
         if (indexOfShape == objects.Length)
         {
             timebar.Stop();
-            Debug.Log("WIN");
-            Finish();
+            Finish(true);
         }
         else
         {
@@ -209,17 +218,25 @@ public class correctSideEngine : MonoBehaviour
         Destroy(temp);
     }
 
-    void Finish()
+    void Finish(bool win)
     {
-        Debug.Log("GAME OVER");
         timebar.Stop();
         int childs = transform.childCount;
         for (int i = childs - 1; i > 0; i--)
         {
             GameObject.Destroy(transform.GetChild(i).gameObject);
         }
-
         GameObject.Destroy(transform.GetChild(0).gameObject);
+
+        StartCoroutine(End(win));
     }
 
+    IEnumerator End(bool win)
+    {
+        yield return new WaitForSeconds(1);
+        if (Demo == 0)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
+        }
+    }
 }

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class ChangeText : MonoBehaviour
 {
+    public int Demo = 0;
+
     //timebar
     public GameObject TBC;
     timebarScript timebar;
@@ -28,11 +30,20 @@ public class ChangeText : MonoBehaviour
     bool answer;
     void Start()
     {
+
         //timebar
         GameObject temp = Instantiate(TBC);
         timebar = temp.GetComponent<TBCscript>().timebar();
 
-        difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        if (Demo == 0)
+        {
+            difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        }
+        else
+        {
+            difficulty = Demo;
+        }
+
 
         switch (difficulty)
         {
@@ -187,6 +198,9 @@ public class ChangeText : MonoBehaviour
     IEnumerator EndOfMinigame(bool result)
     {
         yield return new WaitForSeconds(1);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, result);
+        if (Demo == 0)
+        {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, result);
+        }
     }
 }

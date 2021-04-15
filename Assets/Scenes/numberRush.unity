@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209d20b1b4703ba46984ae1796684917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Demo: 0
   collectible: {fileID: 1363592036668795497, guid: d8c3fdfab011cec478b0b42726e89f79,
     type: 3}
   enemy: {fileID: 2449552498420333042, guid: de089593f87366f4dbad99c3eb4c49f6, type: 3}
