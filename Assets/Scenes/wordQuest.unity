@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6a6b4c56be96547ac0f66a515f3f84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Demo: 0
   TBC: {fileID: 2680854561537681972, guid: e2316c9dfafdf884c98b9b13723782fd, type: 3}
   difficulty: 1
   text: {fileID: 352593470}

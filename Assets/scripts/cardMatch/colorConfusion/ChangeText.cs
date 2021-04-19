@@ -200,7 +200,7 @@ public class ChangeText : MonoBehaviour
         yield return new WaitForSeconds(1);
         if (Demo == 0)
         {
-                GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, result);
+                GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame((timebar.GetTime() / timebar.GetMax()), result);
         }
     }
 }

@@ -325,8 +325,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 657fad3d60bea0c41afb7c96ef27e613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Demo: 0
+  TBC: {fileID: 2680854561537681972, guid: e2316c9dfafdf884c98b9b13723782fd, type: 3}
   images: []
-  difficulty: 2
+  difficulty: 3
   originalCard: {fileID: 7969104873080819615, guid: 725a00e7b5053ce48a8d36f7d6178374,
     type: 3}
   card: {fileID: 162849867}

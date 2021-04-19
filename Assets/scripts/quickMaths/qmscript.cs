@@ -70,7 +70,7 @@ public class qmscript : MonoBehaviour
         yield return new WaitForSeconds(1);
         if (Demo == 0)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, win);
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame((timebar.GetTime() / timebar.GetMax()), win);
         }
     }
 

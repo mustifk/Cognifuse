@@ -12,7 +12,7 @@ public class gameEngine : MonoBehaviour
     //1 -> Easy
     //2 -> Normal
     //3 -> Hard
-    int diffLevel = new int();
+    private int diffLevel;
     private int row = 2;
     private int col;
     private float offsetX = 4f;
@@ -62,11 +62,11 @@ public class gameEngine : MonoBehaviour
             case 1:
                 col = 3;
                 startPos.x = -4;
-                timebar.SetMax(4);
+                timebar.SetMax(6);
                 break;
             case 2:
                 col = 4;
-                timebar.SetMax(7);
+                timebar.SetMax(8);
                 break;
             case 3:
                 startPos.x = -7;
@@ -205,7 +205,7 @@ public class gameEngine : MonoBehaviour
         yield return new WaitForSeconds(1);
         if (Demo == 0)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, result);
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame((timebar.GetTime() / timebar.GetMax()), result);
         }
     }
 

@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 /// <summary>
 /// SAHNE GEÇİŞLERİNDE SORUNLAR VAR
-/// SKOR EKLENECEK
 /// OYUNLAR DÜZENLENİP EKLENECEK
 /// CAN VE FİNAL İÇİN SAHNELER OLUŞTURULACAK
 /// SKOR TAKİBİ ÖNEMLİ
@@ -13,16 +12,14 @@ using UnityEngine.SceneManagement;
 /// KATEGORİLER EKLENDİĞİNDE BU PROBLEMİ ÇÖZ /\
 /// </summary>
 
-
-
 public class mainScript : MonoBehaviour
 {
     public float animSpeed;
     public Animator transition;
-    private int nextSceneIndex;
+    private int nextSceneIndex,maxSceneIndex = 5,minSceneIndex = 0,sceneQueueSize = 5,sceneIndexCounter = 0;
     static int levelCount, HP, totalScore,bestScore,lastMinigame = 0;
     static int difficulty = new int();
-    public int sceneCount = 4;
+    public int sceneCount = 14;
     Stack<int> sceneQueue;
 
     private bool gameOver = false;
@@ -71,6 +68,7 @@ public class mainScript : MonoBehaviour
     {
         StartCoroutine(Lag());
     }
+
     IEnumerator Lag()
     {
         yield return new WaitForSeconds(animSpeed);
@@ -79,7 +77,7 @@ public class mainScript : MonoBehaviour
 
     public void NextScene()
     {
-        difficulty = ((levelCount++ / 4) + 1);
+        difficulty = ((levelCount++ / 7) + 1);
         if (difficulty > 3)
         {
             difficulty = 3;
@@ -94,20 +92,19 @@ public class mainScript : MonoBehaviour
 
     void EndScene()
     {
-
         SceneManager.LoadScene("End");
     }
 
     void SceneRandomizer()
     {
-        int temp = Random.Range(1, sceneCount + 1);
-        for (int i = 0; i < sceneCount; i++)
+        int temp = Random.Range(minSceneIndex + 1, sceneCount + 1);
+        for (int i = 0; i < sceneQueueSize; i++)
         {
             if (i == 0)
             {
                 while (temp == lastMinigame)
                 {
-                    temp = Random.Range(1, sceneCount + 1);
+                    temp = Random.Range(minSceneIndex + 1, sceneCount + 1);
                 }
                 lastMinigame = temp;
                 sceneQueue.Push(temp);
@@ -116,20 +113,48 @@ public class mainScript : MonoBehaviour
             {
                 while (sceneQueue.Contains(temp))
                 {
-                    temp = Random.Range(1, sceneCount + 1);
+                    temp = Random.Range(minSceneIndex + 1, sceneCount + 1);
                 }
                 sceneQueue.Push(temp);
             }
-            temp = Random.Range(1, sceneCount + 1);
+            temp = Random.Range(minSceneIndex + 1, sceneCount + 1);
         }
+
+        switch (sceneIndexCounter)
+        {
+            case 0:
+                maxSceneIndex = 5;
+                minSceneIndex = 0;
+                break;
+            case 1:
+                maxSceneIndex = 10;
+                minSceneIndex = 0;
+                break;
+            case 2:
+                maxSceneIndex = 10;
+                minSceneIndex = 5;
+                break;
+            case 3:
+                maxSceneIndex = 15;
+                minSceneIndex = 5;
+                break;
+            default:
+                maxSceneIndex = 15;
+                minSceneIndex = 0;
+                break;
+        }
+        sceneIndexCounter++;
     }
 
-
-    public void EndOfMinigame(int score,bool won)
+    public void EndOfMinigame(float scoreRate, bool won)
     {        
+        //////
+        ///Bu noktada skorların kategorik kaydını gelen skor ile tutabilirsin
+        ///-----------------------------------------------------
         if (won)
         {
-            totalScore += score * difficulty;
+            Debug.Log(difficulty * (int)(100 * Mathf.Sin(Mathf.Deg2Rad * 90 * scoreRate)));
+            totalScore += difficulty * (int)(100 * Mathf.Sin(Mathf.Deg2Rad * 90 * scoreRate));
             Debug.Log("Won the minigame!");
             Transitioner();
         }
@@ -164,15 +189,14 @@ public class mainScript : MonoBehaviour
     {
         return totalScore.ToString();
     }
+
     public string getBestScore()
     {
         return bestScore.ToString();
     }
-
     public bool isGameOver() {
         return gameOver;
     }
-
     public int Difficulty()
     {
         return difficulty;

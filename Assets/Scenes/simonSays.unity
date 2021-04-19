@@ -224,6 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1239cf39343c7940bc7c0658246ea48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Demo: 3
   TBC: {fileID: 2680854561537681972, guid: e2316c9dfafdf884c98b9b13723782fd, type: 3}
   dot: {fileID: 7633663375140466068, guid: 4ed92af1958d2044586e4922602eb033, type: 3}
 --- !u!4 &256860529

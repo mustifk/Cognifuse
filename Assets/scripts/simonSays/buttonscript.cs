@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class buttonscript : MonoBehaviour
 {
+    static int colorCount;
     SpriteRenderer sprt;
     Color colortemp;
     bool blinking = false,clicked = false,colliding = false;
@@ -11,6 +12,31 @@ public class buttonscript : MonoBehaviour
     void Start()
     {
         gameObject.GetComponent<CircleCollider2D>().enabled = false;
+        switch (colorCount)
+        {
+            case 0:
+                this.GetComponent<SpriteRenderer>().color = new Color(Color.red.r / 1.5f, Color.red.g / 1.5f, Color.red.b / 1.5f);
+                break;
+            case 1:
+                this.GetComponent<SpriteRenderer>().color = new Color(Color.green.r / 1.5f, Color.green.g / 1.5f, Color.green.b / 1.5f);
+                break;
+            case 2:
+                this.GetComponent<SpriteRenderer>().color = new Color((Color.blue.r - 0.05f) / 1.4f, (Color.blue.g + 0.05f) / 1.4f, (Color.blue.b - 0.2f) / 1.4f);
+                break;
+            case 3:
+                this.GetComponent<SpriteRenderer>().color = new Color(Color.magenta.r / 1.5f, Color.magenta.g / 1.5f, Color.magenta.b / 1.5f);
+                break;
+            case 4:
+                this.GetComponent<SpriteRenderer>().color = new Color(Color.cyan.r / 1.5f, Color.cyan.g / 1.5f, Color.cyan.b / 1.5f);
+                break;
+            case 5:
+                this.GetComponent<SpriteRenderer>().color = new Color(Color.yellow.r / 1.5f, Color.yellow.g / 1.5f, Color.yellow.b / 1.5f);
+                break;
+            case 6:
+                this.GetComponent<SpriteRenderer>().color = new Color(Color.gray.r / 1.5f, Color.gray.g / 1.5f, Color.gray.b / 1.5f);
+                break;
+        }
+        colorCount++;
         sprt = GetComponent<SpriteRenderer>();
         colortemp = sprt.color;
     }
@@ -20,7 +46,7 @@ public class buttonscript : MonoBehaviour
     {
         if (blinking)
         {
-            sprt.material.color = Color.white + colortemp;
+            sprt.material.color = Color.white + colortemp + Color.white;
         }
         else if (clicked)
         {

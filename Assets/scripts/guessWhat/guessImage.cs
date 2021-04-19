@@ -31,4 +31,9 @@ public class guessImage : MonoBehaviour
         controller.check(this.id);
 
     }
+    
+    public void defuse()
+    {
+        this.GetComponent<BoxCollider2D>().enabled = false;
+    }
 }

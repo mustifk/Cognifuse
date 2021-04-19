@@ -5,87 +5,130 @@ using UnityEngine.UI;
 
 public class guessWhat : MonoBehaviour
 {
+    public int Demo = 0;
+    //timebar
+    public GameObject TBC;
+    timebarScript timebar;
+
     [SerializeField] private Sprite[] images;
     [SerializeField] private int difficulty;
     [SerializeField] private guessImage originalCard;
     [SerializeField] private guessImage card;
     [SerializeField] private GameObject glass;
 
+    guessImage[] cardChoices;
     private List<int> randomList = new List<int>();
     private bool find = false;
-    private int cardNumbers;
+    private int choices, tourCount = 0;
+    float scaleX;
     float startposX, startPosY = -2f,posX,plus;
+    bool isGameover = false;
     void Awake()
     {
+        cardChoices = new guessImage[5];
         images = Resources.LoadAll<Sprite>("Sprites/haveYou");
         images = shuffleImages(images);
     }
     void Start()
     {
+        //timebar
+        GameObject temp = Instantiate(TBC);
+        timebar = temp.GetComponent<TBCscript>().timebar();
+
+        if (Demo == 0)
+        {
+            difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        }
+
         switch (difficulty)
         {
-            case 1:
-                cardNumbers = 3;
-                startposX = -8f;
-                plus = 4f;
-                break;
             case 2:
-                cardNumbers = 4;
+                tourCount = 3;
+                choices = 4;
                 startposX = -9f;
                 plus = 3.5f;
-
+                scaleX = 1.5f;
+                timebar.SetMax(6);
                 break;
             case 3:
-                cardNumbers = 5;
+                tourCount = 4;
+                choices = 5;
                 startposX = -9f;
                 plus = 3f;
+                scaleX = 2f;
+                timebar.SetMax(8);
                 break;
             default:
+                tourCount = 2;
+                scaleX = 1f;
+                choices = 3;
+                startposX = -8f;
+                plus = 4f;
+                timebar.SetMax(9);
                 break;
         }
         shuffleList();
-        StartCoroutine(begin());
+        StartCoroutine(Game());
+        timebar.Begin();
     }
-    private IEnumerator begin()
+
+    IEnumerator Game()
     {
-        yield return new WaitForSeconds(0f);
+        yield return new WaitForSeconds(0.1f);
+        begin();
+
        
+    }
 
-        StartCoroutine(showCards(0,false));
-        for (int i = 0; i < cardNumbers; i++)
+    void begin()
+    {
+       
+        showCards(0,false);
+        for (int i = 0; i < choices; i++)
         {
-
-            StartCoroutine(showCards(randomList[i], true));
+            cardChoices[i] = showCards(randomList[i], true);
         }
         glass.SetActive(true);
 
     }
-    private IEnumerator showCards(int i, bool inst)
+    guessImage showCards(int i, bool inst)
     {
-        yield return new WaitForSeconds(0f);
+        guessImage temporary;
         if (inst)
         {
-            card = Instantiate(originalCard) as guessImage;
-            card.transform.parent = this.gameObject.transform;
-            card.ChangeSprite(i, images[i]);
+            temporary = Instantiate(originalCard) as guessImage;
+            temporary.transform.parent = this.gameObject.transform;
+            temporary.ChangeSprite(i, images[i]);
             posX = startposX + plus;
             startposX = posX;
-            card.transform.position = new Vector2(posX, startPosY);
-
-
+            temporary.transform.position = new Vector2(posX, startPosY);
+            return temporary;
         }
         else
         {
-            int numberX = Random.Range(-2,2);
-            int numberY = Random.Range(1, 3);
+            float numberX = Random.Range(-2f,2f);
+            float numberY = Random.Range(1f, 3f);
 
             card.transform.position = new Vector2(numberX, numberY);
             card.ChangeImage(i, images[i]);
             card.gameObject.SetActive(true);
-
-
+            card.transform.position.Scale(new Vector2(scaleX,scaleX));
+            return card;
         }
+    }
 
+    private void Update()
+    {
+        if (timebar.GetTime() == 0 && !isGameover)
+        {
+            isGameover = true;
+            timebar.Stop();
+            Terminate();
+            if (Demo == 0)
+            {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame((timebar.GetTime() / timebar.GetMax()), false);
+            }
+        }
     }
     private Sprite[] shuffleImages(Sprite[] images)
     {
@@ -99,14 +142,17 @@ public class guessWhat : MonoBehaviour
         }
         return temp;
     }
+
     private void shuffleList()
     {
+        randomList.Clear();
         int index;
-        for (int i = 0; i < cardNumbers; i++)
+        find = false;
+        for (int i = 0; i < choices; i++)
         {
             while (!find)
             {
-                index = Random.Range(0, cardNumbers);
+                index = Random.Range(0, choices);
                 if (!randomList.Contains(index))
                 {
                     randomList.Add(index);
@@ -116,16 +162,70 @@ public class guessWhat : MonoBehaviour
             find = false;
         }
     }
+
     public void check(int id)
     {
-        if(id == 0)
+        if(id == 0 && !isGameover)
         {
-            Debug.Log("win");
+            if (tourCount > 0)
+            {
+                tourCount--;
+                Set();
+                StartCoroutine(Game());
+            }
+            else
+            {
+                Terminate();
+                timebar.Stop();
+                if (Demo == 0)
+                {
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame((timebar.GetTime() / timebar.GetMax()), true);
+                }
+                isGameover = true;
+            }
         }
         else
         {
-            Debug.Log("lose");
+            timebar.Stop();
+            Terminate();
+            if (Demo == 0)
+            {
+                GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame((timebar.GetTime() / timebar.GetMax()), false);
+            }
+            isGameover = true;
+        }
+    }
 
+    void Terminate()
+    {
+        for (int i = 0; i < choices; i++)
+        {
+            cardChoices[i].GetComponent<guessImage>().defuse();
+        }
+    }
+
+    void Set()
+    {
+        images = shuffleImages(images);
+        shuffleList();
+        switch (difficulty)
+        {
+            case 2:
+                startposX = -9f;
+                plus = 3.5f;
+                break;
+            case 3:
+                startposX = -9f;
+                plus = 3f;
+                break;
+            default:
+                startposX = -8f;
+                plus = 4f;
+                break;
+        }
+        for (int i = 0; i < choices; i++)
+        {
+            Destroy(cardChoices[i].gameObject);
         }
     }
 }

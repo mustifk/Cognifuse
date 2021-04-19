@@ -39,9 +39,8 @@ public class timebarScript : MonoBehaviour
 
     public void Begin()
     {
-        isTicking = true;
-   
         temp = Time.realtimeSinceStartup;
+        isTicking = true;
     }
     public void Stop()
     {

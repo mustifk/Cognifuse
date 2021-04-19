@@ -101,13 +101,12 @@ public class EngineScript : MonoBehaviour
 
     IEnumerator EndOfMinigame(bool result)
     {
-        Debug.Log(result);
         isGameover = true;
         timebar.Stop();
         yield return new WaitForSeconds(1);
         if (Demo == 0)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(10, result);
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame((timebar.GetTime() / timebar.GetMax()), result);
         }
     }
 
@@ -127,7 +126,6 @@ public class EngineScript : MonoBehaviour
         for (int i = 0; i < objCount; i++)
         {
             dots[i] = Instantiate(dot, spawnPositions[i], Quaternion.identity,gameObject.transform) as GameObject;
-            yield return new WaitForSeconds(0.1f - objCount * 0.01f);
         }
         StartCoroutine(Begin());
     }
@@ -139,7 +137,7 @@ public class EngineScript : MonoBehaviour
             temp = Random.Range(0,objCount);
             queue[i] = temp;
             dots[temp].GetComponent<buttonscript>().Blink();
-            yield return new WaitForSeconds(1.3f - objCount * 0.08f);
+            yield return new WaitForSeconds(1.1f - objCount * 0.08f);
         }
         PlayerAct();
     }
