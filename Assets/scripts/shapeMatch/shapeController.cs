@@ -177,16 +177,16 @@ public class shapeController : MonoBehaviour
         {
             case 1:
                 distanceX = Random.Range(3f, 4f);
-                distanceY = Random.Range(1f, 1.5f);
+                distanceY = Random.Range(1.2f, 1.7f);
                 break;
             case 2:
-                distanceX = Random.Range(2f, 2.5f);
-                distanceY = Random.Range(0.5f, 1f);
+                distanceX = Random.Range(2.5f, 2.8f);
+                distanceY = Random.Range(0.9f, 1.1f);
                 break;
             case 3:
                 startPosX = -8f;
-                distanceX = Random.Range(2f,2.3f);
-                distanceY = Random.Range(0.5f, 0.9f);
+                distanceX = Random.Range(2.2f,2.3f);
+                distanceY = Random.Range(0.6f, 0.9f);
                 break;
         }
 

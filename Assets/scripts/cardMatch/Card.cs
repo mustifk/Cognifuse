@@ -37,7 +37,7 @@ public class Card : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (coroutineAllowed && !matched && controller.selectedTwoCard)
+        if (coroutineAllowed && !matched && controller.selectedTwoCard & controller.bTime)
         {
             Flip();
             controller.CardRevealed(this);

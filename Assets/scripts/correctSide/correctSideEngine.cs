@@ -127,24 +127,23 @@ public class correctSideEngine : MonoBehaviour
         if (number == 0)
         {
             leftShape = objects[indexOfShape];
-            /*  number = Random.Range((indexOfShape + 1) % objects.Length, objects.Length);
-              if(objects[number].name == leftShape.name)
-                  number = Random.Range((indexOfShape + 1) % objects.Length, objects.Length);*/
             number = (indexOfShape + 1) % objects.Length;
-            if(objects[number].name == leftShape.name)
+            if (objects[number].name == leftShape.name)
                 number = (indexOfShape + 1) % objects.Length;
             rightShape = objects[number];
+            if (leftShape.name.Contains(rightShape.name))
+                rightShape = objects[++number];
+
         }
         else
         {
             rightShape = objects[indexOfShape];
-            /*  number = Random.Range((indexOfShape + 1) % objects.Length, objects.Length);
-              if (objects[number].name == rightShape.name)
-                  number = Random.Range((indexOfShape + 1) % objects.Length, objects.Length);*/
             number = (indexOfShape + 1) % objects.Length;
             if (objects[number].name == rightShape.name)
                 number = (indexOfShape + 1) % objects.Length;
             leftShape = objects[number];
+            if (rightShape.name.Contains(leftShape.name))
+                leftShape = objects[++number];
         }
 
         Instantiate(leftShape, new Vector3(-5.92f, -1.88f), Quaternion.identity).transform.parent = gameObject.transform;
@@ -157,6 +156,14 @@ public class correctSideEngine : MonoBehaviour
             shape = Instantiate(objects[i++], new Vector3(posX[j], posY[j]), Quaternion.identity);
             shape.transform.localScale = new Vector3(scaleX[j], scaleY[j]);
             shape.transform.parent = gameObject.transform;
+            if (counter == 1)
+            {
+                shape.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.6f);
+            }
+            if (counter == 2)
+            {
+                shape.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.2f);
+            }
         }
     }
 

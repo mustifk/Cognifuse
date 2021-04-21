@@ -21,6 +21,8 @@ public class gameEngine : MonoBehaviour
     private int counter = 0;
     private int numberOfCards;
 
+    public bool bTime;
+
     [SerializeField] private Card originalCard;
     [SerializeField] private Sprite[] images;   //hold our images
 
@@ -54,6 +56,8 @@ public class gameEngine : MonoBehaviour
         }
         
         originalCard.GetComponent<SpriteRenderer>().enabled = true;
+
+        bTime = true;
 
         Vector3 startPos = originalCard.transform.position;
 
@@ -215,11 +219,13 @@ public class gameEngine : MonoBehaviour
         if (x == 1)
         {
             timebar.Stop();
+            bTime = false;
             StartCoroutine(EndOfMinigame(true));
         }
         else
         {
             timebar.Stop();
+            bTime = false;
             StartCoroutine(EndOfMinigame(false));
         }
     }

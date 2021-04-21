@@ -226,7 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Demo: 0
   TBC: {fileID: 2680854561537681972, guid: e2316c9dfafdf884c98b9b13723782fd, type: 3}
-  diffLevel: 1
+  bTime: 0
   originalCard: {fileID: 868226717}
   images:
   - {fileID: 21300000, guid: aa9b2f1884c1a9f43ae49a92762646a7, type: 3}
