@@ -32,8 +32,8 @@ public class correctSideEngine : MonoBehaviour
 
     float[] posX = { 0, 0, -0.02f};
     float[] posY = { 0, 2.36f, 4.2f };
-    float[] scaleX = { 2, 1.5f, 1 };
-    float[] scaleY = { 2, 1.5f, 1 };
+    float[] scaleX = { 0.45f, 0.37f, 0.28f };
+    float[] scaleY = { 0.45f, 0.37f, 0.28f };
 
     int indexOfShape = 0;
 

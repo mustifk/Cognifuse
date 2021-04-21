@@ -231,12 +231,13 @@ public class shapeController : MonoBehaviour
                 }
                 shape = Instantiate(shape) as shape;
                 lastSprite = shape.changeSprite(lastSprite);
+                shape.transform.localScale = new Vector2(0.3f, 0.3f);
             }
             else
             {
                 int index = Random.Range(0, otherShapes.Length);
                 shape = Instantiate(otherShapes[index]) as shape;
-                
+                shape.transform.localScale = new Vector2(0.3f, 0.3f);
                 switch (shape.shapeName)
                 {
                     case "circle":

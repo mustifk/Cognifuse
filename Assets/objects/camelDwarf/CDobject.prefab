@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 4008552718042760127}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 489882dfcd988a249933a47bd2ac539b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b5f303a1808b5f746b0477c10e2d47bd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -94,6 +94,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44e399cf610ceeb4ea94ca613d9b4b41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camel: {fileID: 21300000, guid: 489882dfcd988a249933a47bd2ac539b, type: 3}
-  dwarf: {fileID: 21300000, guid: 2c2c3a88c19a7104b8f655e731689e85, type: 3}
+  camel: {fileID: 21300000, guid: b5f303a1808b5f746b0477c10e2d47bd, type: 3}
+  dwarf: {fileID: 21300000, guid: 95d4711fd2e165b4e8b546f89dc185a5, type: 3}
   situation: Camel

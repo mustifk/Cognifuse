@@ -14,19 +14,26 @@ public class camelEngine : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI text;
 
+    [SerializeField]
+    Tbcmini mini;
+
+    minibarScript miniTime;
+
     string[] messages;
 
     bool gameOver, isClick;
 
-    int waitingTime;
+    float waitingTime;
 
     int countGame;
 
-    float period = 0.0f;
+    float startPos, currentPos;
+
+    int index = 0;
 
     void Start()
     {
-        messages = new string[]{ "Camel", "Dwarf", "Camel", "Dwarf", "Camel", "Dwarf"};
+        messages = new string[]{ "Camel", "Dwarf", "Camel", "Dwarf", "Camel", "Dwarf", "Camel", "Dwarf"};
 
         prepareGame();
 
@@ -36,18 +43,23 @@ public class camelEngine : MonoBehaviour
         switch(diffLevel)
         {
             case 1:
-                waitingTime = 3;
+                waitingTime = 3f;
                 break;
             case 2:
-                waitingTime = 2;
+                waitingTime = 2.5f;
                 break;
             case 3:
-                waitingTime = 1;
+                waitingTime = 1.5f;
                 break;
         }
         countGame = 0;
 
-        //timer sıfırla
+        miniTime = mini.GetComponent<Tbcmini>().timebar();
+        miniTime.SetMax(waitingTime);
+
+        miniTime.Begin();
+
+        setTimer();
     }
 
     void prepareGame()
@@ -59,20 +71,20 @@ public class camelEngine : MonoBehaviour
 
     void updateText()
     {
-        int index = Random.Range(0, messages.Length);
-        text.text = messages[index];
-        Debug.Log("+");
+        //int index = Random.Range(0, messages.Length);
+        text.text = messages[index++];
     }
 
     void checkGame()
     {
-        if (text.text == cdObject.situation)
+        if (text.text != cdObject.situation)
         {
-            if (isClick)      //true
+            if (isClick)      
             {
                 Debug.Log("TRUE");
                 countGame++;
                 updateText();
+                setTimer();
                 cdObject.changePos();
             }
             else
@@ -82,7 +94,7 @@ public class camelEngine : MonoBehaviour
                 Finish();
             }
         }
-        else if (text.text != cdObject.situation)
+        else if (text.text == cdObject.situation)
         {
             if (isClick)
             {
@@ -93,9 +105,8 @@ public class camelEngine : MonoBehaviour
             else
             {
                 Debug.Log("TRUE");
-                countGame++;
                 updateText();
-                cdObject.changePos();
+                setTimer();
             }
         }
         isClick = false;
@@ -103,42 +114,44 @@ public class camelEngine : MonoBehaviour
 
     void Update()
     {
-        if(!gameOver)
+        currentPos = Time.time;
+        if (!gameOver)
         {
-            if (period > (waitingTime))
-            {
-                updateText();
-
-                period -= waitingTime;
-            }
-            period += UnityEngine.Time.deltaTime;
-
             if (countGame == (diffLevel * 3))
             {
                 Finish();
             }
+            else if ((currentPos - startPos) > waitingTime)
+            {
+                checkGame();
+                //updateText();
+            }
         }
+    }
+
+    void setTimer()
+    {
+        startPos = Time.time;
+        miniTime.SetMax(waitingTime);
+        miniTime.Begin();
     }
 
     public void checkPos()
     {
-        isClick = true;
-        checkGame();
-    }
-
-    IEnumerator changeText()
-    {
-        while(gameOver)
+        if(!gameOver)
         {
-            updateText();
-            yield return new WaitForSeconds(waitingTime);
+            isClick = true;
+            checkGame();
         }
     }
 
     void Finish()
     {
         Destroy(text);
-        GameObject.Destroy(gameObject.transform.GetChild(0).gameObject);
+        int childs = transform.childCount;
+        for(int i=childs-1;i>=0;i--) 
+            GameObject.Destroy(gameObject.transform.GetChild(i).gameObject);
+        Destroy(mini.gameObject);
         gameOver = true;
     }
 }

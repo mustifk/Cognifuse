@@ -730,7 +730,7 @@ ParticleSystem:
     m_Mesh: {fileID: 0}
     m_MeshRenderer: {fileID: 0}
     m_SkinnedMeshRenderer: {fileID: 0}
-    m_Sprite: {fileID: 21300000, guid: 74eb74027d198e84abba1b881a23bc5a, type: 3}
+    m_Sprite: {fileID: 21300000, guid: 95d4711fd2e165b4e8b546f89dc185a5, type: 3}
     m_SpriteRenderer: {fileID: 104489011721343005, guid: 8b3957438f4519f4e86f6df64426cdae,
       type: 3}
     m_UseMeshMaterialIndex: 0

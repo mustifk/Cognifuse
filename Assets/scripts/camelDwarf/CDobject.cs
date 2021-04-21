@@ -28,12 +28,14 @@ public class CDobject : MonoBehaviour
             GetComponent<SpriteRenderer>().sprite = dwarf;
             bit = 1;
             situation = "Dwarf";
+            transform.localScale = new Vector2(1.8f,1.8f);
         }
         else
         {
             GetComponent<SpriteRenderer>().sprite = camel;
             bit = 0;
             situation = "Camel";
+            transform.localScale = new Vector2(2f, 2f);
         }
     }
 }

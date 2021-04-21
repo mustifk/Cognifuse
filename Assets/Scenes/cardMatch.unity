@@ -601,7 +601,7 @@ PrefabInstance:
         type: 3}
       propertyPath: backSprite
       value: 
-      objectReference: {fileID: 21300000, guid: 75151bb477d6f1d41a7e7f2b52f437e2,
+      objectReference: {fileID: 21300000, guid: ac0b9f32fabccaa4387d5baab3f6017c,
         type: 3}
     - target: {fileID: 9200775739291378047, guid: ff8dbd5b489a43c49b8db1ee494343c3,
         type: 3}

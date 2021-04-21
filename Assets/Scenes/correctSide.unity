@@ -241,11 +241,12 @@ MonoBehaviour:
   Demo: 0
   TBC: {fileID: 2680854561537681972, guid: e2316c9dfafdf884c98b9b13723782fd, type: 3}
   diffLevel: 2
-  triangle: {fileID: 641772893257787070, guid: a7b5f5a0c8f33a14ea9d1ea25df658f4, type: 3}
-  circle: {fileID: 7624655620257593914, guid: 61425c49d16cddf4886c597cbb2900de, type: 3}
-  rectangle: {fileID: 1709407307126830388, guid: f94dcf00bc2a45349898cc3f15db87d4,
+  triangle: {fileID: 6430039502505243512, guid: 66756f25c68c98249ad6c7786c75ffeb,
     type: 3}
-  star: {fileID: 4329579991621449020, guid: 458fdf55e9b1d9048aeca8598f4f1866, type: 3}
+  circle: {fileID: 286640003722128830, guid: 540a177584deda146b0aa76dddef6438, type: 3}
+  rectangle: {fileID: 8953391093808362150, guid: a2eded8ad8723504d95276d8d3efedc0,
+    type: 3}
+  star: {fileID: 4045688933732171029, guid: 8b3957438f4519f4e86f6df64426cdae, type: 3}
   leftButton: {fileID: 5468164746389727065, guid: 3c2903a9bfa04af498db5726e0642a68,
     type: 3}
   rightButton: {fileID: 2449514054369266064, guid: 863c15b57c0e12d4e97d7ea79752640e,
