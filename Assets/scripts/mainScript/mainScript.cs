@@ -16,11 +16,11 @@ public class mainScript : MonoBehaviour
 {
     public float animSpeed;
     public Animator transition;
-    private int nextSceneIndex,maxSceneIndex = 5,minSceneIndex = 0,sceneQueueSize = 5,sceneIndexCounter = 0;
+    private int nextSceneIndex,maxSceneIndex = 5,sceneQueueSize = 4,sceneCounter = 0;
     static int levelCount, HP, totalScore,bestScore,lastMinigame = 0;
     static int difficulty = new int();
-    public int sceneCount = 14;
-    Stack<int> sceneQueue;
+    public int totalSceneCount = 14;
+    Queue<int> sceneQueue;
 
     private bool gameOver = false;
     // Start is called before the first frame update
@@ -29,7 +29,7 @@ public class mainScript : MonoBehaviour
         Destroy(GameObject.FindGameObjectWithTag("OldScript"));
         bestScore = PlayerPrefs.GetInt("highscore");
         difficulty = 1;
-        sceneQueue = new Stack<int>();
+        sceneQueue = new Queue<int>();
         DontDestroyOnLoad(this.gameObject.GetComponent<mainScript>());
     }
 
@@ -43,7 +43,7 @@ public class mainScript : MonoBehaviour
     {
         bestScore = PlayerPrefs.GetInt("highscore");
         HP = 3;
-        sceneQueue = new Stack<int>();
+        sceneQueue = new Queue<int>();
         totalScore = 0;
         levelCount = 0;
         difficulty = 1;
@@ -56,7 +56,7 @@ public class mainScript : MonoBehaviour
     {
         bestScore = PlayerPrefs.GetInt("highscore");
         HP = 3;
-        sceneQueue = new Stack<int>();
+        sceneQueue = new Queue<int>();
         totalScore = 0;
         levelCount = 0;
         difficulty = 1;
@@ -77,12 +77,12 @@ public class mainScript : MonoBehaviour
 
     public void NextScene()
     {
-        difficulty = ((levelCount++ / 7) + 1);
+        difficulty = ((levelCount++ / 6) + 1);
         if (difficulty > 3)
         {
             difficulty = 3;
         }
-        nextSceneIndex = sceneQueue.Pop();
+        nextSceneIndex = sceneQueue.Dequeue();
         SceneManager.LoadScene(nextSceneIndex);
         if (sceneQueue.Count == 0)
         {
@@ -95,61 +95,74 @@ public class mainScript : MonoBehaviour
         SceneManager.LoadScene("End");
     }
 
+
+    /// <summary>
+    /// DİFFİCULTY SON OYUNLARDA HEP YÜKSEK
+    /// OYUN SONDA İKEN DİFFİ RANDOMLA
+    /// ARKA ARKAYA GELME SORUNU HENÜZ ÇÖZÜLMEMİŞ OLABİLİR
+    /// 
+    /// </summary>
     void SceneRandomizer()
     {
-        int temp = Random.Range(minSceneIndex + 1, sceneCount + 1);
+        sceneCounter++;
+        if (sceneCounter == 1)
+        {
+            maxSceneIndex = 5;
+        }
+        else if (sceneCounter < 4)
+        {
+            maxSceneIndex = 10;
+        }
+        else
+        {
+            maxSceneIndex = totalSceneCount;
+        }
+
+        int temp = Random.Range(1, maxSceneIndex + 1);
         for (int i = 0; i < sceneQueueSize; i++)
         {
-            if (i == 0)
+            if (i == sceneQueueSize - 1)
             {
                 while (temp == lastMinigame)
                 {
-                    temp = Random.Range(minSceneIndex + 1, sceneCount + 1);
+                    temp = Random.Range(1, maxSceneIndex + 1);
                 }
                 lastMinigame = temp;
-                sceneQueue.Push(temp);
+                sceneQueue.Enqueue(temp);
             }
             else
             {
-                while (sceneQueue.Contains(temp))
+                if (i == 0)
                 {
-                    temp = Random.Range(minSceneIndex + 1, sceneCount + 1);
+                    while (temp == lastMinigame || sceneQueue.Contains(temp))
+                    {
+                        temp = Random.Range(1, maxSceneIndex + 1);
+                    }
+                    sceneQueue.Enqueue(temp);
                 }
-                sceneQueue.Push(temp);
+                else
+                {
+                    while (sceneQueue.Contains(temp))
+                    {
+                        temp = Random.Range(1, maxSceneIndex + 1);
+                    }
+                    sceneQueue.Enqueue(temp);
+                }
             }
-            temp = Random.Range(minSceneIndex + 1, sceneCount + 1);
+            temp = Random.Range(1, maxSceneIndex + 1);
         }
 
-        switch (sceneIndexCounter)
-        {
-            case 0:
-                maxSceneIndex = 5;
-                minSceneIndex = 0;
-                break;
-            case 1:
-                maxSceneIndex = 10;
-                minSceneIndex = 0;
-                break;
-            case 2:
-                maxSceneIndex = 10;
-                minSceneIndex = 5;
-                break;
-            case 3:
-                maxSceneIndex = 15;
-                minSceneIndex = 5;
-                break;
-            default:
-                maxSceneIndex = 15;
-                minSceneIndex = 0;
-                break;
-        }
-        sceneIndexCounter++;
+        
     }
 
     public void EndOfMinigame(float scoreRate, bool won)
     {        
         //////
         ///Bu noktada skorların kategorik kaydını gelen skor ile tutabilirsin
+        ///kategorik skor arrayı 0 1 2 3 4 kkategoriler
+        ///currentscene indexini 5e böl kategorisine göre arraya at 
+        ///finalde ona göre göster
+        ///
         ///-----------------------------------------------------
         if (won)
         {
@@ -179,9 +192,8 @@ public class mainScript : MonoBehaviour
 
     void Transitioner()
     {
-        int temp = sceneQueue.Pop();
+        int temp = sceneQueue.Peek();
         nextSceneIndex = temp;
-        sceneQueue.Push(temp);
         SceneManager.LoadScene("Transition");
     }
 
