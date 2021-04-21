@@ -58,12 +58,12 @@ public class EngineScript : MonoBehaviour
                 break;
         }
         
-        spawnPositions[0] = new Vector2(0, 2.7f); 
-        spawnPositions[1] = new Vector2(2.598076f, -1.2f); 
-        spawnPositions[2] = new Vector2(-2.598076f, -1.2f);
-        spawnPositions[3] = new Vector2(2.598076f, 1.2f);
-        spawnPositions[4] = new Vector2(0, -2.7f);
-        spawnPositions[5] = new Vector2(-2.598076f, 1.2f);
+        spawnPositions[0] = new Vector2(2.598076f, 1.2f);
+        spawnPositions[1] = new Vector2(0, -2.7f);
+        spawnPositions[2] = new Vector2(-2.598076f, 1.2f);
+        spawnPositions[3] = new Vector2(0, 2.7f); 
+        spawnPositions[4] = new Vector2(2.598076f, -1.2f); 
+        spawnPositions[5] = new Vector2(-2.598076f, -1.2f);
         spawnPositions[6] = new Vector2(0, 0);
         queue = new int[blinkCount];
         dots = new GameObject[objCount];
