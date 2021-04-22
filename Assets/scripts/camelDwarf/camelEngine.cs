@@ -33,8 +33,12 @@ public class camelEngine : MonoBehaviour
 
     void Start()
     {
-        messages = new string[]{ "Camel", "Dwarf", "Camel", "Dwarf", "Camel", "Dwarf", "Camel", "Dwarf"};
+      //  messages = new string[]{ "Camel", "Dwarf", "Camel", "Dwarf", "Camel", "Dwarf", "Camel", "Dwarf"};
 
+        setMessage();
+
+       // updateText();
+       
         prepareGame();
 
         gameOver = false;
@@ -43,10 +47,10 @@ public class camelEngine : MonoBehaviour
         switch(diffLevel)
         {
             case 1:
-                waitingTime = 3f;
+                waitingTime = 2.5f;
                 break;
             case 2:
-                waitingTime = 2.5f;
+                waitingTime = 2f;
                 break;
             case 3:
                 waitingTime = 1.5f;
@@ -62,16 +66,41 @@ public class camelEngine : MonoBehaviour
         setTimer();
     }
 
+    void setMessage()
+    {
+        messages = new string[40];
+        if(Random.Range(0,2) == 0)
+            messages[0] = "Camel";
+        else
+            messages[0] = "Dwarf";
+
+        for(int i=1;i<messages.Length-3;i++)
+        {
+            messages[i] = "Camel";
+            messages[++i] = "Dwarf";
+            int ind = Random.Range(0, 9);
+            if(ind % 2 == 0)
+                messages[++i] = "Camel";
+            else
+                messages[++i] = "Dwarf";
+        }
+        index = Random.Range(0, messages.Length/2);
+    }
+
     void prepareGame()
     {
         updateText();
         cdObject = Instantiate(cdObject);
         cdObject.transform.parent = gameObject.transform;
+        if (text.text == "Camel")
+            cdObject.setStartSituation(0);
+        else
+            cdObject.setStartSituation(1);
     }
 
     void updateText()
     {
-        //int index = Random.Range(0, messages.Length);
+        //int index = Random.Range(0, 10);
         text.text = messages[index++];
     }
 
@@ -83,6 +112,7 @@ public class camelEngine : MonoBehaviour
             {
                 Debug.Log("TRUE");
                 countGame++;
+               // StartCoroutine(wait());
                 updateText();
                 setTimer();
                 cdObject.changePos();
@@ -105,6 +135,7 @@ public class camelEngine : MonoBehaviour
             else
             {
                 Debug.Log("TRUE");
+              //  StartCoroutine(wait());
                 updateText();
                 setTimer();
             }
@@ -117,14 +148,13 @@ public class camelEngine : MonoBehaviour
         currentPos = Time.time;
         if (!gameOver)
         {
-            if (countGame == (diffLevel * 3))
+            if (countGame > (diffLevel * 4) - 1)
             {
                 Finish();
             }
             else if ((currentPos - startPos) > waitingTime)
             {
                 checkGame();
-                //updateText();
             }
         }
     }
@@ -142,7 +172,17 @@ public class camelEngine : MonoBehaviour
         {
             isClick = true;
             checkGame();
+            StartCoroutine(wait());
         }
+    }
+
+    IEnumerator wait()
+    {
+        miniTime.Stop();
+        text.text = "";
+        yield return new WaitForSeconds(0.5f);
+        updateText();
+        setTimer();
     }
 
     void Finish()

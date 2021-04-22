@@ -16,9 +16,23 @@ public class CDobject : MonoBehaviour
 
     void Start()
     {
-       // GetComponent<SpriteRenderer>().sprite = camel;
-        bit = 0;
-        situation = "Camel";
+        // GetComponent<SpriteRenderer>().sprite = camel;
+        //setStartSituation();
+    }
+    public void setStartSituation(int value)
+    {
+        if(value ==0)
+        {
+            bit = 0;
+            situation = "Camel";
+            GetComponent<SpriteRenderer>().sprite = camel;
+        }
+        else
+        {
+            bit = 1;
+            situation = "Dwarf";
+            GetComponent<SpriteRenderer>().sprite = dwarf;
+        }
     }
 
     public void changePos()

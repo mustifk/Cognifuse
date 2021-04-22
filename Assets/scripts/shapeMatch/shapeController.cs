@@ -176,17 +176,20 @@ public class shapeController : MonoBehaviour
         switch (difficulty)
         {
             case 1:
+                startPosY = -3.5f;
                 distanceX = Random.Range(3f, 4f);
-                distanceY = Random.Range(1.2f, 1.7f);
+                distanceY = Random.Range(1.0f, 1.5f);
                 break;
             case 2:
-                distanceX = Random.Range(2.5f, 2.8f);
-                distanceY = Random.Range(0.9f, 1.1f);
+                startPosY = -3.4f;
+                distanceX = Random.Range(2.4f, 2.5f);
+                distanceY = Random.Range(0.9f, 1f);
                 break;
             case 3:
                 startPosX = -8f;
+                startPosY = -3.45f;
                 distanceX = Random.Range(2.2f,2.3f);
-                distanceY = Random.Range(0.6f, 0.9f);
+                distanceY = Random.Range(0.6f, 0.7f);
                 break;
         }
 
