@@ -16,12 +16,12 @@ public class mainScript : MonoBehaviour
 {
     public float animSpeed;
     public Animator transition;
-    private int nextSceneIndex,maxSceneIndex = 5,sceneQueueSize = 4,sceneCounter = 0;
+    private int nextSceneIndex,maxSceneIndex = 5,sceneQueueSize = 4,sceneCounter = 0,currentScene;
     static int levelCount, HP, totalScore,bestScore,lastMinigame = 0;
     static int difficulty = new int();
     public int totalSceneCount = 14;
     Queue<int> sceneQueue;
-
+    private int[] cScores = new int[5];
     private bool gameOver = false;
     // Start is called before the first frame update
     void Start()
@@ -41,6 +41,11 @@ public class mainScript : MonoBehaviour
 
     public void BeginTheGame()
     {
+        cScores[0] = 0;
+        cScores[1] = 0;
+        cScores[2] = 0;
+        cScores[3] = 0;
+        cScores[4] = 0;
         bestScore = PlayerPrefs.GetInt("highscore");
         HP = 3;
         sceneQueue = new Queue<int>();
@@ -54,6 +59,11 @@ public class mainScript : MonoBehaviour
 
     public void PlayAgain()
     {
+        cScores[0] = 0;
+        cScores[1] = 0;
+        cScores[2] = 0;
+        cScores[3] = 0;
+        cScores[4] = 0;
         bestScore = PlayerPrefs.GetInt("highscore");
         HP = 3;
         sceneQueue = new Queue<int>();
@@ -75,7 +85,7 @@ public class mainScript : MonoBehaviour
         Transitioner();
     }
 
-    public void NextScene()
+    public void NextScene() 
     {
         difficulty = ((levelCount++ / 6) + 1);
         if (difficulty > 3)
@@ -102,6 +112,7 @@ public class mainScript : MonoBehaviour
     /// ARKA ARKAYA GELME SORUNU HENÜZ ÇÖZÜLMEMİŞ OLABİLİR
     /// 
     /// </summary>
+
     void SceneRandomizer()
     {
         sceneCounter++;
@@ -164,10 +175,14 @@ public class mainScript : MonoBehaviour
         ///finalde ona göre göster
         ///
         ///-----------------------------------------------------
+        ///
+
+
         if (won)
         {
             Debug.Log(difficulty * (int)(100 * Mathf.Sin(Mathf.Deg2Rad * 90 * scoreRate)));
             totalScore += difficulty * (int)(100 * Mathf.Sin(Mathf.Deg2Rad * 90 * scoreRate));
+            cScores[(currentScene - 1) % 5] += difficulty * (int)(100 * Mathf.Sin(Mathf.Deg2Rad * 90 * scoreRate));
             Debug.Log("Won the minigame!");
             Transitioner();
         }
@@ -178,7 +193,18 @@ public class mainScript : MonoBehaviour
                 bestScore = totalScore;
                 PlayerPrefs.SetInt("highscore", bestScore);
             }
+            for (int i = 0; i < 5; i++)
+            {
+                if (cScores[i] > PlayerPrefs.GetInt("CHS" + i))
+                {
+                    PlayerPrefs.SetInt("CHS" + i, cScores[i]);
+                }
+            }
             Debug.Log("Lost the game! - Score = " + totalScore);
+            Debug.Log("Category scores Percpt  = " + cScores[0] + " Attnt = " + cScores[1]);
+            Debug.Log("Motrskl "+ cScores[2] + " Reasng = " + cScores[3] + " Memory = " + cScores[4]);
+            Debug.Log("Category best scores Percpt  = " + PlayerPrefs.GetInt("CHS" + 0) + " Attnt = " + PlayerPrefs.GetInt("CHS" + 1));
+            Debug.Log("Motrskl "+ PlayerPrefs.GetInt("CHS" + 2) + " Reasng = " + PlayerPrefs.GetInt("CHS" + 3) + " Memory = " + PlayerPrefs.GetInt("CHS" + 4));
             HP = 0;
             EndScene();
         }
@@ -192,8 +218,8 @@ public class mainScript : MonoBehaviour
 
     void Transitioner()
     {
-        int temp = sceneQueue.Peek();
-        nextSceneIndex = temp;
+        currentScene = sceneQueue.Peek();
+        nextSceneIndex = currentScene;
         SceneManager.LoadScene("Transition");
     }
 
@@ -213,6 +239,12 @@ public class mainScript : MonoBehaviour
     {
         return difficulty;
     }
+
+    public int GetHP()
+    {
+        return HP;
+    }
+
     public int CurrentSceneIndex()
     {
         return nextSceneIndex;

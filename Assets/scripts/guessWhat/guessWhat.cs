@@ -126,7 +126,7 @@ public class guessWhat : MonoBehaviour
             Terminate();
             if (Demo == 0)
             {
-                GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame((timebar.GetTime() / timebar.GetMax()), false);
+                StartCoroutine(End(false));
             }
         }
     }
@@ -179,7 +179,7 @@ public class guessWhat : MonoBehaviour
                 timebar.Stop();
                 if (Demo == 0)
                 {
-                    GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame((timebar.GetTime() / timebar.GetMax()), true);
+                    StartCoroutine(End(true));
                 }
                 isGameover = true;
             }
@@ -190,10 +190,16 @@ public class guessWhat : MonoBehaviour
             Terminate();
             if (Demo == 0)
             {
-                GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame((timebar.GetTime() / timebar.GetMax()), false);
+                StartCoroutine(End(false));
             }
             isGameover = true;
         }
+    }
+
+    IEnumerator End(bool win)
+    {
+        yield return new WaitForSeconds(0.5f);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame((timebar.GetTime() / timebar.GetMax()), win);
     }
 
     void Terminate()
