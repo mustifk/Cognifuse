@@ -54,10 +54,7 @@ public class tapTheDotEngine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timebar.GetTime() == 0 && !gameOver)
-        {
-            timebar.Stop();
-        }
+
     }
 
     public void Press(bool wrong)
@@ -188,11 +185,12 @@ public class tapTheDotEngine : MonoBehaviour
         }
         return position;
     }
+
     Vector2 NewPosition(Vector2 temp, Vector2 temp2)
     {
         Vector2 position = new Vector2(Random.Range(-7f, 7.0001f), Random.Range(-3.5f, 3.50001f));
         float x = temp.x, y = temp.y, x2 = temp2.x, y2 = temp2.y;
-        while (Mathf.Abs(position.x - x) < 2 && Mathf.Abs(position.y - y) < 2 && Mathf.Abs(position.x - x2) < 2 && Mathf.Abs(position.y - y2) < 2)
+        while ((Mathf.Abs(position.x - x) < 2 && Mathf.Abs(position.y - y) < 2) || (Mathf.Abs(position.x - x2) < 2 && Mathf.Abs(position.y - y2) < 2))
         {
             position = new Vector2(Random.Range(-7f, 7.0001f), Random.Range(-3.5f, 3.50001f));
         }
@@ -201,7 +199,6 @@ public class tapTheDotEngine : MonoBehaviour
 
     IEnumerator EndOfMinigame(bool result)
     {
-        timebar.Stop();
         yield return new WaitForSeconds(1);
         if (Demo == 0)
         {

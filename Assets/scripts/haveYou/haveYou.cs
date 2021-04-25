@@ -69,7 +69,7 @@ public class haveYou : MonoBehaviour
     {
         if (timebar.GetTime() == 0)
         {
-            EndGame(false);
+            StartCoroutine(EndGame(false));
         }
     }
 
@@ -157,7 +157,7 @@ public class haveYou : MonoBehaviour
 
     IEnumerator EndGame(bool win)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         if (Demo == 0)
         {
             GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame((timebar.GetTime() / timebar.GetMax()), win);
