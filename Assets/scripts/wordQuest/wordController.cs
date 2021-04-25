@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class wordController : MonoBehaviour
 {
@@ -18,7 +19,11 @@ public class wordController : MonoBehaviour
     //3 -> Hard     3 word
     public int difficulty;
 
-    string[] words = { "GENE", "BODY", "MOOD", "NEURO", "BRAIN", "CONE", "DEEP", "LEARN", "RNA", "IONS", "TERM", "OPTIC", "PAIN", "PRION", "EYE", "ROD", "SENSE", "STEM", "ULTRA", "RAY"};
+    //string[] words = { "GENE", "BODY", "MOOD", "NEURO", "BRAIN", "CONE", "DEEP", "LEARN", "RNA", "IONS", "TERM", "OPTIC", "PAIN", "PRION", "EYE", "ROD", "SENSE", "STEM", "ULTRA", "RAY"};
+    string[] words = { "RNA", "EYE", "ROD", "RAY", "BAR", "WIT"};
+    string[] four = { "BODY", "CONE", "DEEP", "TERM", "PAIN", "STEM", "IONS", "MIND", "PONS", "NOUS", "HEAD"};
+    string[] five = { "NERVE", "BRAIN", "LEARN", "OPTIC", "GYRUS", "SENSE", "SMART" };
+
 
     public Text text;
 
@@ -111,6 +116,8 @@ public class wordController : MonoBehaviour
                 break;
         }
 
+        fillWords();
+        
         bitArray = new int[row, column];
         for(int i=0;i<row;i++)
         {
@@ -139,6 +146,7 @@ public class wordController : MonoBehaviour
             {
                 indexWord = Random.Range(0, words.Length);
             }
+
             texts[textIndex++].text = words[indexWord];
             bitWord[indexWord] = 1;
         }
@@ -147,6 +155,22 @@ public class wordController : MonoBehaviour
         createButtons();
         assignWord();
         timebar.Begin();
+    }
+
+    void fillWords()
+    {
+        switch(difficulty)
+        {
+            case 1:
+                break;
+            case 2:
+                words = words.Concat(four).ToArray();
+                break;
+            default:
+                words = words.Concat(four).ToArray();
+                words = words.Concat(five).ToArray();
+                break;
+        }
     }
 
     private void Update()
@@ -190,6 +214,7 @@ public class wordController : MonoBehaviour
             indexCol = Random.Range(0, column);
 
             tempWord = texts[t].text;
+
             checkFilled();
             for (int i = 0; i < tempWord.Length; i++)
             {
@@ -202,10 +227,13 @@ public class wordController : MonoBehaviour
 
     void checkFilled()
     {
-        int counter = Random.Range(0, 4);
+        int max = 4;
+        if (difficulty == 3)
+            max = 5;
+        int counter = Random.Range(0, max);
         while (bitPath[counter] == 1)
         {
-            counter = (counter + 1) % 4;
+            counter = (counter + 1) % max;
         }
         switch (counter)
         {
@@ -214,8 +242,8 @@ public class wordController : MonoBehaviour
                 indexCol = 0;
                 break;
             case 1:
-                indexRow = (row /2) + 1;
-                indexCol = column /2;
+                indexRow = row - 1;
+                indexCol = 1;
                 break;
             case 2:
                 indexRow = row - 1;
@@ -226,8 +254,8 @@ public class wordController : MonoBehaviour
                 indexCol = column - 1;
                 break;
             default:
-                indexRow = row - 1;
-                indexCol = 1;
+                indexRow = (row / 2) + 1;
+                indexCol = column / 2;
                 break;
         }
         bitPath[counter] = 1;
