@@ -71,10 +71,7 @@ public class ChangeText : MonoBehaviour
         colors[7] = Color.yellow;
        
 
-        while (current == current2) // birincinin texti ile ikincinin renginin farklı olması için.
-        {
-            current2 = Random.Range(0, 8);
-        }
+      
 
         timebar.Begin();
         StartCoroutine(Begin());
@@ -92,10 +89,13 @@ public class ChangeText : MonoBehaviour
     {
         current = Random.Range(0, 8);
         current2 = Random.Range(0, 8);
+        while (current == current2) // birincinin texti ile ikincinin renginin farklı olması için.
+        {
+            current2 = Random.Range(0, 8);
+        }
         checkButton.gameObject.SetActive(true);
         Button.gameObject.SetActive(true);
         Button2.gameObject.SetActive(true);
-        uncheckButton.gameObject.SetActive(true);
         uncheckButton.gameObject.SetActive(true);
         checkButton.interactable = true;
         uncheckButton.interactable = true;
@@ -137,7 +137,6 @@ public class ChangeText : MonoBehaviour
         answer = true; 
         myText.text = colorNames[current]; // birincinin textiyle ikincinin rengi aynı olursa doğru oluyor.
         myText2.color = colors[current];
-
 
         while (current3 == current)
         {
@@ -191,10 +190,7 @@ public class ChangeText : MonoBehaviour
         {
             StartCoroutine(EndOfMinigame(false));
         }
-    
-
     }
-
     IEnumerator EndOfMinigame(bool result)
     {
         yield return new WaitForSeconds(1);
