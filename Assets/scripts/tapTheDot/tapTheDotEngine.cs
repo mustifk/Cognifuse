@@ -199,6 +199,7 @@ public class tapTheDotEngine : MonoBehaviour
 
     IEnumerator EndOfMinigame(bool result)
     {
+        timebar.Stop();
         yield return new WaitForSeconds(1);
         if (Demo == 0)
         {
