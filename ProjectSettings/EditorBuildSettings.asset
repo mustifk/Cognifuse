@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/haveYou.unity
     guid: 0036b408bc45710428ce2aa429e0e25f
   - enabled: 1
+    path: Assets/Scenes/camelDwarf.unity
+    guid: abdcbbfcaa4565d4ea959f97c285cf34
+  - enabled: 1
     path: Assets/Scenes/shapeMatch.unity
     guid: ebd480146516d8947b40b29ea6e5079c
   - enabled: 1

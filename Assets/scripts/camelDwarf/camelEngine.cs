@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+
 public class camelEngine : MonoBehaviour
 {
-    [SerializeField]
+    public int Demo = 0;
+    //timebar
+    public GameObject TBC;
+    timebarScript timebar;
+
     int diffLevel;
 
     [SerializeField]
@@ -33,7 +38,20 @@ public class camelEngine : MonoBehaviour
 
     void Start()
     {
-      //  messages = new string[]{ "Camel", "Dwarf", "Camel", "Dwarf", "Camel", "Dwarf", "Camel", "Dwarf"};
+        //timebar
+        GameObject temp = Instantiate(TBC);
+        timebar = temp.GetComponent<TBCscript>().timebar();
+
+        //  messages = new string[]{ "Camel", "Dwarf", "Camel", "Dwarf", "Camel", "Dwarf", "Camel", "Dwarf"};
+
+        if (Demo == 0)
+        {
+            diffLevel = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
+        }
+        else
+        {
+            diffLevel = Demo;
+        }
 
         setMessage();
 
@@ -47,13 +65,16 @@ public class camelEngine : MonoBehaviour
         switch(diffLevel)
         {
             case 1:
-                waitingTime = 2.5f;
+                waitingTime = 2f;
+                timebar.SetMax(10);
                 break;
             case 2:
-                waitingTime = 2f;
+                waitingTime = 1.5f;
+                timebar.SetMax(15);
                 break;
             case 3:
-                waitingTime = 1.5f;
+                waitingTime = 1f;
+                timebar.SetMax(20);
                 break;
         }
         countGame = 0;
@@ -64,6 +85,7 @@ public class camelEngine : MonoBehaviour
         miniTime.Begin();
 
         setTimer();
+        timebar.Begin();
     }
 
     void setMessage()
@@ -110,7 +132,6 @@ public class camelEngine : MonoBehaviour
         {
             if (isClick)      
             {
-                Debug.Log("TRUE");
                 countGame++;
                // StartCoroutine(wait());
                 updateText();
@@ -119,22 +140,19 @@ public class camelEngine : MonoBehaviour
             }
             else
             {
-                Debug.Log("GAME OVER");
                 gameOver = true;
-                Finish();
+                Finish(false);
             }
         }
         else if (text.text == cdObject.situation)
         {
             if (isClick)
             {
-                Debug.Log("GAME OVER");
                 gameOver = true;
-                Finish();
+                Finish(false);
             }
             else
             {
-                Debug.Log("TRUE");
               //  StartCoroutine(wait());
                 updateText();
                 setTimer();
@@ -145,12 +163,16 @@ public class camelEngine : MonoBehaviour
 
     void Update()
     {
+        if (timebar.GetTime() == 0 && !gameOver)
+        {
+            timebar.Stop();
+        }
         currentPos = Time.time;
         if (!gameOver)
         {
             if (countGame > (diffLevel * 4) - 1)
             {
-                Finish();
+                Finish(true);
             }
             else if ((currentPos - startPos) > waitingTime)
             {
@@ -180,18 +202,29 @@ public class camelEngine : MonoBehaviour
     {
         miniTime.Stop();
         text.text = "";
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds((6 - diffLevel) / 10);
         updateText();
         setTimer();
     }
 
-    void Finish()
+    void Finish(bool win)
     {
+        timebar.Stop();
         Destroy(text);
         int childs = transform.childCount;
         for(int i=childs-1;i>=0;i--) 
             GameObject.Destroy(gameObject.transform.GetChild(i).gameObject);
         Destroy(mini.gameObject);
         gameOver = true;
+        StartCoroutine(End(win));
+    }
+
+    IEnumerator End(bool win)
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (Demo == 0)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(1, win);
+        }
     }
 }
