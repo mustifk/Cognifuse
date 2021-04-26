@@ -249,5 +249,15 @@ public class mainScript : MonoBehaviour
     {
         return nextSceneIndex;
     }
+
+    public int[] CategoricalBestScores()
+    {
+        int[] CBS = new int[5];
+        for (int i = 0; i < 5; i++)
+        {
+            CBS[i] = PlayerPrefs.GetInt("CBS" + i);
+        }
+        return CBS;
+    }
 }
 
