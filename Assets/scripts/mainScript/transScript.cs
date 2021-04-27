@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 public class transScript : MonoBehaviour
 {
@@ -8,6 +9,20 @@ public class transScript : MonoBehaviour
     public float transitionDuration = 8f;
     public int sceneIndex = 0;
     private string[][] instructions;
+
+    [SerializeField]
+    Canvas canvas;
+
+    [SerializeField]
+    GameObject brain;
+
+    GameObject[] brains;
+
+    bool changed2 = false, changed1 = false;
+    float startTime, speed = 1.0f;
+
+    static int number_of_brains;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +63,19 @@ public class transScript : MonoBehaviour
         instructions[14][1] = "Try to figure out the final shape when the shapes on left and right become one!";
         instructions[15][0] = "Simon Says";
         instructions[15][1] = "Wait for the buttons to blink, then push them in the correct order!";
+        createBrains();
+        startTime = Time.time;
+
+        if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().GetHP() == number_of_brains && number_of_brains == 2)
+            changed2 = true;
+        if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().GetHP() == number_of_brains && number_of_brains == 1)
+        {
+            changed2 = true;
+            changed1 = true;
+        }
+
+        number_of_brains = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().GetHP();
+  
         CurrentSceneSelector();
         StartCoroutine(NextScene());
     }
@@ -55,11 +83,43 @@ public class transScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(number_of_brains == 2 && !changed2)
+        {
+            float t = (Time.time - startTime) * speed;
+            brains[2].transform.GetComponent<Image>().color = Color.Lerp(Color.white, new Color(0.3568628f, 0.3490196f, 0.3490196f, 255), t);
+        }
+        if (number_of_brains == 1 && !changed1)
+        {
+            float t = (Time.time - startTime) * speed;
+            brains[1].transform.GetComponent<Image>().color = Color.Lerp(Color.white, new Color(0.3568628f, 0.3490196f, 0.3490196f, 255), t);
+            brains[2].GetComponent<Image>().color = new Color32(91, 89, 89, 255);
+        }
+        else
+        {
+            if(changed1 && changed2)
+            {
+                brains[1].GetComponent<Image>().color = new Color32(91, 89, 89, 255);
+                brains[2].GetComponent<Image>().color = new Color32(91, 89, 89, 255);
+            }
+            else if(changed1)
+                brains[1].GetComponent<Image>().color = new Color32(91, 89, 89, 255);
+            else if(changed2)
+                brains[2].GetComponent<Image>().color = new Color32(91, 89, 89, 255);
+        }
+
+    }
+
+    void createBrains()
+    {
+        brains = new GameObject[3];
+        brains[0] = Instantiate(brain, new Vector3(-4, 3.9f), Quaternion.identity, canvas.transform);
+        brains[1] = Instantiate(brain, new Vector3(0, 3.9f), Quaternion.identity, canvas.transform);
+        brains[2] = Instantiate(brain, new Vector3(4, 3.9f), Quaternion.identity, canvas.transform);
     }
 
     IEnumerator NextScene()
     {
+        
         yield return new WaitForSeconds(transitionDuration);
         GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().NextScene();
     }
