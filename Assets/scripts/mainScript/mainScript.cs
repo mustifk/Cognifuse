@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 /// <summary>
 /// SAHNE GEÇİŞLERİNDE SORUNLAR VAR
 /// OYUNLAR DÜZENLENİP EKLENECEK
@@ -16,6 +17,7 @@ public class mainScript : MonoBehaviour
 {
     public float animSpeed;
     public Animator transition;
+    public AudioSource mainMenu,electricitySound,gameMusic, transitionMusic;
     private int nextSceneIndex,maxSceneIndex = 5,sceneQueueSize = 4,sceneCounter = 0,currentScene;
     static int levelCount, HP, totalScore,bestScore,lastMinigame = 0;
     static int difficulty = new int();
@@ -26,6 +28,9 @@ public class mainScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        electricitySound.PlayDelayed(0.5f);
+        mainMenu.Play();
+
         Destroy(GameObject.FindGameObjectWithTag("OldScript"));
         bestScore = PlayerPrefs.GetInt("highscore");
         difficulty = 1;
@@ -83,10 +88,13 @@ public class mainScript : MonoBehaviour
     {
         yield return new WaitForSeconds(animSpeed);
         Transitioner();
+        
     }
 
     public void NextScene() 
     {
+        transitionMusic.Stop();
+
         difficulty = ((levelCount++ / 6) + 1);
         if (difficulty > 3)
         {
@@ -94,6 +102,7 @@ public class mainScript : MonoBehaviour
         }
         nextSceneIndex = sceneQueue.Dequeue();
         SceneManager.LoadScene(nextSceneIndex);
+        
         if (sceneQueue.Count == 0)
         {
             SceneRandomizer();
@@ -167,7 +176,7 @@ public class mainScript : MonoBehaviour
     }
 
     public void EndOfMinigame(float scoreRate, bool won)
-    {        
+    {
         //////
         ///Bu noktada skorların kategorik kaydını gelen skor ile tutabilirsin
         ///kategorik skor arrayı 0 1 2 3 4 kkategoriler
@@ -176,8 +185,7 @@ public class mainScript : MonoBehaviour
         ///
         ///-----------------------------------------------------
         ///
-
-
+        gameMusic.Stop();
         if (won)
         {
             Debug.Log(difficulty * (int)(100 * Mathf.Sin(Mathf.Deg2Rad * 90 * scoreRate)));
@@ -218,9 +226,13 @@ public class mainScript : MonoBehaviour
 
     void Transitioner()
     {
+        mainMenu.Stop();
+        gameMusic.Stop();
         currentScene = sceneQueue.Peek();
         nextSceneIndex = currentScene;
         SceneManager.LoadScene("Transition");
+        transitionMusic.Play();
+
     }
 
     public string getScore()
@@ -249,7 +261,7 @@ public class mainScript : MonoBehaviour
     {
         return nextSceneIndex;
     }
-
+    
     public int[] CategoricalBestScores()
     {
         int[] CBS = new int[5];
@@ -258,6 +270,22 @@ public class mainScript : MonoBehaviour
             CBS[i] = PlayerPrefs.GetInt("CBS" + i);
         }
         return CBS;
+    }
+    public void stopGameMusic()
+    {
+        gameMusic.Stop();
+    }
+    public void startGameMusic()
+    {
+        gameMusic.Play();
+    }
+    public void startTransitionMusic()
+    {
+        transitionMusic.Play();
+    }
+    public void stopTransitionMusic()
+    {
+        transitionMusic.Stop();
     }
 }
 

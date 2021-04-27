@@ -9,7 +9,7 @@ public class guessWhat : MonoBehaviour
     //timebar
     public GameObject TBC;
     timebarScript timebar;
-
+    public AudioSource correct, incorrect;
     [SerializeField] private Sprite[] images;
     [SerializeField] private int difficulty;
     [SerializeField] private guessImage originalCard;
@@ -167,6 +167,7 @@ public class guessWhat : MonoBehaviour
     {
         if(id == 0 && !isGameover)
         {
+            correct.Play();
             if (tourCount > 0)
             {
                 tourCount--;
@@ -186,6 +187,7 @@ public class guessWhat : MonoBehaviour
         }
         else
         {
+            incorrect.Play();
             timebar.Stop();
             Terminate();
             if (Demo == 0)

@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class shape : MonoBehaviour
 {
+    public AudioSource bubble,wrong;
+
     private shapeController controller;
 
     public string shapeName;
@@ -60,20 +62,29 @@ public class shape : MonoBehaviour
    
     private void OnMouseDown()
     {
-        if(selectable)
+        if (selectable)
         {
+         
+
             if (controller.message != shapeName)     //user selected wrong shape according to message
             {
+                wrong.Play();
                 controller.checkShape = false;
                 controller.GameOver(false);
             }
             else
             {
+                bubble.Play();
                 controller.counterShape++;      //user selected right shape and counter is incremented
                 selectable = false;
-                Destroy(gameObject);
+                StartCoroutine(destroy());
             }
         }
+    }
+    IEnumerator destroy()
+    {
+        yield return new WaitForSeconds(0.25f);
+        Destroy(gameObject);
     }
     public int changeSprite(int index)
     {

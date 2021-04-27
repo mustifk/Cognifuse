@@ -128,6 +128,7 @@ public class transScript : MonoBehaviour
     {
         StopAllCoroutines();
         GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().NextScene();
+
     }
 
     void CurrentSceneSelector()

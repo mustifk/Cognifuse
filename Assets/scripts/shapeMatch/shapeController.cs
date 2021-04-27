@@ -95,24 +95,23 @@ public class shapeController : MonoBehaviour
             {
                 if (counterShape == difficulty)       //load other shapes
                 {
-                    int childs = transform.childCount;
-                    for (int i = childs - 1; i > 0; i--)
-                    {
-                        GameObject.Destroy(transform.GetChild(i).gameObject);
-                    }
-                    GameObject.Destroy(transform.GetChild(0).gameObject);
+                  
+                        StartCoroutine(wait2());
+
                     gameCounter++;
                     counterShape = 0;
                     lastSprite = 0;
                     if (gameCounter < numberOfScene)
                     {
-                        prepareGame();
+                        StartCoroutine(wait());
+
                     }
                 }
             }
             else
             {
                 GameOver(true);
+
             }
             if (timebar.GetTime() == 0 && !isGameover)
             {
@@ -121,7 +120,42 @@ public class shapeController : MonoBehaviour
             }
         }
     }
+    IEnumerator wait()
+    {
+        yield return new WaitForSeconds(0.30f);
+        prepareGame();
 
+
+    }
+    IEnumerator wait2()
+    {
+        yield return new WaitForSeconds(0.30f);
+        int childs = transform.childCount;
+        for (int i = childs - 1; i > 0; i--)
+        {
+            GameObject.Destroy(transform.GetChild(i).gameObject);
+        }
+        GameObject.Destroy(transform.GetChild(0).gameObject);
+
+
+    }
+    IEnumerator wait3()
+    {
+        yield return new WaitForSeconds(0.50f);
+        int childs = transform.childCount;
+        for (int i = childs - 1; i > 0; i--)
+        {
+            GameObject.Destroy(transform.GetChild(i).gameObject);
+        }
+        if (transform.childCount > 0)
+        {
+            GameObject.Destroy(transform.GetChild(0).gameObject);
+        }
+        GameObject.Destroy(text);
+
+
+
+    }
     void prepareGame()
     {
         for (int i = 0; i < numberOfObjects; i++)
@@ -289,17 +323,9 @@ public class shapeController : MonoBehaviour
     public void GameOver(bool win)
     {
         isGameover = true;
+        StartCoroutine(wait3());
 
-        int childs = transform.childCount;
-        for (int i = childs - 1; i > 0; i--)
-        {
-            GameObject.Destroy(transform.GetChild(i).gameObject);
-        }
-        if (transform.childCount > 0)
-        {
-            GameObject.Destroy(transform.GetChild(0).gameObject);
-        }
-        GameObject.Destroy(text);
+       
         StartCoroutine(End(win));
     }
 

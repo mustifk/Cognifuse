@@ -41,10 +41,13 @@ public class timebarScript : MonoBehaviour
     {
         temp = Time.realtimeSinceStartup;
         isTicking = true;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().startGameMusic();
     }
     public void Stop()
     {
         isTicking = false;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().stopGameMusic();
+
     }
     public void SetMax(int x)
     {
