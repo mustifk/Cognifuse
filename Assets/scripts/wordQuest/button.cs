@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class button : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
-
+    public AudioSource slider;
     wordController wordController;
 
     Image color;
@@ -53,6 +53,7 @@ public class button : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
     {
         if(wordController.selected)
         {
+            slider.Play();
             color.color = Color.green;
             if(!selected_button)
             {

@@ -11,7 +11,7 @@ public class qmscript : MonoBehaviour
     //timebar
     public GameObject TBC;
     timebarScript timebar;
-
+    public AudioSource check, uncheck;
     bool isGameover = false;
     static int questioncounter;
     int difficulty;
@@ -80,6 +80,7 @@ public class qmscript : MonoBehaviour
         {
             if (str == ans.ToString())
             {
+                check.Play();
                 if (questioncounter == 0)
                 {
                     StartCoroutine(Gameover(true));
@@ -92,6 +93,7 @@ public class qmscript : MonoBehaviour
             }
             else
             {
+                uncheck.Play();
                 StartCoroutine(Gameover(false));
             }
         }

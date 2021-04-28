@@ -11,7 +11,7 @@ public class wordController : MonoBehaviour
     //timebar
     public GameObject TBC;
     timebarScript timebar;
-
+    public AudioSource correct;
     bool isGameover = false;
 
     //1 -> Easy     1 word
@@ -336,6 +336,7 @@ public class wordController : MonoBehaviour
         {
             if(temp == word)
             {
+                correct.Play();
                 for (int i = 0; i < words.Length; i++)
                     if (words[i] == temp)
                         deleteWord(words, i);

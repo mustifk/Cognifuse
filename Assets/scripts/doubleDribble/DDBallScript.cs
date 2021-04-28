@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class DDBallScript : MonoBehaviour
 {
+    public AudioSource correct, incorrect;
     bool left;
+    static bool lose = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,11 +27,22 @@ public class DDBallScript : MonoBehaviour
     {
         if (collision.transform.tag == "DropletX")
         {
+            
+            if (!lose)
+            {
+                incorrect.Play();
+                lose = true;
+            }
             Destroy(collision.gameObject);
             this.transform.parent.GetComponent<DDBallsEngine>().GameOver();
         }
         else
         {
+            if (!lose)
+            {
+                correct.Play();
+
+            }
             collision.transform.parent.GetComponent<DDBallsEngine>().DropletGone();
             Destroy(collision.gameObject);
         }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class buttonscript : MonoBehaviour
 {
     static int colorCount;
+    public AudioSource doo, re, mi, fa, sol, la, si;
+    AudioSource original;
     SpriteRenderer sprt;
     Color colortemp;
     bool blinking = false,clicked = false,colliding = false;
@@ -15,24 +17,32 @@ public class buttonscript : MonoBehaviour
         switch (colorCount)
         {
             case 0:
+                original = doo;
                 this.GetComponent<SpriteRenderer>().color = new Color(Color.red.r / 1.5f, Color.red.g / 1.5f, Color.red.b / 1.5f);
                 break;
             case 1:
+                original = re;
+
                 this.GetComponent<SpriteRenderer>().color = new Color(Color.green.r / 1.5f, Color.green.g / 1.5f, Color.green.b / 1.5f);
                 break;
             case 2:
+                original = mi;
                 this.GetComponent<SpriteRenderer>().color = new Color((Color.blue.r - 0.05f) / 1.4f, (Color.blue.g + 0.05f) / 1.4f, (Color.blue.b - 0.2f) / 1.4f);
                 break;
             case 3:
+                original = fa;
                 this.GetComponent<SpriteRenderer>().color = new Color(Color.magenta.r / 1.5f, Color.magenta.g / 1.5f, Color.magenta.b / 1.5f);
                 break;
             case 4:
+                original = sol;
                 this.GetComponent<SpriteRenderer>().color = new Color(Color.cyan.r / 1.5f, Color.cyan.g / 1.5f, Color.cyan.b / 1.5f);
                 break;
             case 5:
+                original = la;
                 this.GetComponent<SpriteRenderer>().color = new Color(Color.yellow.r / 1.5f, Color.yellow.g / 1.5f, Color.yellow.b / 1.5f);
                 break;
             case 6:
+                original = si;
                 this.GetComponent<SpriteRenderer>().color = new Color(Color.gray.r / 1.5f, Color.gray.g / 1.5f, Color.gray.b / 1.5f);
                 break;
         }
@@ -72,6 +82,7 @@ public class buttonscript : MonoBehaviour
 
     public void Blink()
     {
+        original.Play();
         blinking = true;
         //sprt.color = Color.Lerp(colortemp, Color.white, 0.6f);
         StartCoroutine(Wait());
@@ -86,6 +97,7 @@ public class buttonscript : MonoBehaviour
 
     void Touch()
     {
+        original.Play();
         clicked = true;
         //sprt.color = Color.Lerp(colortemp, Color.white, 0.6f);
         StartCoroutine(TouchWait());

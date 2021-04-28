@@ -13,7 +13,7 @@ public class correctSideEngine : MonoBehaviour
     //1 -> Easy
     //2 -> Normal
     //3 -> Hard
-
+    public AudioSource correct, incorrect;
     public int diffLevel = 1;
 
     int numberOfShape;
@@ -174,10 +174,12 @@ public class correctSideEngine : MonoBehaviour
         {
             if (leftShape.CompareTag(objects[indexOfShape].transform.tag))
             {
+                correct.Play();
                 arrangeButtons();
             }
             else
             {
+                incorrect.Play();
                 Finish(false);
             }
         }
@@ -185,10 +187,12 @@ public class correctSideEngine : MonoBehaviour
         {
             if (rightShape.CompareTag(objects[indexOfShape].transform.tag))
             {
+                correct.Play();
                 arrangeButtons();
             }
             else
             {
+                incorrect.Play();
                 Finish(false);
             }
         }

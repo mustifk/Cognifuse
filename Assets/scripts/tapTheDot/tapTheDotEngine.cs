@@ -8,7 +8,7 @@ public class tapTheDotEngine : MonoBehaviour
     //timebar
     public GameObject TBC;
     timebarScript timebar;
-
+    public AudioSource correct, incorrect;
     int blinkCount, difficulty = new int(); //blink free - diff max 3 
     public GameObject dot,dot2;
     private float lifespan;
@@ -61,8 +61,13 @@ public class tapTheDotEngine : MonoBehaviour
     {
         if (wrong) // puan ver
         {
+            incorrect.Play();
             StartCoroutine(EndOfMinigame(false));
             gameOver = true;
+        }
+        else
+        {
+            correct.Play();
         }
         for (int i = 0; i < dots.Length; i++)
         {

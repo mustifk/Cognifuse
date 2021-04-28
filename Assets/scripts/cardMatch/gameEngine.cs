@@ -5,7 +5,7 @@ using UnityEngine;
 public class gameEngine : MonoBehaviour
 {
     public int Demo = 0;
-
+    public AudioSource correct; 
     //timebar
     public GameObject TBC;
     timebarScript timebar;
@@ -191,6 +191,7 @@ public class gameEngine : MonoBehaviour
         }
         else                                        //their face are same
         {
+            correct.Play();
             firstCard.matched = true;
             secondCard.matched = true;
             counter++;

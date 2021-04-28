@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
+    public AudioSource flip;
     [SerializeField]
     private gameEngine controller;
 
@@ -51,6 +52,7 @@ public class Card : MonoBehaviour
 
     private IEnumerator RotateCard()
     {
+        flip.Play();
         coroutineAllowed = false;
 
         if (!facedUp)

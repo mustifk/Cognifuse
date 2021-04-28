@@ -11,7 +11,7 @@ public class haveYou : MonoBehaviour
     //timebar
     public GameObject TBC;
     timebarScript timebar;
-
+    public AudioSource correct, incorrect, show;
     [SerializeField] private Sprite[] images;
     private int difficulty;
     [SerializeField] private images originalCard;
@@ -100,6 +100,7 @@ public class haveYou : MonoBehaviour
 
     private IEnumerator showCards(int i)
     {
+        show.Play();
         yield return new WaitForSeconds(0f);
 
         card = Instantiate(originalCard) as images;
@@ -138,15 +139,18 @@ public class haveYou : MonoBehaviour
     }
     public void Press(bool trueorfalse)
     {
-        timebar.Stop();
         if (isTrue && trueorfalse || !isTrue && !trueorfalse)
         {
+            correct.Play();
             StartCoroutine(EndGame(true));
         }
         else
         {
+            incorrect.Play();
             StartCoroutine(EndGame(false));
         }
+        timebar.Stop();
+
     }
     private void setActives(bool trueorfalse)
     {

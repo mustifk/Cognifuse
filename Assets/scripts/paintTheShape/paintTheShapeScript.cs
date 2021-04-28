@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class paintTheShapeScript : MonoBehaviour
 {
+    public AudioSource tap, incorrect;
     public int Demo = 0;
     //timebar
     public GameObject TBC;
@@ -116,10 +117,12 @@ public class paintTheShapeScript : MonoBehaviour
             {
                 if (blockList[x,y].GetComponent<blockScript>().CurrentState() < validBlocks[x,y])
                 {
+                    incorrect.Play();
                     StartCoroutine(GameOver(false));
                 }
                 else if (blockList[x,y].GetComponent<blockScript>().CurrentState() == validBlocks[x,y])
                 {
+                    tap.Play();
                     complete++;
                 }
             }
