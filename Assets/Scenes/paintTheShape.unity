@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 354228684}
   - component: {fileID: 354228683}
   - component: {fileID: 354228682}
+  - component: {fileID: 354228685}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -204,6 +205,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &354228685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 354228681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f0cd7f1bd2ae74449f892e5e07852c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &365070952
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,7 +499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tap: {fileID: 1329621077}
   incorrect: {fileID: 1329621078}
-  Demo: 2
+  Demo: 0
   TBC: {fileID: 2680854561537681972, guid: e2316c9dfafdf884c98b9b13723782fd, type: 3}
   block: {fileID: 6489936877388339711, guid: acbc28b025467bb4d90da499c4bf3399, type: 3}
   blockM: {fileID: 2601698519667632535, guid: 0b3a647ed83be304a85277ebe900739f, type: 3}

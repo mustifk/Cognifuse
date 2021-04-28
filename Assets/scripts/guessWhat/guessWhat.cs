@@ -200,8 +200,11 @@ public class guessWhat : MonoBehaviour
 
     IEnumerator End(bool win)
     {
-        yield return new WaitForSeconds(0.5f);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame((timebar.GetTime() / timebar.GetMax()), win);
+        yield return new WaitForSeconds(0.8f);
+        if (Demo == 0)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame((timebar.GetTime() / timebar.GetMax()), win);
+        }
     }
 
     void Terminate()

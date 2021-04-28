@@ -25,6 +25,7 @@ public class mainScript : MonoBehaviour
     Queue<int> sceneQueue;
     private int[] cScores = new int[5];
     private bool gameOver = false;
+    static bool isListening = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +45,16 @@ public class mainScript : MonoBehaviour
         
     }
 
+    public void Listen(bool tf)
+    {
+        isListening = tf;   
+    }
+
+    public bool Listening()
+    {
+        return isListening;
+    }
+
     public void BeginTheGame()
     {
         electricitySound.Stop();
@@ -54,7 +65,7 @@ public class mainScript : MonoBehaviour
         cScores[3] = 0;
         cScores[4] = 0;
         bestScore = PlayerPrefs.GetInt("highscore");
-        HP = 3;
+        HP = 1;
         sceneQueue = new Queue<int>();
         totalScore = 0;
         levelCount = 0;
@@ -205,16 +216,17 @@ public class mainScript : MonoBehaviour
             }
             for (int i = 0; i < 5; i++)
             {
-                if (cScores[i] > PlayerPrefs.GetInt("CHS" + i))
+                PlayerPrefs.SetInt("CCS" + i, cScores[i]);
+                if (cScores[i] > PlayerPrefs.GetInt("CBS" + i))
                 {
-                    PlayerPrefs.SetInt("CHS" + i, cScores[i]);
+                    PlayerPrefs.SetInt("CBS" + i, cScores[i]);
                 }
             }
             Debug.Log("Lost the game! - Score = " + totalScore);
             Debug.Log("Category scores Percpt  = " + cScores[0] + " Attnt = " + cScores[1]);
             Debug.Log("Motrskl "+ cScores[2] + " Reasng = " + cScores[3] + " Memory = " + cScores[4]);
-            Debug.Log("Category best scores Percpt  = " + PlayerPrefs.GetInt("CHS" + 0) + " Attnt = " + PlayerPrefs.GetInt("CHS" + 1));
-            Debug.Log("Motrskl "+ PlayerPrefs.GetInt("CHS" + 2) + " Reasng = " + PlayerPrefs.GetInt("CHS" + 3) + " Memory = " + PlayerPrefs.GetInt("CHS" + 4));
+            Debug.Log("Category best scores Percpt  = " + PlayerPrefs.GetInt("CBS" + 0) + " Attnt = " + PlayerPrefs.GetInt("CBS" + 1));
+            Debug.Log("Motrskl "+ PlayerPrefs.GetInt("CBS" + 2) + " Reasng = " + PlayerPrefs.GetInt("CBS" + 3) + " Memory = " + PlayerPrefs.GetInt("CBS" + 4));
             HP = 0;
             EndScene();
         }
@@ -269,10 +281,20 @@ public class mainScript : MonoBehaviour
         int[] CBS = new int[5];
         for (int i = 0; i < 5; i++)
         {
-            CBS[i] = PlayerPrefs.GetInt("CBS" + i);
+            CBS[i] = PlayerPrefs.GetInt("CHS" + i);
         }
         return CBS;
     }
+    public int[] CategoricalCurrentScores()
+    {
+        int[] CCS = new int[5];
+        for (int i = 0; i < 5; i++)
+        {
+            CCS[i] = PlayerPrefs.GetInt("CCS" + i);
+        }
+        return CCS;
+    }
+
     public void stopGameMusic()
     {
         gameMusic.Stop();

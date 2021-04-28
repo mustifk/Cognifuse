@@ -212,7 +212,7 @@ public class paintTheShapeScript : MonoBehaviour
         isGameover = true;
         Terminate();
         timebar.Stop();
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.8f);
         if (Demo == 0)
         {
             GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame((timebar.GetTime() / timebar.GetMax()), win);

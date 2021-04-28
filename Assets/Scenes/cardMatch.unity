@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166404a681b6c13469aead0d59996d8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Demo: 2
+  Demo: 0
   correct: {fileID: 241846382}
   TBC: {fileID: 2680854561537681972, guid: e2316c9dfafdf884c98b9b13723782fd, type: 3}
   bTime: 0
@@ -435,6 +435,7 @@ GameObject:
   - component: {fileID: 827941695}
   - component: {fileID: 827941694}
   - component: {fileID: 827941693}
+  - component: {fileID: 827941696}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -507,6 +508,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &827941696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 827941692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f0cd7f1bd2ae74449f892e5e07852c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &868226717 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9200775739291378047, guid: ff8dbd5b489a43c49b8db1ee494343c3,

@@ -11,7 +11,7 @@ public class soundButtonScript : MonoBehaviour
     bool toggleListening = true;
     void Start()
     {
-  
+        toggleListening = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Listening();
     }
 
     // Update is called once per frame
@@ -26,11 +26,13 @@ public class soundButtonScript : MonoBehaviour
         if (toggleListening)
         {
             audio.enabled = true;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Listen(true);
             this.GetComponent<Image>().sprite = on;
         }
         else
         {
             audio.enabled = false;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Listen(false);
             this.GetComponent<Image>().sprite = off;
         }
     }

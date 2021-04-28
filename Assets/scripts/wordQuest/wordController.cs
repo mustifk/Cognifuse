@@ -360,7 +360,7 @@ public class wordController : MonoBehaviour
     {
         timebar.Stop();
         isGameover = true;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.8f);
         Finish();
         if (Demo == 0)
         {
