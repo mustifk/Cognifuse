@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CDobject : MonoBehaviour
 {
+    public AudioSource up, down;
     [SerializeField]
     Sprite camel;
 
@@ -39,6 +40,7 @@ public class CDobject : MonoBehaviour
     {
         if(bit == 0)
         {
+            down.Play();
             GetComponent<SpriteRenderer>().sprite = dwarf;
             bit = 1;
             situation = "Dwarf";
@@ -46,6 +48,7 @@ public class CDobject : MonoBehaviour
         }
         else
         {
+            up.Play();
             GetComponent<SpriteRenderer>().sprite = camel;
             bit = 0;
             situation = "Camel";

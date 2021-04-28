@@ -420,7 +420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4829a2782e44bc44895f257bf0feb416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Demo: 0
+  Demo: 2
   TBC: {fileID: 2680854561537681972, guid: e2316c9dfafdf884c98b9b13723782fd, type: 3}
   cdObject: {fileID: 1936930711649374573, guid: eb29f054c6612d040bb16b27395289d0,
     type: 3}
