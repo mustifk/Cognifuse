@@ -18,7 +18,7 @@ public class mainScript : MonoBehaviour
     public float animSpeed;
     public Animator transition;
     public AudioSource mainMenu,electricitySound,gameMusic, transitionMusic,endGameMusic;
-    private int nextSceneIndex,maxSceneIndex = 5,sceneQueueSize = 4,sceneCounter = 0,currentScene;
+    private int nextSceneIndex,maxSceneIndex = 5,sceneQueueSize = 5,sceneCounter = 0,currentScene;
     static int levelCount, HP, totalScore,bestScore,lastMinigame = 0;
     static int difficulty = new int();
     public int totalSceneCount = 14;
@@ -29,7 +29,7 @@ public class mainScript : MonoBehaviour
     void Start()
     {
         endGameMusic.Stop();
-        electricitySound.PlayDelayed(0.5f);
+        electricitySound.PlayDelayed(0.7f);
         mainMenu.PlayDelayed(3f);
         Destroy(GameObject.FindGameObjectWithTag("OldScript"));
         bestScore = PlayerPrefs.GetInt("highscore");
@@ -147,7 +147,7 @@ public class mainScript : MonoBehaviour
         {
             if (i == sceneQueueSize - 1)
             {
-                while (temp == lastMinigame)
+                while (temp == lastMinigame || sceneQueue.Contains(temp))
                 {
                     temp = Random.Range(1, maxSceneIndex + 1);
                 }
@@ -175,8 +175,6 @@ public class mainScript : MonoBehaviour
             }
             temp = Random.Range(1, maxSceneIndex + 1);
         }
-
-        
     }
 
     public void EndOfMinigame(float scoreRate, bool won)
