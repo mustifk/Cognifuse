@@ -14,7 +14,7 @@ public class transScript : MonoBehaviour
     Canvas canvas;
 
     [SerializeField]
-    GameObject brain;
+    GameObject brain,deathBrain;
 
     //[SerializeField]
     GameObject[] brains;
@@ -54,7 +54,7 @@ public class transScript : MonoBehaviour
         instructions[8][1] = "Catch the circles with the same color and avoid vice versa!";
         instructions[9][0] = "Color Confusion";
         instructions[9][1] = "Result is correct iff text in left part is the color of the right part!";
-        instructions[10][0] = "Match The Cards";
+        instructions[10][0] = "Match The Badges";
         instructions[10][1] = "Try to find the other twin of all the cards on the screen!";
         instructions[11][0] = "Word Quest";
         instructions[11][1] = "Try to find the hidden words written on the left before the time is up!";
@@ -64,7 +64,7 @@ public class transScript : MonoBehaviour
         instructions[13][1] = "Try to collect all numbers in order, avoid the enemies!";
         instructions[14][0] = "Paint The Shape";
         instructions[14][1] = "Try to figure out the final shape when the shapes on left and right become one!";
-        instructions[15][0] = "Simon Says";
+        instructions[15][0] = "Simon's Orders";
         instructions[15][1] = "Wait for the buttons to blink, then push them in the correct order!";
         createBrains();
         startTime = Time.time;
@@ -85,40 +85,7 @@ public class transScript : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {/*
-        if (number_of_brains == 2 && !changed2)
-        {
-            //float t = (Time.time - startTime) * speed;
-            // brains[2].transform.GetComponent<Image>().color = Color.Lerp(Color.white, new Color(0.3568628f, 0.3490196f, 0.3490196f, 255), t);
-            animator = brains[2].transform.GetComponent<Animator>();
-            animator.SetBool("loseTrigger", true);
-        }
-        if (number_of_brains == 1 && !changed1)
-        {
-            animator = brains[1].transform.GetComponent<Animator>();
-            animator.SetBool("loseTrigger", true);
-            //brains[1].transform.GetComponent<Image>().color = Color.Lerp(Color.white, new Color(0.3568628f, 0.3490196f, 0.3490196f, 255), t);
-
-            //brains[2].GetComponent<Image>().color = new Color32(91, 89, 89, 255);
-            float t = (Time.time - startTime) * speed;
-            //brains[2].transform.GetComponent<Image>().color = Color.Lerp(new Color(0.3568628f, 0.3490196f, 0.3490196f, 1), new Color(0.3568628f, 0.3490196f, 0.3490196f, 1), t);
-
-            // brains[2].GetComponent<Image>().color = new Color(0.3568628f, 0.3490196f, 0.3490196f, 1);
-            brains[2].GetComponent<changeColor>().colorChange();
-        }
-      /*  else
-        {
-            if(changed1 && changed2)
-            {
-                brains[1].transform.GetComponent<Image>().color = new Color(0.3568628f, 0.3490196f, 0.3490196f, 1);
-                brains[2].transform.GetComponent<Image>().color = new Color(0.3568628f, 0.3490196f, 0.3490196f, 1);
-            }
-            else if(changed1)
-                brains[1].transform.GetComponent<Image>().color = new Color(0.3568628f, 0.3490196f, 0.3490196f, 1);
-            else if(changed2)
-                //brains[2].transform.GetComponent<Image>().color = new Color(0.3568628f, 0.3490196f, 0.3490196f, 1);
-                brains[2].transform.GetComponent<Image>().color = new Color32(91, 89, 89, 255);
-        }*/
+    {
         
     }
 
@@ -126,8 +93,6 @@ public class transScript : MonoBehaviour
     {
         if (number_of_brains == 2 && !changed2)
         {
-            //float t = (Time.time - startTime) * speed;
-            // brains[2].transform.GetComponent<Image>().color = Color.Lerp(Color.white, new Color(0.3568628f, 0.3490196f, 0.3490196f, 255), t);
             animator = brains[2].transform.GetComponent<Animator>();
             animator.SetBool("loseTrigger", true);
         }
@@ -135,13 +100,9 @@ public class transScript : MonoBehaviour
         {
             animator = brains[1].transform.GetComponent<Animator>();
             animator.SetBool("loseTrigger", true);
-            //brains[1].transform.GetComponent<Image>().color = Color.Lerp(Color.white, new Color(0.3568628f, 0.3490196f, 0.3490196f, 255), t);
 
-            //brains[2].GetComponent<Image>().color = new Color32(91, 89, 89, 255);
             float t = (Time.time - startTime) * speed;
-            //brains[2].transform.GetComponent<Image>().color = Color.Lerp(new Color(0.3568628f, 0.3490196f, 0.3490196f, 1), new Color(0.3568628f, 0.3490196f, 0.3490196f, 1), t);
 
-            // brains[2].GetComponent<Image>().color = new Color(0.3568628f, 0.3490196f, 0.3490196f, 1);
             brains[2].GetComponent<changeColor>().colorChange();
         }
         else
@@ -161,9 +122,29 @@ public class transScript : MonoBehaviour
     void createBrains()
     {
         brains = new GameObject[3];
-        brains[0] = Instantiate(brain, new Vector3(-4, 3.9f), Quaternion.identity, canvas.transform);
-        brains[1] = Instantiate(brain, new Vector3(0, 3.9f), Quaternion.identity, canvas.transform);
-        brains[2] = Instantiate(brain, new Vector3(4, 3.9f), Quaternion.identity, canvas.transform);
+        if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().GetHP() == 3)
+        {
+
+            brains[0] = Instantiate(brain, new Vector3(-4, 3.9f), Quaternion.identity, canvas.transform);
+            brains[1] = Instantiate(brain, new Vector3(0, 3.9f), Quaternion.identity, canvas.transform);
+            brains[2] = Instantiate(brain, new Vector3(4, 3.9f), Quaternion.identity, canvas.transform);
+        }
+        else if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().GetHP() == 2)
+        {
+
+            brains[0] = Instantiate(brain, new Vector3(-4, 3.9f), Quaternion.identity, canvas.transform);
+            brains[1] = Instantiate(brain, new Vector3(0, 3.9f), Quaternion.identity, canvas.transform);
+            brains[2] = Instantiate(deathBrain, new Vector3(4, 3.9f), Quaternion.identity, canvas.transform);
+
+        }
+        else if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().GetHP() == 1)
+        {
+
+            brains[0] = Instantiate(brain, new Vector3(-4, 3.9f), Quaternion.identity, canvas.transform);
+            brains[1] = Instantiate(deathBrain, new Vector3(0, 3.9f), Quaternion.identity, canvas.transform);
+            brains[2] = Instantiate(deathBrain, new Vector3(4, 3.9f), Quaternion.identity, canvas.transform);
+
+        }
     }
 
     IEnumerator NextScene()
