@@ -26,6 +26,19 @@ public class mainScript : MonoBehaviour
     private int[] cScores = new int[5];
     private bool gameOver = false;
     static bool isListening = true;
+
+    static int counter = 0;
+    // Start is called before the first frame update
+    public GameObject Main, Detail;
+
+    public void ChangeCanvas()
+    {
+        // Main tekrar çalışıyor aktif oldugunda düzelt
+        // detailde arkaplan sorunu arkaplanı karart
+        Main.SetActive(counter % 2 == 1);
+        Detail.SetActive(counter % 2 == 0);
+        counter++;
+    }
     // Start is called before the first frame update
     void Start()
     {
