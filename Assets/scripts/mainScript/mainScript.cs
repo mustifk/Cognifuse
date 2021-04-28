@@ -129,14 +129,6 @@ public class mainScript : MonoBehaviour
         endGameMusic.Play();
     }
 
-
-    /// <summary>
-    /// DİFFİCULTY SON OYUNLARDA HEP YÜKSEK
-    /// OYUN SONDA İKEN DİFFİ RANDOMLA
-    /// ARKA ARKAYA GELME SORUNU HENÜZ ÇÖZÜLMEMİŞ OLABİLİR
-    /// 
-    /// </summary>
-
     void SceneRandomizer()
     {
         sceneCounter++;
@@ -281,7 +273,7 @@ public class mainScript : MonoBehaviour
         int[] CBS = new int[5];
         for (int i = 0; i < 5; i++)
         {
-            CBS[i] = PlayerPrefs.GetInt("CHS" + i);
+            CBS[i] = PlayerPrefs.GetInt("CBS" + i);
         }
         return CBS;
     }

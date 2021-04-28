@@ -12,6 +12,18 @@ public class soundButtonScript : MonoBehaviour
     void Start()
     {
         toggleListening = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Listening();
+        if (toggleListening)
+        {
+            audio.enabled = true;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Listen(true);
+            this.GetComponent<Image>().sprite = on;
+        }
+        else
+        {
+            audio.enabled = false;
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Listen(false);
+            this.GetComponent<Image>().sprite = off;
+        }
     }
 
     // Update is called once per frame
