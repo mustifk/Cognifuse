@@ -16,7 +16,10 @@ public class transScript : MonoBehaviour
     [SerializeField]
     GameObject brain;
 
+    //[SerializeField]
     GameObject[] brains;
+
+    Animator animator;
 
     bool changed2 = false, changed1 = false;
     float startTime, speed = 1.0f;
@@ -73,8 +76,8 @@ public class transScript : MonoBehaviour
             changed2 = true;
             changed1 = true;
         }
-
         number_of_brains = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().GetHP();
+        changeColor();
   
         CurrentSceneSelector();
         StartCoroutine(NextScene());
@@ -82,31 +85,77 @@ public class transScript : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        if(number_of_brains == 2 && !changed2)
+    {/*
+        if (number_of_brains == 2 && !changed2)
         {
-            float t = (Time.time - startTime) * speed;
-            brains[2].transform.GetComponent<Image>().color = Color.Lerp(Color.white, new Color(0.3568628f, 0.3490196f, 0.3490196f, 255), t);
+            //float t = (Time.time - startTime) * speed;
+            // brains[2].transform.GetComponent<Image>().color = Color.Lerp(Color.white, new Color(0.3568628f, 0.3490196f, 0.3490196f, 255), t);
+            animator = brains[2].transform.GetComponent<Animator>();
+            animator.SetBool("loseTrigger", true);
         }
         if (number_of_brains == 1 && !changed1)
         {
+            animator = brains[1].transform.GetComponent<Animator>();
+            animator.SetBool("loseTrigger", true);
+            //brains[1].transform.GetComponent<Image>().color = Color.Lerp(Color.white, new Color(0.3568628f, 0.3490196f, 0.3490196f, 255), t);
+
+            //brains[2].GetComponent<Image>().color = new Color32(91, 89, 89, 255);
             float t = (Time.time - startTime) * speed;
-            brains[1].transform.GetComponent<Image>().color = Color.Lerp(Color.white, new Color(0.3568628f, 0.3490196f, 0.3490196f, 255), t);
-            brains[2].GetComponent<Image>().color = new Color32(91, 89, 89, 255);
+            //brains[2].transform.GetComponent<Image>().color = Color.Lerp(new Color(0.3568628f, 0.3490196f, 0.3490196f, 1), new Color(0.3568628f, 0.3490196f, 0.3490196f, 1), t);
+
+            // brains[2].GetComponent<Image>().color = new Color(0.3568628f, 0.3490196f, 0.3490196f, 1);
+            brains[2].GetComponent<changeColor>().colorChange();
         }
-        else
+      /*  else
         {
             if(changed1 && changed2)
             {
-                brains[1].GetComponent<Image>().color = new Color32(91, 89, 89, 255);
-                brains[2].GetComponent<Image>().color = new Color32(91, 89, 89, 255);
+                brains[1].transform.GetComponent<Image>().color = new Color(0.3568628f, 0.3490196f, 0.3490196f, 1);
+                brains[2].transform.GetComponent<Image>().color = new Color(0.3568628f, 0.3490196f, 0.3490196f, 1);
             }
             else if(changed1)
-                brains[1].GetComponent<Image>().color = new Color32(91, 89, 89, 255);
+                brains[1].transform.GetComponent<Image>().color = new Color(0.3568628f, 0.3490196f, 0.3490196f, 1);
             else if(changed2)
-                brains[2].GetComponent<Image>().color = new Color32(91, 89, 89, 255);
-        }
+                //brains[2].transform.GetComponent<Image>().color = new Color(0.3568628f, 0.3490196f, 0.3490196f, 1);
+                brains[2].transform.GetComponent<Image>().color = new Color32(91, 89, 89, 255);
+        }*/
+        
+    }
 
+    void changeColor()
+    {
+        if (number_of_brains == 2 && !changed2)
+        {
+            //float t = (Time.time - startTime) * speed;
+            // brains[2].transform.GetComponent<Image>().color = Color.Lerp(Color.white, new Color(0.3568628f, 0.3490196f, 0.3490196f, 255), t);
+            animator = brains[2].transform.GetComponent<Animator>();
+            animator.SetBool("loseTrigger", true);
+        }
+        if (number_of_brains == 1 && !changed1)
+        {
+            animator = brains[1].transform.GetComponent<Animator>();
+            animator.SetBool("loseTrigger", true);
+            //brains[1].transform.GetComponent<Image>().color = Color.Lerp(Color.white, new Color(0.3568628f, 0.3490196f, 0.3490196f, 255), t);
+
+            //brains[2].GetComponent<Image>().color = new Color32(91, 89, 89, 255);
+            float t = (Time.time - startTime) * speed;
+            //brains[2].transform.GetComponent<Image>().color = Color.Lerp(new Color(0.3568628f, 0.3490196f, 0.3490196f, 1), new Color(0.3568628f, 0.3490196f, 0.3490196f, 1), t);
+
+            // brains[2].GetComponent<Image>().color = new Color(0.3568628f, 0.3490196f, 0.3490196f, 1);
+            brains[2].GetComponent<changeColor>().colorChange();
+        }
+        else
+        {
+            if (changed1 && changed2)
+            {
+                brains[1].GetComponent<changeColor>().colorChange();
+                brains[2].GetComponent<changeColor>().colorChange();
+            }
+            else if (changed1)
+                brains[1].GetComponent<changeColor>().colorChange();
+            else if (changed2)
+                brains[2].GetComponent<changeColor>().colorChange();
+        }
     }
 
     void createBrains()

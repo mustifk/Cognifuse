@@ -36,6 +36,8 @@ public class camelEngine : MonoBehaviour
 
     int index = 0;
 
+    int maxSpinGame;
+
     void Start()
     {
         //timebar
@@ -51,6 +53,19 @@ public class camelEngine : MonoBehaviour
         else
         {
             diffLevel = Demo;
+        }
+
+        switch(diffLevel)
+        {
+            case 1:
+                maxSpinGame = 8;
+                break;
+            case 2:
+                maxSpinGame = 12;
+                break;
+            case 3:
+                maxSpinGame = 16;
+                break;
         }
 
         setMessage();
@@ -70,14 +85,14 @@ public class camelEngine : MonoBehaviour
                 break;
             case 2:
                 waitingTime = 1.5f;
-                timebar.SetMax(15);
+                timebar.SetMax(12);
                 break;
             case 3:
                 waitingTime = 1f;
-                timebar.SetMax(20);
+                timebar.SetMax(15);
                 break;
         }
-        countGame = 0;
+        countGame = 1;
 
         miniTime = mini.GetComponent<Tbcmini>().timebar();
         miniTime.SetMax(waitingTime);
@@ -90,7 +105,7 @@ public class camelEngine : MonoBehaviour
 
     void setMessage()
     {
-        messages = new string[40];
+        messages = new string[60];
         if(Random.Range(0,2) == 0)
             messages[0] = "Camel";
         else
@@ -153,7 +168,7 @@ public class camelEngine : MonoBehaviour
             }
             else
             {
-              //  StartCoroutine(wait());
+                countGame++;
                 updateText();
                 setTimer();
             }
@@ -170,7 +185,7 @@ public class camelEngine : MonoBehaviour
         currentPos = Time.time;
         if (!gameOver)
         {
-            if (countGame > (diffLevel * 4) - 1)
+            if (countGame > maxSpinGame)
             {
                 Finish(true);
             }
@@ -216,7 +231,7 @@ public class camelEngine : MonoBehaviour
             GameObject.Destroy(gameObject.transform.GetChild(i).gameObject);
         Destroy(mini.gameObject);
         gameOver = true;
-        StartCoroutine(End(win));
+       // StartCoroutine(End(win));
     }
 
     IEnumerator End(bool win)
