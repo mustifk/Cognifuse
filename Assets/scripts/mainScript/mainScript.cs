@@ -65,7 +65,7 @@ public class mainScript : MonoBehaviour
         cScores[3] = 0;
         cScores[4] = 0;
         bestScore = PlayerPrefs.GetInt("highscore");
-        HP = 1;
+        HP = 3;
         sceneQueue = new Queue<int>();
         totalScore = 0;
         levelCount = 0;
