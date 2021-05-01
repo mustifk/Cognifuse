@@ -12,6 +12,7 @@ public class numberRushScript : MonoBehaviour
     public int difficulty;
     int collectibleCount,enemyCount,nextToCount = 1;
     bool isGameOver = false;
+    public AudioSource collect ,win, lose;
     // Start is called before the first frame update
     void Start()
     {
@@ -130,6 +131,7 @@ public class numberRushScript : MonoBehaviour
     {
         if (nextToCount == x)
         {
+            collect.Play();
             nextToCount++;
             if (nextToCount == collectibleCount + 1)
             {
@@ -138,6 +140,7 @@ public class numberRushScript : MonoBehaviour
         }
         else
         {
+            lose.Play();
             GameOver(0);
         }
     }

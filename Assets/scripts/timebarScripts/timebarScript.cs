@@ -9,6 +9,7 @@ public class timebarScript : MonoBehaviour
     public Image fill;
     bool isTicking = false;
     float temp,temp2;
+    public AudioSource time;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,16 +40,14 @@ public class timebarScript : MonoBehaviour
 
     public void Begin()
     {
+        time.Play();
         temp = Time.realtimeSinceStartup;
         isTicking = true;
-        
-        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().startGameMusic();
     }
     public void Stop()
     {
+        time.Stop();
         isTicking = false;
-        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().stopGameMusic();
-
     }
     public void SetMax(int x)
     {

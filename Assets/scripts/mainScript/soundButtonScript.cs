@@ -14,13 +14,13 @@ public class soundButtonScript : MonoBehaviour
         toggleListening = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Listening();
         if (toggleListening)
         {
-            audio.enabled = true;
+            AudioListener.volume = 1;
             GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Listen(true);
             this.GetComponent<Image>().sprite = on;
         }
         else
         {
-            audio.enabled = false;
+            AudioListener.volume = 0;
             GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Listen(false);
             this.GetComponent<Image>().sprite = off;
         }
@@ -37,13 +37,13 @@ public class soundButtonScript : MonoBehaviour
         toggleListening = !toggleListening;
         if (toggleListening)
         {
-            audio.enabled = true;
+            AudioListener.volume = 1;
             GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Listen(true);
             this.GetComponent<Image>().sprite = on;
         }
         else
         {
-            audio.enabled = false;
+            AudioListener.volume = 0;
             GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Listen(false);
             this.GetComponent<Image>().sprite = off;
         }

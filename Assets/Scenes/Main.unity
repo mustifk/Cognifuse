@@ -2900,7 +2900,6 @@ MonoBehaviour:
   transition: {fileID: 1928249964}
   mainMenu: {fileID: 1724305554}
   electricitySound: {fileID: 1724305553}
-  gameMusic: {fileID: 1724305552}
   transitionMusic: {fileID: 1724305555}
   endGameMusic: {fileID: 1724305556}
   totalSceneCount: 15

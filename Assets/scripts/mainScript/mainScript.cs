@@ -17,7 +17,7 @@ public class mainScript : MonoBehaviour
 {
     public float animSpeed;
     public Animator transition;
-    public AudioSource mainMenu,electricitySound,gameMusic, transitionMusic,endGameMusic;
+    public AudioSource mainMenu,electricitySound, transitionMusic,endGameMusic;
     private int nextSceneIndex,maxSceneIndex = 5,sceneQueueSize = 5,sceneCounter = 0,currentScene;
     static int levelCount, HP, totalScore,bestScore,lastMinigame = 0;
     static int difficulty = new int();
@@ -203,7 +203,6 @@ public class mainScript : MonoBehaviour
         ///
         ///-----------------------------------------------------
         ///
-        gameMusic.Stop();
         if (won)
         {
             Debug.Log(difficulty * (int)(100 * Mathf.Sin(Mathf.Deg2Rad * 90 * scoreRate)));
@@ -246,7 +245,6 @@ public class mainScript : MonoBehaviour
     void Transitioner()
     {
         mainMenu.Stop();
-        gameMusic.Stop();
         currentScene = sceneQueue.Peek();
         nextSceneIndex = currentScene;
         SceneManager.LoadScene("Transition");
@@ -300,14 +298,6 @@ public class mainScript : MonoBehaviour
         return CCS;
     }
 
-    public void stopGameMusic()
-    {
-        gameMusic.Stop();
-    }
-    public void startGameMusic()
-    {
-        gameMusic.Play();
-    }
     public void startTransitionMusic()
     {
         transitionMusic.Play();

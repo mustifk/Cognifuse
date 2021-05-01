@@ -181,6 +181,7 @@ public class camelEngine : MonoBehaviour
         if (timebar.GetTime() == 0 && !gameOver)
         {
             timebar.Stop();
+            Finish(false);
         }
         currentPos = Time.time;
         if (!gameOver)
