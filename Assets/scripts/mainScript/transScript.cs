@@ -125,24 +125,24 @@ public class transScript : MonoBehaviour
         if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().GetHP() == 3)
         {
 
-            brains[0] = Instantiate(brain, new Vector3(-4, 3.9f), Quaternion.identity, canvas.transform);
-            brains[1] = Instantiate(brain, new Vector3(0, 3.9f), Quaternion.identity, canvas.transform);
-            brains[2] = Instantiate(brain, new Vector3(4, 3.9f), Quaternion.identity, canvas.transform);
+            brains[0] = Instantiate(brain, new Vector3(-4, 3.5f), Quaternion.identity, canvas.transform);
+            brains[1] = Instantiate(brain, new Vector3(0, 3.5f), Quaternion.identity, canvas.transform);
+            brains[2] = Instantiate(brain, new Vector3(4, 3.5f), Quaternion.identity, canvas.transform);
         }
         else if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().GetHP() == 2)
         {
 
-            brains[0] = Instantiate(brain, new Vector3(-4, 3.9f), Quaternion.identity, canvas.transform);
-            brains[1] = Instantiate(brain, new Vector3(0, 3.9f), Quaternion.identity, canvas.transform);
-            brains[2] = Instantiate(deathBrain, new Vector3(4, 3.9f), Quaternion.identity, canvas.transform);
+            brains[0] = Instantiate(brain, new Vector3(-4, 3.5f), Quaternion.identity, canvas.transform);
+            brains[1] = Instantiate(brain, new Vector3(0, 3.5f), Quaternion.identity, canvas.transform);
+            brains[2] = Instantiate(deathBrain, new Vector3(4, 3.5f), Quaternion.identity, canvas.transform);
 
         }
         else if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().GetHP() == 1)
         {
 
-            brains[0] = Instantiate(brain, new Vector3(-4, 3.9f), Quaternion.identity, canvas.transform);
-            brains[1] = Instantiate(deathBrain, new Vector3(0, 3.9f), Quaternion.identity, canvas.transform);
-            brains[2] = Instantiate(deathBrain, new Vector3(4, 3.9f), Quaternion.identity, canvas.transform);
+            brains[0] = Instantiate(brain, new Vector3(-4, 3.5f), Quaternion.identity, canvas.transform);
+            brains[1] = Instantiate(deathBrain, new Vector3(0, 3.5f), Quaternion.identity, canvas.transform);
+            brains[2] = Instantiate(deathBrain, new Vector3(4, 3.5f), Quaternion.identity, canvas.transform);
 
         }
     }

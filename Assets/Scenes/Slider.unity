@@ -395,6 +395,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2680854561537681962, guid: e2316c9dfafdf884c98b9b13723782fd,
+        type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2680854561537681972, guid: e2316c9dfafdf884c98b9b13723782fd,
         type: 3}
       propertyPath: m_Name
@@ -410,6 +415,21 @@ PrefabInstance:
       propertyPath: tictoc
       value: 
       objectReference: {fileID: 2680854563195405660}
+    - target: {fileID: 2680854562734683315, guid: e2316c9dfafdf884c98b9b13723782fd,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2680854562734683315, guid: e2316c9dfafdf884c98b9b13723782fd,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2680854562734683315, guid: e2316c9dfafdf884c98b9b13723782fd,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5
+      objectReference: {fileID: 0}
     - target: {fileID: 2680854562758078440, guid: e2316c9dfafdf884c98b9b13723782fd,
         type: 3}
       propertyPath: m_AnchorMax.x

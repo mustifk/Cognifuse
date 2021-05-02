@@ -83,7 +83,7 @@ public class shape : MonoBehaviour
     }
     IEnumerator destroy()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.05f);
         Destroy(gameObject);
     }
     public int changeSprite(int index)

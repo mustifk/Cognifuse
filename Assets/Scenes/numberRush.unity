@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 209d20b1b4703ba46984ae1796684917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Demo: 2
+  Demo: 0
   collectible: {fileID: 1363592036668795497, guid: d8c3fdfab011cec478b0b42726e89f79,
     type: 3}
   enemy: {fileID: 2449552498420333042, guid: de089593f87366f4dbad99c3eb4c49f6, type: 3}
@@ -466,10 +466,10 @@ RectTransform:
   m_Father: {fileID: 641776129}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 450}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &271451502
 MonoBehaviour:

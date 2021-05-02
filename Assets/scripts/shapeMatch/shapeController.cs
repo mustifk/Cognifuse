@@ -104,7 +104,6 @@ public class shapeController : MonoBehaviour
                     if (gameCounter < numberOfScene)
                     {
                         StartCoroutine(wait());
-
                     }
                 }
             }
@@ -122,14 +121,14 @@ public class shapeController : MonoBehaviour
     }
     IEnumerator wait()
     {
-        yield return new WaitForSeconds(0.30f);
+        yield return new WaitForSeconds(0.05f);
         prepareGame();
 
 
     }
     IEnumerator wait2()
     {
-        yield return new WaitForSeconds(0.30f);
+        yield return new WaitForSeconds(0.05f);
         int childs = transform.childCount;
         for (int i = childs - 1; i > 0; i--)
         {
@@ -141,7 +140,7 @@ public class shapeController : MonoBehaviour
     }
     IEnumerator wait3()
     {
-        yield return new WaitForSeconds(0.50f);
+        yield return new WaitForSeconds(0f);
         int childs = transform.childCount;
         for (int i = childs - 1; i > 0; i--)
         {

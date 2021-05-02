@@ -81,15 +81,15 @@ public class camelEngine : MonoBehaviour
         {
             case 1:
                 waitingTime = 2f;
-                timebar.SetMax(10);
+                timebar.SetMax((waitingTime - 0.2f) * maxSpinGame);
                 break;
             case 2:
-                waitingTime = 1.5f;
-                timebar.SetMax(12);
+                waitingTime = 1.6f;
+                timebar.SetMax((waitingTime - 0.2f) * maxSpinGame);
                 break;
             case 3:
-                waitingTime = 1f;
-                timebar.SetMax(15);
+                waitingTime = 1.2f;
+                timebar.SetMax((waitingTime - 0.2f) * maxSpinGame);
                 break;
         }
         countGame = 1;

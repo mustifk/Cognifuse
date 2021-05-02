@@ -91,7 +91,7 @@ public class wordController : MonoBehaviour
                 row = 3;
                 column = 4;
                 startPosX = -126;
-                startPosY = 85;
+                startPosY = 80;
                 distance = 100;
                 timebar.SetMax(5);
                 rt.sizeDelta = new Vector2(distance, distance);
@@ -101,7 +101,7 @@ public class wordController : MonoBehaviour
                 column = 6;
                 startPosX = -178;
                 startPosY = 105;
-                distance = 80;
+                distance = 75;
                 timebar.SetMax(9);
                 rt.sizeDelta = new Vector2(distance, distance);
                 break;
@@ -110,7 +110,7 @@ public class wordController : MonoBehaviour
                 column = 7;
                 startPosX = -162;
                 startPosY = 93;
-                distance = 65;
+                distance = 55;
                 timebar.SetMax(14);
                 rt.sizeDelta = new Vector2(distance, distance);
                 break;

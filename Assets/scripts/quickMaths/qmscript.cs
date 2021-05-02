@@ -135,20 +135,41 @@ public class qmscript : MonoBehaviour
             text.text = firstnum.ToString() + " + " + secnum.ToString();
             if (difficulty == 1)
             {
-                forans3 = Random.Range(1, ans);
-                forans2 = Random.Range(1, ans);
+                forans3 = ans + Random.Range(1, 4);
+                if (ans > 4)
+                {
+                    forans2 = ans - Random.Range(1, 4);
+                }
+                else
+                {
+                    forans2 = ans + Random.Range(4, 6);
+                }
                 if (forans2 == forans3) { forans2 = Random.Range(1, forans3); }
             }
             if (difficulty == 2)
             {
-                forans3 = Random.Range(1, ans);
-                forans2 = Random.Range(1, ans);
+                forans3 = ans + Random.Range(1, 4);
+                if (ans > 4)
+                {
+                    forans2 = ans - Random.Range(1, 4);
+                }
+                else
+                {
+                    forans2 = ans + Random.Range(4, 6);
+                }
                 if (forans2 == forans3) { forans2 = Random.Range(1, forans3); }
             }
             if (difficulty == 3)
             {
-                forans3 = Random.Range(1, ans);
-                forans2 = Random.Range(1, ans);
+                forans3 = ans + Random.Range(1, 4);
+                if (ans > 4)
+                {
+                    forans2 = ans - Random.Range(1, 4);
+                }
+                else
+                {
+                    forans2 = ans + Random.Range(4, 6);
+                }
                 if (forans2 == forans3) { forans2 = Random.Range(1, forans3); }
             }
         }
@@ -158,20 +179,41 @@ public class qmscript : MonoBehaviour
             text.text = firstnum.ToString() + " - " + secnum.ToString();
             if (difficulty == 1)
             {
-                forans3 = ans+3;
-                forans2 = ans + 6;
+                forans3 = ans + Random.Range(1, 4);
+                if (ans > 4)
+                {
+                    forans2 = ans - Random.Range(1, 4);
+                }
+                else
+                {
+                    forans2 = ans + Random.Range(4, 6);
+                }
                 if (forans2 == forans3) { forans2 = Random.Range(1, forans3); }
             }
             if (difficulty == 2)
             {
-                forans3 = ans + 3;
-                forans2 = ans + 6;
+                forans3 = ans + Random.Range(1, 4);
+                if (ans > 4)
+                {
+                    forans2 = ans - Random.Range(1, 4);
+                }
+                else
+                {
+                    forans2 = ans + Random.Range(4, 6);
+                }
                 if (forans2 == forans3) { forans2 = Random.Range(1, forans3); }
             }
             if (difficulty == 3)
             {
-                forans3 = ans + 3;
-                forans2 = ans + 6;
+                forans3 = ans + Random.Range(1, 4);
+                if (ans > 4)
+                {
+                    forans2 = ans - Random.Range(1, 4);
+                }
+                else
+                {
+                    forans2 = ans + Random.Range(4, 6);
+                }
                 if (forans2 == forans3) { forans2 = Random.Range(1, forans3); }
             }
         }
@@ -181,20 +223,41 @@ public class qmscript : MonoBehaviour
             text.text = firstnum.ToString() + " * " + secnum.ToString();
             if (difficulty == 1)
             {
-                forans3 = Random.Range(1, ans);
-                forans2 = Random.Range(1, ans);
+                forans3 = ans + Random.Range(1, 4);
+                if (ans > 4)
+                {
+                    forans2 = ans - Random.Range(1, 4);
+                }
+                else
+                {
+                    forans2 = ans + Random.Range(4, 6);
+                }
                 if (forans2 == forans3) { forans2 = Random.Range(1, forans3); }
             }
             if (difficulty == 2)
             {
-                forans3 = Random.Range(1, ans);
-                forans2 = Random.Range(1, ans);
+                forans3 = ans + Random.Range(1, 4);
+                if (ans > 4)
+                {
+                    forans2 = ans - Random.Range(1, 4);
+                }
+                else
+                {
+                    forans2 = ans + Random.Range(4, 6);
+                }
                 if (forans2 == forans3) { forans2 = Random.Range(1, forans3); }
             }
             if (difficulty == 3)
             {
-                forans3 = Random.Range(1, ans);
-                forans2 = Random.Range(1, ans);
+                forans3 = ans + Random.Range(1, 4);
+                if (ans > 4)
+                {
+                    forans2 = ans - Random.Range(1, 4);
+                }
+                else
+                {
+                    forans2 = ans + Random.Range(4, 6);
+                }
                 if (forans2 == forans3) { forans2 = Random.Range(1, forans3); }
             }
         }
@@ -205,20 +268,41 @@ public class qmscript : MonoBehaviour
             text.text = firstnum.ToString() + " / " + secnum.ToString();
             if (difficulty == 1)
             {
-                forans3 = ans + 3;
-                forans2 = ans + 6;
+                forans3 = ans + Random.Range(1, 4);
+                if (ans > 4)
+                {
+                    forans2 = ans - Random.Range(1, 4);
+                }
+                else
+                {
+                    forans2 = ans + Random.Range(4, 6);
+                }
                 if (forans2 == forans3) { forans2 = Random.Range(1, forans3); }
             }
             if (difficulty == 2)
             {
-                forans3 = ans + 3;
-                forans2 = ans + 6;
+                forans3 = ans + Random.Range(1, 4);
+                if (ans > 4)
+                {
+                    forans2 = ans - Random.Range(1, 4);
+                }
+                else
+                {
+                    forans2 = ans + Random.Range(4, 6);
+                }
                 if (forans2 == forans3) { forans2 = Random.Range(1, forans3); }
             }
             if (difficulty == 3)
             {
-                forans3 = ans + 3;
-                forans2 = ans + 6;
+                forans3 = ans + Random.Range(1, 4);
+                if (ans > 4)
+                {
+                    forans2 = ans - Random.Range(1, 4);
+                }
+                else
+                {
+                    forans2 = ans + Random.Range(4, 6);
+                }
                 if (forans2 == forans3) { forans2 = Random.Range(1, forans3); }
             }
         }

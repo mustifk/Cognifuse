@@ -29,13 +29,12 @@ public class mainScript : MonoBehaviour
 
     static int counter = 0;
     // Start is called before the first frame update
-    public GameObject Main, Detail;
+    public GameObject Detail;
 
     public void ChangeCanvas()
     {
         // Main tekrar çalışıyor aktif oldugunda düzelt
         // detailde arkaplan sorunu arkaplanı karart
-        Main.SetActive(counter % 2 == 1);
         Detail.SetActive(counter % 2 == 0);
         counter++;
     }
