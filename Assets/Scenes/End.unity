@@ -3743,6 +3743,21 @@ MonoBehaviour:
   BestPurple: {fileID: 30284912}
   CurrentGreen: {fileID: 151547293}
   BestGreen: {fileID: 1394026695}
+  mem: {fileID: 816697626}
+  per: {fileID: 1735993299}
+  att: {fileID: 133381682}
+  mot: {fileID: 2000557417}
+  rea: {fileID: 1041540299}
+  b1: {fileID: 245443100}
+  b2: {fileID: 1611955969}
+  b3: {fileID: 1358356278}
+  b4: {fileID: 1549832294}
+  b5: {fileID: 101233944}
+  s1: {fileID: 935238766}
+  s2: {fileID: 1245894814}
+  s3: {fileID: 1495151288}
+  s4: {fileID: 1597904065}
+  s5: {fileID: 1007627260}
 --- !u!1 &1347834555
 GameObject:
   m_ObjectHideFlags: 0
@@ -5777,6 +5792,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: {fileID: 1021334591}
   bestScore: {fileID: 2129165270}
+  Cogni: {fileID: 339655554}
+  mainmenu: {fileID: 1355233977}
+  again: {fileID: 1347834557}
+  details: {fileID: 1936747554}
 --- !u!1 &1881276058
 GameObject:
   m_ObjectHideFlags: 0

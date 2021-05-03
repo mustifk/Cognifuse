@@ -50,7 +50,12 @@ public class shapeController : MonoBehaviour
         //timebar
         GameObject temp = Instantiate(TBC);
         timebar = temp.GetComponent<TBCscript>().timebar();
-        
+
+        if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+        {
+            string[] texts = { "daire", "altigen", "dortgen", "yildiz", "ucgen" };
+        }
+
         if (Demo == 0)
         {
             difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
@@ -181,18 +186,23 @@ public class shapeController : MonoBehaviour
         switch (message)
         {
             case "circle":
+            case "daire":
                 otherShapes = new shape[] { hexagon, rectangle, star, triangle };
                 break;
             case "hexagon":
+            case "altigen":
                 otherShapes = new shape[] { circle, rectangle, star, triangle };
                 break;
             case "rectangle":
+            case "dortgen":
                 otherShapes = new shape[] { circle, hexagon, star, triangle };
                 break;
             case "star":
+            case "yildiz":
                 otherShapes = new shape[] { circle, hexagon, rectangle, triangle };
                 break;
             case "triangle":
+            case "ucgen":
                 otherShapes = new shape[] { circle, hexagon, rectangle, star };
                 break;
         }
@@ -251,15 +261,19 @@ public class shapeController : MonoBehaviour
                 switch (message)
                 {
                     case "circle":
+                    case "daire":
                         shape = circle;
                         break;
                     case "hexagon":
+                    case "altigen":
                         shape = hexagon;
                         break;
                     case "rectangle":
+                    case "dortgen":
                         shape = rectangle;
                         break;
                     case "star":
+                    case "yildiz":
                         shape = star;
                         break;
                     default:
@@ -278,15 +292,19 @@ public class shapeController : MonoBehaviour
                 switch (shape.shapeName)
                 {
                     case "circle":
+                    case "daire":
                         otherSprites = shape.circleSprite();
                         break;
                     case "hexagon":
+                    case "altigen":
                         otherSprites = shape.hexagonSprite();
                         break;
                     case "rectangle":
+                    case "dortgen":
                         otherSprites = shape.rectangleSprite();
                         break;
                     case "star":
+                    case "yildiz":
                         otherSprites = shape.starSprite();
                         break;
                     default:

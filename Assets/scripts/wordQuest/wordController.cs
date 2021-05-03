@@ -65,6 +65,12 @@ public class wordController : MonoBehaviour
 
     void Start()
     {
+        if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+        {
+            string[] words = { "LOB", "KAN", "GOZ", "RAY", "HIS", "ACI" };
+            string[] four = { "ALGI", "ISIK", "DEHA", "KARA", "YENI", "SERI", "ZEKA", "AKIL", "KAFA", "SIKI", "OYUN" };
+            string[] five = { "BEDEN", "VUCUT", "MOTOR", "BEYIN", "NORON", "HEVES", "SINIR" };
+        }
         //timebar
         GameObject temp = Instantiate(TBC);
         timebar = temp.GetComponent<TBCscript>().timebar();

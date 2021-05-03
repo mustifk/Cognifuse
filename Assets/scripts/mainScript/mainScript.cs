@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using TMPro;
 
 /// <summary>
 /// SAHNE GEÇİŞLERİNDE SORUNLAR VAR
@@ -15,6 +15,7 @@ using UnityEngine.SceneManagement;
 
 public class mainScript : MonoBehaviour
 {
+    public TextMeshProUGUI playButton;
     public float animSpeed;
     public Animator transition;
     public AudioSource mainMenu,electricitySound, transitionMusic,endGameMusic;
@@ -27,17 +28,9 @@ public class mainScript : MonoBehaviour
     private bool gameOver = false;
     static bool isListening = true;
 
-    static int counter = 0;
+    static int counter = 0,lang = 0;
     // Start is called before the first frame update
     public GameObject Detail;
-
-    public void ChangeCanvas()
-    {
-        // Main tekrar çalışıyor aktif oldugunda düzelt
-        // detailde arkaplan sorunu arkaplanı karart
-        Detail.SetActive(counter % 2 == 0);
-        counter++;
-    }
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +42,15 @@ public class mainScript : MonoBehaviour
         difficulty = 1;
         sceneQueue = new Queue<int>();
         DontDestroyOnLoad(this.gameObject.GetComponent<mainScript>());
+        switch (lang)
+        {
+            case 1:
+                playButton.text = "Tap To Begin";
+                break;
+            default:
+                playButton.text = "Oynamak Icın Basınız";
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -117,6 +119,25 @@ public class mainScript : MonoBehaviour
         
     }
 
+    public int Language()
+    {
+        return lang;
+    }
+
+    public void ChangeLanguage(int x)
+    {
+        lang = x;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().tag = "OldScript";
+        SceneManager.LoadScene("Main");
+    }
+
+    public void ChangeCanvas()
+    {
+        // Main tekrar çalışıyor aktif oldugunda düzelt
+        // detailde arkaplan sorunu arkaplanı karart
+        Detail.SetActive(counter % 2 == 0);
+        counter++;
+    }
     public void NextScene() 
     {
         transitionMusic.Stop();

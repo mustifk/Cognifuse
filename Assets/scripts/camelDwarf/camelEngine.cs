@@ -54,8 +54,8 @@ public class camelEngine : MonoBehaviour
         {
             diffLevel = Demo;
         }
-
-        switch(diffLevel)
+        
+        switch (diffLevel)
         {
             case 1:
                 maxSpinGame = 8;
@@ -107,19 +107,63 @@ public class camelEngine : MonoBehaviour
     {
         messages = new string[60];
         if(Random.Range(0,2) == 0)
+        {
+            if(GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+            {
+            messages[0] = "Deve";
+            }
+            else
+            {
             messages[0] = "Camel";
+            }
+        }
         else
+        {
+            if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+            {
+            messages[0] = "Cuce";
+            }
+            else
+            {
             messages[0] = "Dwarf";
+            }
+        }
 
         for(int i=1;i<messages.Length-3;i++)
         {
-            messages[i] = "Camel";
-            messages[++i] = "Dwarf";
+            if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+            {
+                messages[i] = "Deve";
+                messages[++i] = "Cuce";
+            }
+            else
+            {
+                messages[i] = "Camel";
+                messages[++i] = "Dwarf";
+            }
             int ind = Random.Range(0, 9);
             if(ind % 2 == 0)
-                messages[++i] = "Camel";
+            {
+                if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+                {
+                    messages[0] = "Deve";
+                }
+                else
+                {
+                    messages[0] = "Camel";
+                }
+            }
             else
-                messages[++i] = "Dwarf";
+            {
+                if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+                {
+                    messages[0] = "Cuce";
+                }
+                else
+                {
+                    messages[0] = "Dwarf";
+                }
+            }
         }
         index = Random.Range(0, messages.Length/2);
     }
@@ -129,7 +173,7 @@ public class camelEngine : MonoBehaviour
         updateText();
         cdObject = Instantiate(cdObject);
         cdObject.transform.parent = gameObject.transform;
-        if (text.text == "Camel")
+        if (text.text == "Camel" || text.text == "Deve")
             cdObject.setStartSituation(0);
         else
             cdObject.setStartSituation(1);
