@@ -7,6 +7,7 @@ using TMPro;
 
 public class shapeController : MonoBehaviour
 {
+    public AudioSource bubble,wrong;
     public int Demo = 0;
     //timebar
     public GameObject TBC;
@@ -349,5 +350,13 @@ public class shapeController : MonoBehaviour
             temp[random] = tmp;
         }
         return temp;
+    }
+    public void playBubble()
+    {
+        bubble.Play();
+    }
+    public void playWrong()
+    {
+        wrong.Play();
     }
 }
