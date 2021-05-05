@@ -218,7 +218,7 @@ public class transScript : MonoBehaviour
                 text.text = instructions[GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().CurrentSceneIndex()][1];
                 break;
             default:
-                title.text = instructions[GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().CurrentSceneIndex()+15][0];
+                title.text = instructions[GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().CurrentSceneIndex()][0];
                 text.text = instructions[GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().CurrentSceneIndex()+15][1];
                 break;
         }
