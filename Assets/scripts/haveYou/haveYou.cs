@@ -30,9 +30,13 @@ public class haveYou : MonoBehaviour
 
     void Start()
     {
-        if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+
+        if (GameObject.FindGameObjectWithTag("Player") != null)
         {
-            text.text = "Bunu daha once gormus muydun?";
+            if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+            {
+                text.text = "Bunu daha once gormus muydun?";
+            }
         }
         //timebar
         GameObject temp = Instantiate(TBC);

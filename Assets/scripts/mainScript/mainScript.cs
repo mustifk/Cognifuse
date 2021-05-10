@@ -4,33 +4,24 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-/// <summary>
-/// SAHNE GEÇİŞLERİNDE SORUNLAR VAR
-/// OYUNLAR DÜZENLENİP EKLENECEK
-/// CAN VE FİNAL İÇİN SAHNELER OLUŞTURULACAK
-/// SKOR TAKİBİ ÖNEMLİ
-/// HALA ARKA ARKAYA AYNI OYUN GELEBİLİYOR
-/// KATEGORİLER EKLENDİĞİNDE BU PROBLEMİ ÇÖZ /\
-/// </summary>
-
 public class mainScript : MonoBehaviour
 {
-    public TextMeshProUGUI playButton;
+    public TextMeshProUGUI playButton,trainingButton;
     public float animSpeed;
     public Animator transition;
     public AudioSource mainMenu,electricitySound, transitionMusic,endGameMusic;
-    private int nextSceneIndex,maxSceneIndex = 5,sceneQueueSize = 5,sceneCounter = 0,currentScene;
-    static int levelCount, HP, totalScore,bestScore,lastMinigame = 0;
+    private int nextSceneIndex,currentScene;
+    static int levelCount, HP, totalScore, bestScore, lastMinigame = 0, trainingMode = 0, trainingScene = 1;
     static int difficulty = new int();
     public int totalSceneCount = 14;
     Queue<int> sceneQueue;
     private int[] cScores = new int[5];
+    int[] randomizerHelper = new int[5];
     private bool gameOver = false;
     static bool isListening = true;
 
-    static int counter = 0,lang = 0;
-    // Start is called before the first frame update
-    public GameObject Detail;
+    static int counter = 0,lang = 1;
+    public GameObject Detail,Training,Canvas;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,17 +37,17 @@ public class mainScript : MonoBehaviour
         {
             case 1:
                 playButton.text = "Tap To Begin";
+                trainingButton.text = "Training";
                 break;
             default:
                 playButton.text = "Oynamak Icın Basınız";
+                trainingButton.text = "Antrenman";
                 break;
         }
     }
-
-    // Update is called once per frame
-    void Update()
+    public void setTrainingMode(int x)
     {
-        
+        trainingMode = x;
     }
 
     public void Listen(bool tf)
@@ -133,8 +124,6 @@ public class mainScript : MonoBehaviour
 
     public void ChangeCanvas()
     {
-        // Main tekrar çalışıyor aktif oldugunda düzelt
-        // detailde arkaplan sorunu arkaplanı karart
         Detail.SetActive(counter % 2 == 0);
         counter++;
     }
@@ -164,101 +153,80 @@ public class mainScript : MonoBehaviour
 
     void SceneRandomizer()
     {
-        sceneCounter++;
-        if (sceneCounter == 1)
+        int tourCount = 1;
+        int temp = Random.Range(1, 16);
+        while (temp == lastMinigame)
         {
-            maxSceneIndex = 5;
+            temp = Random.Range(1, 16);
         }
-        else if (sceneCounter < 4)
+        for (int i = 0; i < 5; i++)
         {
-            maxSceneIndex = 10;
+            randomizerHelper[i] = 0;
         }
-        else
+        for (int c = 0; c < 3; c++)
         {
-            maxSceneIndex = totalSceneCount;
-        }
-
-        int temp = Random.Range(1, maxSceneIndex + 1);
-        for (int i = 0; i < sceneQueueSize; i++)
-        {
-            if (i == sceneQueueSize - 1)
+            for (int i = 0; i < 5; i++)
             {
-                while (temp == lastMinigame || sceneQueue.Contains(temp))
+                while (randomizerHelper[temp % 5] == tourCount || sceneQueue.Contains(temp))
                 {
-                    temp = Random.Range(1, maxSceneIndex + 1);
+                    temp = Random.Range(1, 16);
                 }
-                lastMinigame = temp;
+                if (c == 2 && i == 4)
+                {
+                    lastMinigame = temp;
+                }
+                randomizerHelper[temp % 5] = tourCount;
                 sceneQueue.Enqueue(temp);
             }
-            else
-            {
-                if (i == 0)
-                {
-                    while (temp == lastMinigame || sceneQueue.Contains(temp))
-                    {
-                        temp = Random.Range(1, maxSceneIndex + 1);
-                    }
-                    sceneQueue.Enqueue(temp);
-                }
-                else
-                {
-                    while (sceneQueue.Contains(temp))
-                    {
-                        temp = Random.Range(1, maxSceneIndex + 1);
-                    }
-                    sceneQueue.Enqueue(temp);
-                }
-            }
-            temp = Random.Range(1, maxSceneIndex + 1);
+            tourCount++;
         }
     }
 
     public void EndOfMinigame(float scoreRate, bool won)
     {
-        //////
-        ///Bu noktada skorların kategorik kaydını gelen skor ile tutabilirsin
-        ///kategorik skor arrayı 0 1 2 3 4 kkategoriler
-        ///currentscene indexini 5e böl kategorisine göre arraya at 
-        ///finalde ona göre göster
-        ///
-        ///-----------------------------------------------------
-        ///
-        if (won)
+        if (trainingMode == 1)
         {
-            Debug.Log(difficulty * (int)(100 * Mathf.Sin(Mathf.Deg2Rad * 90 * scoreRate)));
-            totalScore += difficulty * (int)(100 * Mathf.Sin(Mathf.Deg2Rad * 90 * scoreRate));
-            cScores[(currentScene - 1) % 5] += difficulty * (int)(100 * Mathf.Sin(Mathf.Deg2Rad * 90 * scoreRate));
-            Debug.Log("Won the minigame!");
-            Transitioner();
-        }
-        else if(!won && HP == 1)
-        {
-            if (totalScore > bestScore)
-            {
-                bestScore = totalScore;
-                PlayerPrefs.SetInt("highscore", bestScore);
-            }
-            for (int i = 0; i < 5; i++)
-            {
-                PlayerPrefs.SetInt("CCS" + i, cScores[i]);
-                if (cScores[i] > PlayerPrefs.GetInt("CBS" + i))
-                {
-                    PlayerPrefs.SetInt("CBS" + i, cScores[i]);
-                }
-            }
-            Debug.Log("Lost the game! - Score = " + totalScore);
-            Debug.Log("Category scores Percpt  = " + cScores[0] + " Attnt = " + cScores[1]);
-            Debug.Log("Motrskl "+ cScores[2] + " Reasng = " + cScores[3] + " Memory = " + cScores[4]);
-            Debug.Log("Category best scores Percpt  = " + PlayerPrefs.GetInt("CBS" + 0) + " Attnt = " + PlayerPrefs.GetInt("CBS" + 1));
-            Debug.Log("Motrskl "+ PlayerPrefs.GetInt("CBS" + 2) + " Reasng = " + PlayerPrefs.GetInt("CBS" + 3) + " Memory = " + PlayerPrefs.GetInt("CBS" + 4));
-            HP = 0;
-            EndScene();
+            endTrainingScene();
         }
         else
         {
-            Debug.Log("Lose the minigame!");
-            HP--;
-            Transitioner();
+            if (won)
+            {
+                Debug.Log(difficulty * (int)(100 * Mathf.Sin(Mathf.Deg2Rad * 90 * scoreRate)));
+                totalScore += difficulty * (int)(100 * Mathf.Sin(Mathf.Deg2Rad * 90 * scoreRate));
+                cScores[(currentScene - 1) % 5] += difficulty * (int)(100 * Mathf.Sin(Mathf.Deg2Rad * 90 * scoreRate));
+                Debug.Log("Won the minigame!");
+                Transitioner();
+            }
+            else if (!won && HP == 1)
+            {
+                if (totalScore > bestScore)
+                {
+                    bestScore = totalScore;
+                    PlayerPrefs.SetInt("highscore", bestScore);
+                }
+                for (int i = 0; i < 5; i++)
+                {
+                    PlayerPrefs.SetInt("CCS" + i, cScores[i]);
+                    if (cScores[i] > PlayerPrefs.GetInt("CBS" + i))
+                    {
+                        PlayerPrefs.SetInt("CBS" + i, cScores[i]);
+                    }
+                }
+                Debug.Log("Lost the game! - Score = " + totalScore);
+                Debug.Log("Category scores Percpt  = " + cScores[0] + " Attnt = " + cScores[1]);
+                Debug.Log("Motrskl " + cScores[2] + " Reasng = " + cScores[3] + " Memory = " + cScores[4]);
+                Debug.Log("Category best scores Percpt  = " + PlayerPrefs.GetInt("CBS" + 0) + " Attnt = " + PlayerPrefs.GetInt("CBS" + 1));
+                Debug.Log("Motrskl " + PlayerPrefs.GetInt("CBS" + 2) + " Reasng = " + PlayerPrefs.GetInt("CBS" + 3) + " Memory = " + PlayerPrefs.GetInt("CBS" + 4));
+                HP = 0;
+                EndScene();
+            }
+            else
+            {
+                Debug.Log("Lose the minigame!");
+                HP--;
+                Transitioner();
+            }
         }
     }
 
@@ -296,6 +264,10 @@ public class mainScript : MonoBehaviour
 
     public int CurrentSceneIndex()
     {
+        if (trainingMode == 1)
+        {
+            return trainingScene;
+        }
         return nextSceneIndex;
     }
     
@@ -318,6 +290,35 @@ public class mainScript : MonoBehaviour
         return CCS;
     }
 
+    public void startTraining(int sceneNumber,int diff)
+    {
+        difficulty = diff;
+        trainingScene = sceneNumber;
+        SceneManager.LoadScene("Transition", LoadSceneMode.Additive);
+        Canvas.GetComponent<CanvasGroup>().interactable = false;
+        Canvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
+    }
+
+    public void startTrainingScene()
+    {
+        SceneManager.UnloadSceneAsync("Transition");
+        SceneManager.LoadScene(trainingScene, LoadSceneMode.Additive);
+    }
+
+    public void interruptTrainingScene()
+    {
+        SceneManager.UnloadSceneAsync("Transition");
+    }
+
+    public void endTrainingScene() 
+    {
+        SceneManager.UnloadSceneAsync(trainingScene);
+        Canvas.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        Canvas.GetComponent<CanvasGroup>().interactable = true;
+        setTrainingScene();
+        Destroy(GameObject.FindGameObjectsWithTag("Finish")[0].gameObject);
+    }
+
     public void startTransitionMusic()
     {
         transitionMusic.Play();
@@ -325,6 +326,16 @@ public class mainScript : MonoBehaviour
     public void stopTransitionMusic()
     {
         transitionMusic.Stop();
+    }
+    public void setTrainingScene()
+    {
+        Training.SetActive(true);
+        trainingMode = 1;
+    }
+
+    public bool isTraining()
+    {
+        return trainingMode == 1;
     }
 }
 

@@ -11,7 +11,7 @@ public class camelEngine : MonoBehaviour
     public GameObject TBC;
     timebarScript timebar;
 
-    int diffLevel;
+    int diffLevel,lang = 0;
 
     [SerializeField]
     CDobject cdObject;
@@ -48,10 +48,12 @@ public class camelEngine : MonoBehaviour
 
         if (Demo == 0)
         {
+            lang = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language();
             diffLevel = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
         }
         else
         {
+            lang = 1;
             diffLevel = Demo;
         }
         
@@ -108,7 +110,7 @@ public class camelEngine : MonoBehaviour
         messages = new string[60];
         if(Random.Range(0,2) == 0)
         {
-            if(GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+            if(lang == 0)
             {
             messages[0] = "Deve";
             }
@@ -119,7 +121,7 @@ public class camelEngine : MonoBehaviour
         }
         else
         {
-            if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+            if (lang == 0)
             {
             messages[0] = "Cuce";
             }
@@ -131,7 +133,7 @@ public class camelEngine : MonoBehaviour
 
         for(int i=1;i<messages.Length-3;i++)
         {
-            if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+            if (lang == 0)
             {
                 messages[i] = "Deve";
                 messages[++i] = "Cuce";
@@ -144,7 +146,7 @@ public class camelEngine : MonoBehaviour
             int ind = Random.Range(0, 9);
             if(ind % 2 == 0)
             {
-                if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+                if (lang == 0)
                 {
                     messages[0] = "Deve";
                 }
@@ -155,7 +157,7 @@ public class camelEngine : MonoBehaviour
             }
             else
             {
-                if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+                if (lang == 0)
                 {
                     messages[0] = "Cuce";
                 }

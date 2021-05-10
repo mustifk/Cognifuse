@@ -30,9 +30,12 @@ public class ChangeText : MonoBehaviour
     bool answer;
     void Start()
     {
-        if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+        if (GameObject.FindGameObjectWithTag("Player") != null)
         {
-            string[] colorNames = { "Kirmizi", "Mavi", "Siyah", "Yesil", "Turkuaz", "Pembe", "Beyaz", "Sari" };
+            if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+            {
+                string[] colorNames = { "Kirmizi", "Mavi", "Siyah", "Yesil", "Turkuaz", "Pembe", "Beyaz", "Sari" };
+            }
         }
         //timebar
         GameObject temp = Instantiate(TBC);

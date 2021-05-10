@@ -22,7 +22,7 @@ public class transScript : MonoBehaviour
 
     Animator animator;
 
-    bool changed2 = false, changed1 = false;
+    bool changed2 = false, changed1 = false,trainingMode = false;
     float startTime, speed = 1.0f;
 
     static int number_of_brains;
@@ -30,6 +30,7 @@ public class transScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        trainingMode = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().isTraining();
         switch (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language())
         {
             case 1:
@@ -108,19 +109,27 @@ public class transScript : MonoBehaviour
         instructions[29][1] = "Kenarlardaki sekillerin ust uste binmis halini ortadaki sekile uygula,unutma beyaz baskin kutucuk!";
         instructions[30][0] = "Yakup Diyor Ki";
         instructions[30][1] = "Butonlarin yanmasini bekle ve ardindan ayni sirayla butonlara bas!";
-        createBrains();
-        startTime = Time.time;
-
-        if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().GetHP() == number_of_brains && number_of_brains == 2)
-            changed2 = true;
-        if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().GetHP() == number_of_brains && number_of_brains == 1)
+        if (trainingMode)
         {
-            changed2 = true;
-            changed1 = true;
+
         }
-        number_of_brains = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().GetHP();
-        changeColor();
-  
+        else
+        {
+
+            createBrains();
+            startTime = Time.time;
+
+            if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().GetHP() == number_of_brains && number_of_brains == 2)
+                changed2 = true;
+            if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().GetHP() == number_of_brains && number_of_brains == 1)
+            {
+                changed2 = true;
+                changed1 = true;
+            }
+            number_of_brains = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().GetHP();
+            changeColor();
+        }
+
         CurrentSceneSelector();
         StartCoroutine(NextScene());
     }
@@ -133,8 +142,15 @@ public class transScript : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
-        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().tag = "OldScript";
-        SceneManager.LoadScene("Main");
+        if (trainingMode)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().interruptTrainingScene();
+        }
+        else
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().tag = "OldScript";
+            SceneManager.LoadScene("Main");
+        }
     }
 
     void changeColor()
@@ -197,16 +213,28 @@ public class transScript : MonoBehaviour
 
     IEnumerator NextScene()
     {
-        
         yield return new WaitForSeconds(transitionDuration);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().NextScene();
+        if (trainingMode)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().startTrainingScene();
+        }
+        else
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().NextScene();
+        }
     }
 
     public void NextSceneImmediate()
     {
         StopAllCoroutines();
-        GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().NextScene();
-
+        if (trainingMode)
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().startTrainingScene();
+        }
+        else
+        {
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().NextScene();
+        }
     }
 
     void CurrentSceneSelector()

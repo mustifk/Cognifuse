@@ -44,17 +44,11 @@ public class tapTheDotEngine : MonoBehaviour
                 break;
         }
         lifespan = 1.2f - (blinkCount * 0.035f);
-        timebar.SetMax(2.3f + (lifespan * blinkCount));
+        timebar.SetMax(2.5f + (lifespan * blinkCount));
 
         dots = new GameObject[3];
         StartCoroutine(Begin());
         timebar.Begin();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void Press(bool wrong)
@@ -170,7 +164,7 @@ public class tapTheDotEngine : MonoBehaviour
                     dots[i].GetComponent<dontTapDot>().Exist(lifespan);
                 }
             }
-            if (i == 0)
+            if (i == 1)
             {
                 temp = NewPosition(temp);
             }

@@ -6,9 +6,12 @@ public class allCamScript : MonoBehaviour
 {
     private void Start()
     {
-        if (!GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Listening())
+        if (GameObject.FindGameObjectWithTag("Player") != null)
         {
-            AudioListener.volume = 0;
+            if (!GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Listening())
+            {
+                AudioListener.volume = 0;
+            }
         }
     }
 }

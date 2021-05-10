@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class soundButtonScript : MonoBehaviour
 {
     public Sprite on, off;
-    public AudioListener audio;
+    public AudioListener audioObject;
     
     // Start is called before the first frame update
     bool toggleListening = true;

@@ -9,7 +9,7 @@ public class numberRushScript : MonoBehaviour
     GameObject[] collectibles,enemies;
     timebarScript timebar;
     int[,] coord;
-    public int difficulty;
+    int difficulty;
     int collectibleCount,enemyCount,nextToCount = 1;
     bool isGameOver = false;
     public AudioSource collect ,win, lose;

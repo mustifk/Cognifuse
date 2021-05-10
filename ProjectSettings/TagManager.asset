@@ -15,6 +15,7 @@ TagManager:
   - Enemy
   - Avoid
   - canvas
+  - trainingEditor
   layers:
   - Default
   - TransparentFX

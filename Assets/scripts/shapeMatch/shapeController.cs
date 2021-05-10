@@ -51,9 +51,12 @@ public class shapeController : MonoBehaviour
         GameObject temp = Instantiate(TBC);
         timebar = temp.GetComponent<TBCscript>().timebar();
 
-        if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+        if (GameObject.FindGameObjectWithTag("Player") != null)
         {
-            string[] texts = { "daire", "altigen", "dortgen", "yildiz", "ucgen" };
+            if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+            {
+                string[] texts = { "daire", "altigen", "dortgen", "yildiz", "ucgen" };
+            }
         }
 
         if (Demo == 0)

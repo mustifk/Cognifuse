@@ -16,13 +16,12 @@ public class buttonscript : MonoBehaviour
         gameObject.GetComponent<CircleCollider2D>().enabled = false;
         switch (colorCount)
         {
-            case 0:
+            default:
                 original = doo;
                 this.GetComponent<SpriteRenderer>().color = new Color(Color.red.r / 1.5f, Color.red.g / 1.5f, Color.red.b / 1.5f);
                 break;
             case 1:
                 original = re;
-
                 this.GetComponent<SpriteRenderer>().color = new Color(Color.green.r / 1.5f, Color.green.g / 1.5f, Color.green.b / 1.5f);
                 break;
             case 2:
@@ -47,6 +46,10 @@ public class buttonscript : MonoBehaviour
                 break;
         }
         colorCount++;
+        if (colorCount > 6)
+        {
+            colorCount = 0;
+        }
         sprt = GetComponent<SpriteRenderer>();
         colortemp = sprt.color;
     }

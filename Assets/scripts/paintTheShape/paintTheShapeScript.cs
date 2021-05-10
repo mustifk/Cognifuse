@@ -18,6 +18,7 @@ public class paintTheShapeScript : MonoBehaviour
     public int[,] blocks1, blocks2, validBlocks;
     int difficulty;
     int gap = 1,arrLength;
+    float positioner,scaler;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,30 +38,29 @@ public class paintTheShapeScript : MonoBehaviour
         blocks2 = new int[5,5];
         validBlocks = new int[5,5];
        
-        switch (difficulty)
+        switch (difficulty) 
         {
+            
             case 2:
-                Camera.main.transform.position = new Vector3(1.5f, 1.5f, 0);
-                Camera.main.orthographicSize = 3f;
-                //this.gameObject.transform.position += new Vector3(-2.25f, -2.25f, 0);
                 currentBlock = blockM;
                 arrLength = 4;
+                positioner = 1.5f;
+                scaler = 0.5f;
                 timebar.SetMax(9);
                 break;
             case 3:
-                Camera.main.transform.position = new Vector3(2f, 2f, 0);
-                Camera.main.orthographicSize = 4f;
-                //this.gameObject.transform.position += new Vector3(-2.5f, -2.5f, 1f);
                 currentBlock = blockM;
                 arrLength = 5;
+                positioner = 2f;
+                scaler = 0.5f;
                 timebar.SetMax(13);
                 break;
             default:
                 gap = 2;
-                Camera.main.transform.position = new Vector3(2f, 2f, 0);
-                //this.gameObject.transform.position += new Vector3(-2f,-2f,1f);
                 currentBlock = block;
                 arrLength = 3;
+                positioner = 2f;
+                scaler = 0.6f;
                 timebar.SetMax(5);
                 break;
         }
@@ -76,26 +76,39 @@ public class paintTheShapeScript : MonoBehaviour
         {
             for (int y = 0; y < arrLength; y++)
             {
-                blockList[x, y] = Instantiate(currentBlock, new Vector3(x * gap, y * gap, 1), Quaternion.identity, this.transform);
+                blockList[x, y] = Instantiate(currentBlock, new Vector3((x * gap) - positioner,( y * gap) - positioner, 1), Quaternion.identity, this.transform);
                 tempGO = Instantiate(currentBlock, new Vector3(x * gap, y * gap, 1), Quaternion.identity, BlocksLeft.transform) as GameObject;
                 tempGO.GetComponent<blockScript>().ChangeState(blocks1[x, y]);
                 tempGO = Instantiate(currentBlock, new Vector3(x * gap, y * gap, 1), Quaternion.identity, BlocksRight.transform) as GameObject;
                 tempGO.GetComponent<blockScript>().ChangeState(blocks2[x, y]);
             }
         }
-        BlocksRight.transform.localScale = new Vector3(0.5f, 0.5f, 1);
-        BlocksLeft.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+        BlocksRight.transform.localScale = new Vector3(scaler, scaler, 1);
+        BlocksLeft.transform.localScale = new Vector3(scaler, scaler, 1);
         if (difficulty == 2)
         {
-            BlocksRight.transform.position = new Vector3(Camera.main.transform.position.x + 3f, Camera.main.transform.position.y / 2, 3);
-            BlocksLeft.transform.position = new Vector3(Camera.main.transform.position.x - 4.5f, Camera.main.transform.position.y / 2, 3);
+            foreach (var cam in Camera.allCameras)
+            {
+                cam.orthographicSize = 3;
+            }
+            BlocksRight.transform.position = new Vector3(2.5f, -0.75f, 3);
+            BlocksLeft.transform.position = new Vector3(-4f, -0.75f, 3);
+            this.gameObject.transform.localScale = new Vector3(1.1f, 1.1f, 1);
+        }
+        else if(difficulty == 1)
+        {
+            BlocksRight.transform.position = new Vector3(4.75f, -1.175f, 3);
+            BlocksLeft.transform.position = new Vector3(-7.25f, -1.175f, 3);
         }
         else
         {
-            BlocksRight.transform.position = new Vector3(Camera.main.transform.position.x + 4f, Camera.main.transform.position.y / 2, 3);
-            BlocksLeft.transform.position = new Vector3(Camera.main.transform.position.x - 6f, Camera.main.transform.position.y / 2, 3);
+            foreach (var cam in Camera.allCameras)
+            {
+                cam.orthographicSize = 3.5f;
+            }
+            BlocksRight.transform.position = new Vector3(3.5f, -1f, 3);
+            BlocksLeft.transform.position = new Vector3(-5.5f, -1f, 3);
         }
-
         timebar.Begin();
     }
 
@@ -213,6 +226,10 @@ public class paintTheShapeScript : MonoBehaviour
         Terminate();
         timebar.Stop();
         yield return new WaitForSeconds(0.8f);
+        foreach (var cam in Camera.allCameras)
+        {
+            cam.orthographicSize = 5;
+        }
         if (Demo == 0)
         {
             GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame((timebar.GetTime() / timebar.GetMax()), win);
