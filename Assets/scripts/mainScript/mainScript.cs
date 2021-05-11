@@ -308,6 +308,8 @@ public class mainScript : MonoBehaviour
     public void interruptTrainingScene()
     {
         SceneManager.UnloadSceneAsync("Transition");
+        Canvas.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        Canvas.GetComponent<CanvasGroup>().interactable = true;
     }
 
     public void endTrainingScene() 

@@ -14,7 +14,7 @@ public class pageSwiper : MonoBehaviour,IDragHandler,IEndDragHandler
     void Start()
     {
         panelLoc = transform.position;
-        if (Screen.width / Screen.height < 1.8f)
+        if ((float)Screen.width / (float)Screen.height < 1.79f)
         {
             swipeAmount = 18.86f;
         }
