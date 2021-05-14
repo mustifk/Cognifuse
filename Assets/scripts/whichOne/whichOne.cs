@@ -8,7 +8,7 @@ public class whichOne : MonoBehaviour
     //timebar
     public GameObject TBC;
     timebarScript timebar;
-
+    public AudioSource trueSound, wrongSound, sliderSound,sliderSound2,playSound;
     bool isGameover = false;
     [SerializeField] private Sprite[] images;
     private int difficulty;
@@ -68,7 +68,7 @@ public class whichOne : MonoBehaviour
             default:
                 break;
         }
-       
+        playSound.Play();
         StartCoroutine(listCard());
     }
     private void Update()
@@ -154,6 +154,7 @@ public class whichOne : MonoBehaviour
         yield return new WaitForSeconds(4f);
         if (!isAgain)
         {
+            sliderSound.Play();
             isAgain = true;
             StartCoroutine(listCard());
             timebar.Begin();
@@ -187,10 +188,12 @@ public class whichOne : MonoBehaviour
         StopAllCoroutines();
         if (id == cardNumbers)
         {
+            trueSound.Play();
             StartCoroutine(GameOver(true));
         }
         else
         {
+            wrongSound.Play();
             StartCoroutine(GameOver(false));
         }
     }

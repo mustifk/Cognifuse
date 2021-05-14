@@ -38,7 +38,9 @@ public class MainCard : MonoBehaviour
     }
     IEnumerator destroy()
     {
+
         yield return new WaitForSeconds(3f);
+        controller.sliderSound2.Play();
         Destroy(this.gameObject);
     }
 }

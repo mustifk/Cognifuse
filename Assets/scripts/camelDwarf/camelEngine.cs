@@ -6,6 +6,9 @@ using TMPro;
 
 public class camelEngine : MonoBehaviour
 {
+    public AudioSource gameOverSound;
+    public AudioSource trueSound;
+
     public int Demo = 0;
     //timebar
     public GameObject TBC;
@@ -271,6 +274,14 @@ public class camelEngine : MonoBehaviour
 
     void Finish(bool win)
     {
+        if (win)
+        {
+            trueSound.Play();
+        }
+        if (!win)
+        {
+            gameOverSound.Play();
+        }
         timebar.Stop();
         Destroy(text);
         int childs = transform.childCount;
