@@ -68,19 +68,37 @@ public class wordController : MonoBehaviour
 
     void Start()
     {
-        if (GameObject.FindGameObjectWithTag("Player") != null)
-        {
-            if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
-            {
-                string[] words = { "LOB", "KAN", "GOZ", "RAY", "HIS", "ACI" };
-                string[] four = { "ALGI", "ISIK", "DEHA", "KARA", "YENI", "SERI", "ZEKA", "AKIL", "KAFA", "SIKI", "OYUN" };
-                string[] five = { "BEDEN", "VUCUT", "MOTOR", "BEYIN", "NORON", "HEVES", "SINIR" };
-            }
-        }
         //timebar
         GameObject temp = Instantiate(TBC);
         timebar = temp.GetComponent<TBCscript>().timebar();
 
+        if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+        {
+            words[0] = "LOB";
+            words[1] = "KAN";
+            words[2] = "GOZ";
+            words[3] = "RAY"; 
+            words[4] = "HIS"; 
+            words[5] = "ACI";
+            four[0] = "ALGI"; 
+            four[1] = "ISIK";
+            four[2] = "DEHA";
+            four[3] = "KARA"; 
+            four[4] = "YENI";
+            four[5] = "SERI";
+            four[6] = "ZEKA";
+            four[7] = "AKIL";
+            four[8] = "KAFA";
+            four[9] = "SIKI"; 
+            four[10] = "OYUN";
+            five[0] = "BEDEN"; 
+            five[1] = "VUCUT";
+            five[2] = "MOTOR";
+            five[3] = "BEYIN";
+            five[4] = "NORON";
+            five[5] = "HEVES";
+            five[6] = "SINIR";
+        }
         selected_buttons = new List<GameObject>();
 
         if (Demo == 0)

@@ -91,21 +91,46 @@ public class shape : MonoBehaviour
     {
         switch (shapeName)
         {
+            case "daire":
+                shapeName = "circle";
+                index = (++index) % _circleSprite.Length;
+                GetComponent<SpriteRenderer>().sprite = _circleSprite[index];
+                break;
             case "circle":
                 index = (++index) % _circleSprite.Length;
                 GetComponent<SpriteRenderer>().sprite = _circleSprite[index];
+                break;
+            case "altigen":
+                shapeName = "hexagon";
+                index = (++index) % _hexagonSprite.Length;
+                GetComponent<SpriteRenderer>().sprite = _hexagonSprite[index];
                 break;
             case "hexagon":
                 index = (++index) % _hexagonSprite.Length;
                 GetComponent<SpriteRenderer>().sprite = _hexagonSprite[index];
                 break;
+            case "dortgen":
+                shapeName = "rectangle";
+                index = (++index) % _rectangleSprite.Length;
+                GetComponent<SpriteRenderer>().sprite = _rectangleSprite[index];
+                break;
             case "rectangle":
                 index = (++index) % _rectangleSprite.Length;
                 GetComponent<SpriteRenderer>().sprite = _rectangleSprite[index];
                 break;
+            case "yildiz":
+                shapeName = "star";
+                index = (++index) % _starSprite.Length;
+                GetComponent<SpriteRenderer>().sprite = _starSprite[index];
+                break;
             case "star":
                 index = (++index) % _starSprite.Length;
                 GetComponent<SpriteRenderer>().sprite = _starSprite[index];
+                break;
+            case "ucgen":
+                shapeName = "triangle";
+                index = (++index) % _triangleSprite.Length;
+                GetComponent<SpriteRenderer>().sprite = _triangleSprite[index];
                 break;
             case "triangle":
                 index = (++index) % _triangleSprite.Length;

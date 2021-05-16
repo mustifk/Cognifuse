@@ -30,13 +30,8 @@ public class ChangeText : MonoBehaviour
     bool answer;
     void Start()
     {
-        if (GameObject.FindGameObjectWithTag("Player") != null)
-        {
-            if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
-            {
-                string[] colorNames = { "Kirmizi", "Mavi", "Siyah", "Yesil", "Turkuaz", "Pembe", "Beyaz", "Sari" };
-            }
-        }
+
+
         //timebar
         GameObject temp = Instantiate(TBC);
         timebar = temp.GetComponent<TBCscript>().timebar();
@@ -75,9 +70,20 @@ public class ChangeText : MonoBehaviour
         colors[5] = Color.magenta;
         colors[6] = Color.white;
         colors[7] = Color.yellow;
-       
 
-      
+
+
+        if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+        {
+            colorNames[0] = "Kirmizi";
+            colorNames[1] = "Mavi";
+            colorNames[2] = "Siyah";
+            colorNames[3] = "Yesil";
+            colorNames[4] = "Turkuaz";
+            colorNames[5] = "Pembe";
+            colorNames[6] = "Beyaz";
+            colorNames[7] = "Sari";
+        }
 
         timebar.Begin();
         StartCoroutine(Begin());

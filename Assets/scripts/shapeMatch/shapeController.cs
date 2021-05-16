@@ -51,14 +51,6 @@ public class shapeController : MonoBehaviour
         GameObject temp = Instantiate(TBC);
         timebar = temp.GetComponent<TBCscript>().timebar();
 
-        if (GameObject.FindGameObjectWithTag("Player") != null)
-        {
-            if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
-            {
-                string[] texts = { "daire", "altigen", "dortgen", "yildiz", "ucgen" };
-            }
-        }
-
         if (Demo == 0)
         {
             difficulty = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
@@ -91,6 +83,16 @@ public class shapeController : MonoBehaviour
 
         otherSpriteArray = new int[numberOfObjects];
         sameSpriteArray = new int[difficulty];
+
+
+        if (GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language() == 0)
+        {
+            texts[0] = "daire";
+            texts[1] = "altigen";
+            texts[2] = "dortgen";
+            texts[3] = "yildiz";
+            texts[4] = "ucgen";
+        }
 
         prepareGame();
         timebar.Begin();
@@ -188,24 +190,39 @@ public class shapeController : MonoBehaviour
 
         switch (message)
         {
-            case "circle":
             case "daire":
+                message = "circle";
                 otherShapes = new shape[] { hexagon, rectangle, star, triangle };
                 break;
-            case "hexagon":
+            case "circle":
+                otherShapes = new shape[] { hexagon, rectangle, star, triangle };
+                break;
             case "altigen":
+                message = "hexagon";
                 otherShapes = new shape[] { circle, rectangle, star, triangle };
                 break;
-            case "rectangle":
+            case "hexagon":
+                otherShapes = new shape[] { circle, rectangle, star, triangle };
+                break;
             case "dortgen":
+                message = "rectangle";
                 otherShapes = new shape[] { circle, hexagon, star, triangle };
                 break;
-            case "star":
+            case "rectangle":
+                otherShapes = new shape[] { circle, hexagon, star, triangle };
+                break;
             case "yildiz":
+                message = "star";
                 otherShapes = new shape[] { circle, hexagon, rectangle, triangle };
                 break;
-            case "triangle":
+            case "star":
+                otherShapes = new shape[] { circle, hexagon, rectangle, triangle };
+                break;
             case "ucgen":
+                message = "ucgen";
+                otherShapes = new shape[] { circle, hexagon, rectangle, star };
+                break;
+            case "triangle":
                 otherShapes = new shape[] { circle, hexagon, rectangle, star };
                 break;
         }
@@ -263,23 +280,36 @@ public class shapeController : MonoBehaviour
             {
                 switch (message)
                 {
-                    case "circle":
                     case "daire":
+                        message = "circle";
                         shape = circle;
                         break;
-                    case "hexagon":
+                    case "circle":
+                        shape = circle;
+                        break;
                     case "altigen":
+                        message = "hexagon";
                         shape = hexagon;
                         break;
-                    case "rectangle":
+                    case "hexagon":
+                        shape = hexagon;
+                        break;
                     case "dortgen":
+                        message = "rectangle";
                         shape = rectangle;
                         break;
-                    case "star":
+                    case "rectangle":
+                        shape = rectangle;
+                        break;
                     case "yildiz":
+                        message = "star";
+                        shape = star;
+                        break;
+                    case "star":
                         shape = star;
                         break;
                     default:
+                        message = "triangle";
                         shape = triangle;
                         break;
                 }
@@ -294,23 +324,36 @@ public class shapeController : MonoBehaviour
                 shape.transform.localScale = new Vector2(0.3f, 0.3f);
                 switch (shape.shapeName)
                 {
-                    case "circle":
                     case "daire":
+                        shape.shapeName = "circle";
                         otherSprites = shape.circleSprite();
                         break;
-                    case "hexagon":
+                    case "circle":
+                        otherSprites = shape.circleSprite();
+                        break;
                     case "altigen":
+                        shape.shapeName = "hexagon";
                         otherSprites = shape.hexagonSprite();
                         break;
-                    case "rectangle":
+                    case "hexagon":
+                        otherSprites = shape.hexagonSprite();
+                        break;
                     case "dortgen":
+                        shape.shapeName = "rectangle";
                         otherSprites = shape.rectangleSprite();
                         break;
-                    case "star":
+                    case "rectangle":
+                        otherSprites = shape.rectangleSprite();
+                        break;
                     case "yildiz":
+                        shape.shapeName = "star";
+                        otherSprites = shape.starSprite();
+                        break;
+                    case "star":
                         otherSprites = shape.starSprite();
                         break;
                     default:
+                        shape.shapeName = "triangle";
                         otherSprites = shape.triangleSprite();
                         break;
                 }

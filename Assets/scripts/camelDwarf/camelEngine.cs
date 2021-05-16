@@ -14,7 +14,7 @@ public class camelEngine : MonoBehaviour
     public GameObject TBC;
     timebarScript timebar;
 
-    int diffLevel,lang = 0;
+    int diffLevel, lang = 0;
 
     [SerializeField]
     CDobject cdObject;
@@ -48,10 +48,10 @@ public class camelEngine : MonoBehaviour
         timebar = temp.GetComponent<TBCscript>().timebar();
 
         //  messages = new string[]{ "Camel", "Dwarf", "Camel", "Dwarf", "Camel", "Dwarf", "Camel", "Dwarf"};
+        lang = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language();
 
         if (Demo == 0)
         {
-            lang = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language();
             diffLevel = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
         }
         else
@@ -59,7 +59,7 @@ public class camelEngine : MonoBehaviour
             lang = 1;
             diffLevel = Demo;
         }
-        
+
         switch (diffLevel)
         {
             case 1:
@@ -75,14 +75,14 @@ public class camelEngine : MonoBehaviour
 
         setMessage();
 
-       // updateText();
-       
+        // updateText();
+
         prepareGame();
 
         gameOver = false;
         isClick = false;
-      
-        switch(diffLevel)
+
+        switch (diffLevel)
         {
             case 1:
                 waitingTime = 2f;
@@ -111,30 +111,30 @@ public class camelEngine : MonoBehaviour
     void setMessage()
     {
         messages = new string[60];
-        if(Random.Range(0,2) == 0)
+        if (Random.Range(0, 2) == 0)
         {
-            if(lang == 0)
+            if (lang == 0)
             {
-            messages[0] = "Deve";
+                messages[0] = "Deve";
             }
             else
             {
-            messages[0] = "Camel";
+                messages[0] = "Camel";
             }
         }
         else
         {
             if (lang == 0)
             {
-            messages[0] = "Cuce";
+                messages[0] = "Cuce";
             }
             else
             {
-            messages[0] = "Dwarf";
+                messages[0] = "Dwarf";
             }
         }
 
-        for(int i=1;i<messages.Length-3;i++)
+        for (int i = 1; i < messages.Length - 3; i++)
         {
             if (lang == 0)
             {
@@ -147,7 +147,7 @@ public class camelEngine : MonoBehaviour
                 messages[++i] = "Dwarf";
             }
             int ind = Random.Range(0, 9);
-            if(ind % 2 == 0)
+            if (ind % 2 == 0)
             {
                 if (lang == 0)
                 {
@@ -170,7 +170,7 @@ public class camelEngine : MonoBehaviour
                 }
             }
         }
-        index = Random.Range(0, messages.Length/2);
+        index = Random.Range(0, messages.Length / 2);
     }
 
     void prepareGame()
@@ -179,9 +179,13 @@ public class camelEngine : MonoBehaviour
         cdObject = Instantiate(cdObject);
         cdObject.transform.parent = gameObject.transform;
         if (text.text == "Camel" || text.text == "Deve")
+        {
             cdObject.setStartSituation(0);
+        }
         else
+        {
             cdObject.setStartSituation(1);
+        }
     }
 
     void updateText()
@@ -194,10 +198,10 @@ public class camelEngine : MonoBehaviour
     {
         if (text.text != cdObject.situation)
         {
-            if (isClick)      
+            if (isClick)
             {
                 countGame++;
-               // StartCoroutine(wait());
+                // StartCoroutine(wait());
                 updateText();
                 setTimer();
                 cdObject.changePos();
@@ -255,7 +259,7 @@ public class camelEngine : MonoBehaviour
 
     public void checkPos()
     {
-        if(!gameOver)
+        if (!gameOver)
         {
             isClick = true;
             checkGame();
@@ -285,7 +289,7 @@ public class camelEngine : MonoBehaviour
         timebar.Stop();
         Destroy(text);
         int childs = transform.childCount;
-        for(int i=childs-1;i>=0;i--) 
+        for (int i = childs - 1; i >= 0; i--)
             GameObject.Destroy(gameObject.transform.GetChild(i).gameObject);
         Destroy(mini.gameObject);
         gameOver = true;
@@ -295,10 +299,10 @@ public class camelEngine : MonoBehaviour
     IEnumerator End(bool win)
     {
         yield return new WaitForSeconds(0.8f);
-        if(Demo == 0)
+        if (Demo == 0)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(1, win);
-            //GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame((timebar.GetTime() / timebar.GetMax()), win);
+            GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame((timebar.GetTime() / timebar.GetMax()), win);
+            //GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().EndOfMinigame(1, win);
         }
     }
 }
