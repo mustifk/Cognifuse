@@ -15,15 +15,9 @@ public class CDobject : MonoBehaviour
     int lang;
 
     public string situation;
-
-    void Start()
+    public void setStartSituation(int value, int lang)
     {
-        lang = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language();
-        // GetComponent<SpriteRenderer>().sprite = camel;
-        //setStartSituation();
-    }
-    public void setStartSituation(int value)
-    {
+        this.lang = lang;
         if (value == 0)
         {
             bit = 0;

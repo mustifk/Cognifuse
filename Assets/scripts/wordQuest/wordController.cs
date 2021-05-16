@@ -55,7 +55,6 @@ public class wordController : MonoBehaviour
     int distance;
     int indexWord;
 
-    [SerializeField]
     string tempWord;
 
     [SerializeField]
@@ -248,20 +247,14 @@ public class wordController : MonoBehaviour
             checkFilled();
 
             placeWord(tempWord);
-           /* for (int i = 0; i < tempWord.Length; i++)
-            {
-                buttons[indexRow, indexCol].GetComponentInChildren<Text>().text = tempWord[i].ToString();
-                bitArray[indexRow, indexCol] = 1;
-                findPath();
-            }*/
         }
     }
 
     void checkFilled()
     {
-        int max = 3;
-        if (difficulty == 3)
-            max = 4;
+        //int max = 3;
+       // if (difficulty == 3)
+        int max = 4;
         int counter = Random.Range(0, max);
         while (bitPath[counter] == 1)
         {
@@ -274,20 +267,20 @@ public class wordController : MonoBehaviour
                 indexCol = 0;
                 break;
             case 1:
+                indexRow = (row / 2);
+                indexCol = (column / 2);
+                break;
+            case 2:
+                indexRow = row - 2;
+                indexCol = column - 2;
+                break;
+            case 3:
                 indexRow = row - 1;
                 indexCol = 1;
                 break;
-            case 2:
-                indexRow = row - 1;
-                indexCol = column - 1;
-                break;
-            case 3:
-                indexRow = 0;
-                indexCol = column - 1;
-                break;
             default:
-                indexRow = (row / 2) + 1;
-                indexCol = column / 2;
+                indexRow = 1;
+                indexCol = column - 2;
                 break;
         }
         bitPath[counter] = 1;
@@ -295,9 +288,6 @@ public class wordController : MonoBehaviour
 
     void placeWord(string text)
     {
-        //string text = tempWord[index].ToString();
-
-        //searchEmptyPlace(text);
         tempRow = indexRow;
         tempCol = indexCol;
 
@@ -318,7 +308,7 @@ public class wordController : MonoBehaviour
             positionsRow[i] = tempRow;
             positionsCol[i] = tempCol;
             if(i != text.Length-1)
-                searchEmpty(i);
+                searchEmpty(i, text);
         }
 
         for(int i=0;i<text.Length;i++)
@@ -328,17 +318,16 @@ public class wordController : MonoBehaviour
             buttons[indexRow, indexCol].GetComponentInChildren<Text>().text = text[i].ToString();
             bitArray[indexRow, indexCol] = 1;
         }
-        //Debug.Log("***********");
     }
 
-    void searchEmpty(int index)
+    void searchEmpty(int index, string text)
     {
         int[] bit = new int[4];     //{up, down, left, right}
         for (int i = 0; i < 4; i++)
         {
             bit[i] = 0;
         }
-
+        //Debug.Log(text + " --> ROW: " + tempRow + " COL: " + tempCol);
         if (tempRow != 0 && bitArray[(tempRow - 1), tempCol] != 1)
         {
             //up();
@@ -442,15 +431,7 @@ public class wordController : MonoBehaviour
         }
     }
 
-  /*  void searchEmptyPlace(string text)
-    {
-        for(int i=0;i<text.Length;i++)
-        {
-            findPath();
-        }
-    }*/
-
-    void findPath()
+   /* void findPath()
     {
         int[] bit = new int[4];     //{up, down, left, right}
         for(int i=0;i<4;i++)
@@ -503,7 +484,7 @@ public class wordController : MonoBehaviour
                 indexCol++;
                 break;
         }
-    }
+    }*/
 
     public void makePath(GameObject button)
     {
@@ -526,6 +507,13 @@ public class wordController : MonoBehaviour
             if(temp == word)
             {
                 correct.Play();
+                
+                for(int i=0;i<texts.Length;i++)
+                {
+                    if (word == texts[i].text)
+                        texts[i].color = new Color(0.08904415f, 0.2735849f, 0.1697807f, 1);
+                }
+
                 for (int i = 0; i < words.Length; i++)
                     if (words[i] == temp)
                         deleteWord(words, i);

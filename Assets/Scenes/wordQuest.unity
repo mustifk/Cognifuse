@@ -175,7 +175,6 @@ MonoBehaviour:
   canva: {fileID: 948996185}
   canvas: {fileID: 1979235891}
   selected: 0
-  tempWord: 
   texts:
   - {fileID: 914641479}
   - {fileID: 1873505226}
@@ -206,7 +205,7 @@ AudioSource:
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
-  BypassReverbZones: 0
+  BypassReverbZones: 1
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -495,7 +494,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 0.089044146, g: 0.2735849, b: 0.16978073, a: 1}
+  m_fontColor: {r: 0.83137256, g: 0.1764706, b: 0.09803922, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -629,7 +628,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 0.089044146, g: 0.2735849, b: 0.16978073, a: 1}
+  m_fontColor: {r: 0.8301887, g: 0.17498267, b: 0.09789959, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -866,7 +865,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 0.089044146, g: 0.2735849, b: 0.16978073, a: 1}
+  m_fontColor: {r: 0.83137256, g: 0.1764706, b: 0.09803922, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

@@ -145,9 +145,8 @@ public class shapeController : MonoBehaviour
         {
             GameObject.Destroy(transform.GetChild(i).gameObject);
         }
-        GameObject.Destroy(transform.GetChild(0).gameObject);
-
-
+        Debug.Log(transform.childCount);
+        //GameObject.Destroy(transform.GetChild(0).gameObject);
     }
     IEnumerator wait3()
     {

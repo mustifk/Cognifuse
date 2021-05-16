@@ -47,9 +47,8 @@ public class camelEngine : MonoBehaviour
         GameObject temp = Instantiate(TBC);
         timebar = temp.GetComponent<TBCscript>().timebar();
 
-        //  messages = new string[]{ "Camel", "Dwarf", "Camel", "Dwarf", "Camel", "Dwarf", "Camel", "Dwarf"};
         lang = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Language();
-
+        
         if (Demo == 0)
         {
             diffLevel = GameObject.FindGameObjectWithTag("Player").GetComponent<mainScript>().Difficulty();
@@ -74,8 +73,6 @@ public class camelEngine : MonoBehaviour
         }
 
         setMessage();
-
-        // updateText();
 
         prepareGame();
 
@@ -111,7 +108,7 @@ public class camelEngine : MonoBehaviour
     void setMessage()
     {
         messages = new string[60];
-        if (Random.Range(0, 2) == 0)
+        if ((Random.Range(0, 10) % 2) == 0)
         {
             if (lang == 0)
             {
@@ -138,35 +135,52 @@ public class camelEngine : MonoBehaviour
         {
             if (lang == 0)
             {
-                messages[i] = "Deve";
-                messages[++i] = "Cuce";
-            }
-            else
-            {
-                messages[i] = "Camel";
-                messages[++i] = "Dwarf";
-            }
-            int ind = Random.Range(0, 9);
-            if (ind % 2 == 0)
-            {
-                if (lang == 0)
+                if(messages[i-1].Equals("Deve"))
                 {
-                    messages[0] = "Deve";
+                    messages[i] = "Cuce";
+                    messages[++i] = "Deve";
                 }
                 else
                 {
-                    messages[0] = "Camel";
+                    messages[i] = "Deve";
+                    messages[++i] = "Cuce";
+                }
+
+            }
+            else
+            {
+                if (messages[i - 1].Equals("Camel"))
+                {
+                    messages[i] = "Dwarf";
+                    messages[++i] = "Camel";
+                }
+                else
+                {
+                    messages[i] = "Camel";
+                    messages[++i] = "Dwarf";
+                }
+            }
+
+            if (Random.Range(0, 10) % 2 == 0)
+            {
+                if (lang == 0)
+                {
+                    messages[i] = "Deve";
+                }
+                else
+                {
+                    messages[i] = "Camel";
                 }
             }
             else
             {
                 if (lang == 0)
                 {
-                    messages[0] = "Cuce";
+                    messages[i] = "Cuce";
                 }
                 else
                 {
-                    messages[0] = "Dwarf";
+                    messages[i] = "Dwarf";
                 }
             }
         }
@@ -180,17 +194,16 @@ public class camelEngine : MonoBehaviour
         cdObject.transform.parent = gameObject.transform;
         if (text.text == "Camel" || text.text == "Deve")
         {
-            cdObject.setStartSituation(0);
+            cdObject.setStartSituation(0, lang);
         }
         else
         {
-            cdObject.setStartSituation(1);
+            cdObject.setStartSituation(1, lang);
         }
     }
 
     void updateText()
     {
-        //int index = Random.Range(0, 10);
         text.text = messages[index++];
     }
 
@@ -201,7 +214,6 @@ public class camelEngine : MonoBehaviour
             if (isClick)
             {
                 countGame++;
-                // StartCoroutine(wait());
                 updateText();
                 setTimer();
                 cdObject.changePos();
