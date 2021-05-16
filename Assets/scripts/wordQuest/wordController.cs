@@ -47,6 +47,9 @@ public class wordController : MonoBehaviour
     int startPosX, startPosY;
     int row, column;
     int indexRow, indexCol;
+    int tempRow, tempCol;
+    int[] positionsRow;
+    int[] positionsCol;
 
     int maxWord;
     int distance;
@@ -148,7 +151,7 @@ public class wordController : MonoBehaviour
             bitPath[i] = 0;
         }
 
-        for(int i=0;i<difficulty;i++)
+        for (int i=0;i<difficulty;i++)
         {
             indexWord = Random.Range(0, words.Length);
             while (bitWord[indexWord] == 1)
@@ -225,20 +228,22 @@ public class wordController : MonoBehaviour
             tempWord = texts[t].text;
 
             checkFilled();
-            for (int i = 0; i < tempWord.Length; i++)
+
+            placeWord(tempWord);
+           /* for (int i = 0; i < tempWord.Length; i++)
             {
                 buttons[indexRow, indexCol].GetComponentInChildren<Text>().text = tempWord[i].ToString();
                 bitArray[indexRow, indexCol] = 1;
                 findPath();
-            }
+            }*/
         }
     }
 
     void checkFilled()
     {
-        int max = 4;
+        int max = 3;
         if (difficulty == 3)
-            max = 5;
+            max = 4;
         int counter = Random.Range(0, max);
         while (bitPath[counter] == 1)
         {
@@ -269,6 +274,163 @@ public class wordController : MonoBehaviour
         }
         bitPath[counter] = 1;
     }
+
+    void placeWord(string text)
+    {
+        //string text = tempWord[index].ToString();
+
+        //searchEmptyPlace(text);
+        tempRow = indexRow;
+        tempCol = indexCol;
+
+        positionsRow = new int[text.Length];
+        positionsCol = new int[text.Length];
+
+        for (int i = 0; i < positionsRow.Length; i++)
+        {
+            positionsRow[i] = -1;
+        }
+        for (int i = 0; i < positionsCol.Length; i++)
+        {
+            positionsCol[i] = -1;
+        }
+
+        for (int i = 0; i < text.Length; i++)
+        {
+            positionsRow[i] = tempRow;
+            positionsCol[i] = tempCol;
+            if(i != text.Length-1)
+                searchEmpty(i);
+        }
+
+        for(int i=0;i<text.Length;i++)
+        {
+            indexRow = positionsRow[i];
+            indexCol = positionsCol[i];
+            buttons[indexRow, indexCol].GetComponentInChildren<Text>().text = text[i].ToString();
+            bitArray[indexRow, indexCol] = 1;
+        }
+        //Debug.Log("***********");
+    }
+
+    void searchEmpty(int index)
+    {
+        int[] bit = new int[4];     //{up, down, left, right}
+        for (int i = 0; i < 4; i++)
+        {
+            bit[i] = 0;
+        }
+
+        if (tempRow != 0 && bitArray[(tempRow - 1), tempCol] != 1)
+        {
+            //up();
+            bool check = false;
+            if(index!=0)
+            {
+                for (int i = 0; i < index; i++)
+                {
+                    if ((tempRow - 1) == positionsRow[i] && tempCol == positionsCol[i])
+                        check = true;
+                }
+                if (!check && (tempRow -1) > 0)
+                    bit[0] = 1;
+            }
+            else
+            {
+                bit[0] = 1;
+            }
+        }
+        if (tempRow != (row - 1) && bitArray[(tempRow + 1), tempCol] != 1)
+        {
+            //down();
+            bool check = false;
+            if (index != 0)
+            {
+                for (int i = 0; i < index; i++)
+                {
+                    if ((tempRow + 1) == positionsRow[i] && tempCol == positionsCol[i])
+                        check = true;
+                }
+                if (!check && (tempRow+1) < row)
+                    bit[1] = 1;
+            }
+            else
+            {
+                bit[1] = 1;
+            }
+        }
+        if (tempCol != 0 && bitArray[tempRow, (tempCol - 1)] != 1)
+        {
+            //left();
+            bool check = false;
+            if (index != 0)
+            {
+                for (int i = 0; i < index; i++)
+                {
+                    if (tempRow == positionsRow[i] && (tempCol - 1) == positionsCol[i])
+                        check = true;
+                }
+                if (!check && (tempCol -1) > 0)
+                    bit[2] = 1;
+            }
+            else
+            {
+                bit[2] = 1;
+            }
+        }
+        if (tempCol != (column - 1) && bitArray[tempRow, (tempCol + 1)] != 1)
+        {
+            //right();
+            bool check = false;
+            if (index != 0)
+            {
+                for (int i = 0; i < index; i++)
+                {
+                    if (tempRow == positionsRow[i] && (tempCol + 1) == positionsCol[i])
+                        check = true;
+                }
+                if (!check && (tempCol + 1) < column)
+                    bit[3] = 1;
+            }
+            else
+            {
+                bit[3] = 1;
+            }
+        }
+
+        int number = Random.Range(0, 4);
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (bit[number] == 1)
+                break;
+            number = (number + 1) % 4;
+        }
+
+        switch (number)
+        {
+            case 0:
+                tempRow--;
+                break;
+            case 1:
+                tempRow++;
+                break;
+            case 2:
+                tempCol--;
+                break;
+            default:
+                tempCol++;
+                break;
+        }
+    }
+
+  /*  void searchEmptyPlace(string text)
+    {
+        for(int i=0;i<text.Length;i++)
+        {
+            findPath();
+        }
+    }*/
 
     void findPath()
     {
