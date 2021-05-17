@@ -511,7 +511,7 @@ public class wordController : MonoBehaviour
                 for(int i=0;i<texts.Length;i++)
                 {
                     if (word == texts[i].text)
-                        texts[i].color = new Color(0.08904415f, 0.2735849f, 0.1697807f, 1);
+                        texts[i].color = new Color(0.586f, 0.962f, 0f, 1);
                 }
 
                 for (int i = 0; i < words.Length; i++)
