@@ -9,7 +9,7 @@ public class EngineScript : MonoBehaviour
     //timebar
     public GameObject TBC;
     timebarScript timebar;
-    public AudioSource wrongSound;
+    public AudioSource wrongSound,trueSound;
     bool isGameover = false;
 
     int blinkCount,objCount,difficulty = new int();
@@ -101,7 +101,15 @@ public class EngineScript : MonoBehaviour
 
     IEnumerator EndOfMinigame(bool result)
     {
-        wrongSound.Play();
+        if (!result)
+        {
+            wrongSound.Play();
+
+        }
+        else
+        {
+            trueSound.Play();
+        }
         isGameover = true;
         timebar.Stop();
         yield return new WaitForSeconds(0.8f);
