@@ -9,7 +9,7 @@ public class timebarScript : MonoBehaviour
     public Image fill;
     bool isTicking = false;
     float temp,temp2;
-    public AudioSource time;
+    public AudioSource time,timeout;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +28,7 @@ public class timebarScript : MonoBehaviour
             if (slider.value == 0)
             {
                 Stop();
+                timeout.Play();
             }
         }
     }
