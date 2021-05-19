@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class gameEngine : MonoBehaviour
 {
+    public Animator anim;
     public int Demo = 0;
     public AudioSource correct; 
     //timebar
@@ -207,6 +208,14 @@ public class gameEngine : MonoBehaviour
 
     IEnumerator EndOfMinigame(bool result)
     {
+        if (result == true)
+        {
+            anim.SetBool("true1", true);
+        }
+        else
+        {
+            anim.SetBool("false1", true);
+        }
         yield return new WaitForSeconds(0.8f);
         if (Demo == 0)
         {

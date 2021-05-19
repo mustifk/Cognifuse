@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class tapTheDotEngine : MonoBehaviour
 {
+    public Animator anim;
     public int Demo = 0;
     //timebar
     public GameObject TBC;
@@ -199,6 +200,14 @@ public class tapTheDotEngine : MonoBehaviour
     IEnumerator EndOfMinigame(bool result)
     {
         timebar.Stop();
+        if (result == true)
+        {
+            anim.SetBool("true1", true);
+        }
+        else
+        {
+            anim.SetBool("false1", true);
+        }
         yield return new WaitForSeconds(0.8f);
         if (Demo == 0)
         {

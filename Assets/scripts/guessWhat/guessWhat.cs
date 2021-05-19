@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class guessWhat : MonoBehaviour
 {
+    public Animator anim;
     public int Demo = 0;
     //timebar
     public GameObject TBC;
@@ -200,6 +201,14 @@ public class guessWhat : MonoBehaviour
 
     IEnumerator End(bool win)
     {
+        if (win == true)
+        {
+            anim.SetBool("true1", true);
+        }
+        else
+        {
+            anim.SetBool("false1", true);
+        }
         yield return new WaitForSeconds(0.8f);
         if (Demo == 0)
         {

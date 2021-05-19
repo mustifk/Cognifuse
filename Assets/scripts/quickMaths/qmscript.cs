@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class qmscript : MonoBehaviour
 {
     public int Demo = 0;
-
+    public Animator anim;
     //timebar
     public GameObject TBC;
     timebarScript timebar;
@@ -67,6 +67,14 @@ public class qmscript : MonoBehaviour
     {
         isGameover = true;
         timebar.Stop();
+        if (win == true)
+        {
+            anim.SetBool("true1", true);
+        }
+        else
+        {
+            anim.SetBool("false1", true);
+        }
         yield return new WaitForSeconds(0.8f);
         if (Demo == 0)
         {

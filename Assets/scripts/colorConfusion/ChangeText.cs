@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class ChangeText : MonoBehaviour
 {
     public int Demo = 0;
+    public Animator anim;
 
     //timebar
     public GameObject TBC;
@@ -30,7 +31,7 @@ public class ChangeText : MonoBehaviour
     bool answer;
     void Start()
     {
-
+        
 
         //timebar
         GameObject temp = Instantiate(TBC);
@@ -207,6 +208,14 @@ public class ChangeText : MonoBehaviour
     }
     IEnumerator EndOfMinigame(bool result)
     {
+        if (result==true)
+        {
+            anim.SetBool("true1", true);
+        }
+        else
+        {
+            anim.SetBool("false1", true);
+        }
         yield return new WaitForSeconds(0.8f);
         if (Demo == 0)
         {

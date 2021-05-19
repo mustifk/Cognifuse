@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class EngineScript : MonoBehaviour
 {
+    public Animator anim;
     public int Demo = 0;
     //timebar
     public GameObject TBC;
@@ -112,6 +113,14 @@ public class EngineScript : MonoBehaviour
         }
         isGameover = true;
         timebar.Stop();
+        if (result == true)
+        {
+            anim.SetBool("true1", true);
+        }
+        else
+        {
+            anim.SetBool("false1", true);
+        }
         yield return new WaitForSeconds(0.8f);
         if (Demo == 0)
         {
@@ -153,6 +162,7 @@ public class EngineScript : MonoBehaviour
     
     IEnumerator Begin()
     {
+
         yield return new WaitForSeconds(1f);
         Blinker();
     }

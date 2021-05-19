@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class paintTheShapeScript : MonoBehaviour
 {
+    public Animator anim;
     public AudioSource tap, incorrect;
     public int Demo = 0;
     //timebar
@@ -225,6 +226,14 @@ public class paintTheShapeScript : MonoBehaviour
         isGameover = true;
         Terminate();
         timebar.Stop();
+        if (win == true)
+        {
+            anim.SetBool("true1", true);
+        }
+        else
+        {
+            anim.SetBool("false1", true);
+        }
         yield return new WaitForSeconds(0.8f);
         foreach (var cam in Camera.allCameras)
         {

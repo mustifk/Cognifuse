@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class numberRushScript : MonoBehaviour
 {
+    public Animator anim;
     public int Demo = 0;
     public GameObject collectible,enemy,TBC;
     GameObject[] collectibles,enemies;
@@ -161,6 +162,14 @@ public class numberRushScript : MonoBehaviour
 
     IEnumerator End(bool win)
     {
+        if (win == true)
+        {
+            anim.SetBool("true1", true);
+        }
+        else
+        {
+            anim.SetBool("false1", true);
+        }
         yield return new WaitForSeconds(0.8f);
         if (Demo == 0)
         {

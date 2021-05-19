@@ -7,6 +7,7 @@ using System.Linq;
 
 public class wordController : MonoBehaviour
 {
+    public Animator anim;
     public int Demo = 0;
     //timebar
     public GameObject TBC;
@@ -537,6 +538,14 @@ public class wordController : MonoBehaviour
     {
         timebar.Stop();
         isGameover = true;
+        if (win == true)
+        {
+            anim.SetBool("true1", true);
+        }
+        else
+        {
+            anim.SetBool("false1", true);
+        }
         yield return new WaitForSeconds(0.8f);
         Finish();
         if (Demo == 0)

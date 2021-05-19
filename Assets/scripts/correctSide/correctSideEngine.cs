@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class correctSideEngine : MonoBehaviour
 {
+    public Animator anim;
     public int Demo = 0;
     //timebar
     public GameObject TBC;
@@ -244,6 +245,14 @@ public class correctSideEngine : MonoBehaviour
 
     IEnumerator End(bool win)
     {
+        if (win == true)
+        {
+            anim.SetBool("true1", true);
+        }
+        else
+        {
+            anim.SetBool("false1", true);
+        }
         yield return new WaitForSeconds(0.8f);
         if (Demo == 0)
         {

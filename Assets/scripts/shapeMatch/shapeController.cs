@@ -7,6 +7,7 @@ using TMPro;
 
 public class shapeController : MonoBehaviour
 {
+    public Animator anim;
     public AudioSource bubble,wrong;
     public int Demo = 0;
     //timebar
@@ -395,6 +396,14 @@ public class shapeController : MonoBehaviour
     IEnumerator End(bool win)
     {
         timebar.Stop();
+        if (win == true)
+        {
+            anim.SetBool("true1", true);
+        }
+        else
+        {
+            anim.SetBool("false1", true);
+        }
         yield return new WaitForSeconds(0.8f);
         if (Demo == 0)
         {
