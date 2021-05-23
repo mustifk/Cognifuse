@@ -6,7 +6,7 @@ public class gameEngine : MonoBehaviour
 {
     public Animator anim;
     public int Demo = 0;
-    public AudioSource correct; 
+    public AudioSource correct,win; 
     //timebar
     public GameObject TBC;
     timebarScript timebar;
@@ -210,6 +210,7 @@ public class gameEngine : MonoBehaviour
     {
         if (result == true)
         {
+            win.Play();
             anim.SetBool("true1", true);
         }
         else

@@ -6,7 +6,7 @@ using UnityEngine;
 public class paintTheShapeScript : MonoBehaviour
 {
     public Animator anim;
-    public AudioSource tap, incorrect;
+    public AudioSource tap, incorrect,correct;
     public int Demo = 0;
     //timebar
     public GameObject TBC;
@@ -228,6 +228,7 @@ public class paintTheShapeScript : MonoBehaviour
         timebar.Stop();
         if (win == true)
         {
+            correct.Play();
             anim.SetBool("true1", true);
         }
         else
