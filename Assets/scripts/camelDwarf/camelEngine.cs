@@ -83,16 +83,16 @@ public class camelEngine : MonoBehaviour
         switch (diffLevel)
         {
             case 1:
-                waitingTime = 1.8f;
-                timebar.SetMax((waitingTime - 0.2f) * maxSpinGame);
+                waitingTime = 1.6f;
+                timebar.SetMax((waitingTime ) * maxSpinGame);
                 break;
             case 2:
-                waitingTime = 1.4f;
-                timebar.SetMax((waitingTime - 0.2f) * maxSpinGame);
+                waitingTime = 1.3f;
+                timebar.SetMax((waitingTime ) * maxSpinGame);
                 break;
             case 3:
-                waitingTime = 1.0f;
-                timebar.SetMax((waitingTime - 0.2f) * maxSpinGame);
+                waitingTime = 1.1f;
+                timebar.SetMax((waitingTime ) * maxSpinGame);
                 break;
         }
         countGame = 1;
