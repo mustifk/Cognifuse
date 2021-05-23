@@ -74,7 +74,7 @@ public class transScript : MonoBehaviour
         instructions[12][0] = "Which One";
         instructions[12][1] = "Watch carefully to catch the one which wasn't on the previous screen!";
         instructions[13][0] = "Number Rush";
-        instructions[13][1] = "Try to collect all the numbers in the order, avoid the enemies!";
+        instructions[13][1] = "Try to collect all the numbers in the order, avoid the enemies and don't stop touching!";
         instructions[14][0] = "Paint The Shape";
         instructions[14][1] = "Try to figure out the final shape when the shapes on left and right become one!";
         instructions[15][0] = "Simon's Orders";
@@ -104,7 +104,7 @@ public class transScript : MonoBehaviour
         instructions[27][0] = "Hangisi Gitti";
         instructions[27][1] = "İlk ekranda olup da sonraki ekranda olmayan gorseli bulmaya calis!";
         instructions[28][0] = "Sayi Maratonu";
-        instructions[28][1] = "Dusmanlara yakalanmadan ekrandaki sayilari sirasiyla toplamaya calis!";
+        instructions[28][1] = "Dusmanlara yakalanmadan ekrandaki sayilari sirasiyla toplamaya calis,bitmeden parmagini kaldirma!";
         instructions[29][0] = "Sekil Boyama";
         instructions[29][1] = "Kenarlardaki sekillerin ust uste binmis halini ortadaki sekile uygula,unutma beyaz baskin kutucuk!";
         instructions[30][0] = "Yakup Diyor Ki";
