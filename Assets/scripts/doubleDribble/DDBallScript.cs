@@ -41,7 +41,6 @@ public class DDBallScript : MonoBehaviour
             if (!lose)
             {
                 correct.Play();
-
             }
             collision.transform.parent.GetComponent<DDBallsEngine>().DropletGone();
             Destroy(collision.gameObject);
