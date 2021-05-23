@@ -10,7 +10,7 @@ public class guessWhat : MonoBehaviour
     //timebar
     public GameObject TBC;
     timebarScript timebar;
-    public AudioSource correct, incorrect;
+    public AudioSource correct, incorrect,winSound;
     [SerializeField] private Sprite[] images;
     [SerializeField] private int difficulty;
     [SerializeField] private guessImage originalCard;
@@ -203,6 +203,7 @@ public class guessWhat : MonoBehaviour
     {
         if (win == true)
         {
+            winSound.Play();
             anim.SetBool("true1", true);
         }
         else

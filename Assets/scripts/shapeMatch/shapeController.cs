@@ -8,7 +8,7 @@ using TMPro;
 public class shapeController : MonoBehaviour
 {
     public Animator anim;
-    public AudioSource bubble,wrong;
+    public AudioSource bubble,wrong,winSound;
     public int Demo = 0;
     //timebar
     public GameObject TBC;
@@ -398,6 +398,7 @@ public class shapeController : MonoBehaviour
         timebar.Stop();
         if (win == true)
         {
+            winSound.Play();
             anim.SetBool("true1", true);
         }
         else

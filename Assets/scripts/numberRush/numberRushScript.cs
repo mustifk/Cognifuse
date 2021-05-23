@@ -13,7 +13,7 @@ public class numberRushScript : MonoBehaviour
     int difficulty;
     int collectibleCount,enemyCount,nextToCount = 1;
     bool isGameOver = false;
-    public AudioSource collect ,win, lose;
+    public AudioSource collect, winSound, lose;
     // Start is called before the first frame update
     void Start()
     {
@@ -141,7 +141,6 @@ public class numberRushScript : MonoBehaviour
         }
         else
         {
-            lose.Play();
             GameOver(0);
         }
     }
@@ -156,6 +155,7 @@ public class numberRushScript : MonoBehaviour
         }
         else
         {
+            lose.Play();
             StartCoroutine(End(false));
         }
     }
@@ -164,6 +164,7 @@ public class numberRushScript : MonoBehaviour
     {
         if (win == true)
         {
+            winSound.Play();
             anim.SetBool("true1", true);
         }
         else

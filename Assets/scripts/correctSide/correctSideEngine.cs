@@ -14,7 +14,7 @@ public class correctSideEngine : MonoBehaviour
     //1 -> Easy
     //2 -> Normal
     //3 -> Hard
-    public AudioSource correct, incorrect;
+    public AudioSource correct, incorrect,winSound;
     public int diffLevel = 1;
 
     int numberOfShape;
@@ -247,6 +247,7 @@ public class correctSideEngine : MonoBehaviour
     {
         if (win == true)
         {
+            winSound.Play();
             anim.SetBool("true1", true);
         }
         else

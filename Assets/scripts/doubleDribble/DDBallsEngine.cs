@@ -9,7 +9,7 @@ public class DDBallsEngine : MonoBehaviour
     //timebar
     public GameObject TBC;
     timebarScript timebar;
-
+    public AudioSource winSound;
     public GameObject droplet;
     int difficulty = 3;
     int dropletCount,dCtemp;
@@ -96,6 +96,7 @@ public class DDBallsEngine : MonoBehaviour
         timebar.Stop();
         if (win == true)
         {
+            winSound.Play();
             anim.SetBool("true1", true);
         }
         else
